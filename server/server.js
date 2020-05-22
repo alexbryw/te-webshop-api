@@ -19,5 +19,6 @@ app.use(express.json())
 app.use(userRoute)
 
 app.get('/', (req, res) => res.json({someText: 'From express API! :9000!'}))
+// app.use(errorNotFound) //Add 404 not found error.
 
 app.listen(port, () => console.log(`Server http://localhost:${port}`))

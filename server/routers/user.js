@@ -1,12 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const getUsersMW = require('../middleware/getUsers')
-const secureRouteMW = require('../middleware/secureRoute')
+const {getUsers, getUser} = require('../middleware/user/user-mw')
+const secureRoute = require('../middleware/sessionAuth/secure-mw')
 
-//Get all user to admin accounts.
-router.get('/api/user',secureRouteMW,getUsersMW, async function (req, res) {
+//Secure route check before moving on to the next routes below.
+router.use(secureRoute)
 
-    // res.status(404).json({msg: "Last from get user."}) // behövs ej.
-})
+//Get all user.
+router.get('/api/user',getUsers)
+
+//Get one user by id.
+router.get('/api/user/:id',getUser)
 
 module.exports = router
