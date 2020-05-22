@@ -1,8 +1,11 @@
 function secureRoute(req, res, next) {
-    //check if correct user or admin can go to next.
-    // req.session.admin ? res.status(401).json({msg:"Login with admin."})
     console.log("from secure route")
     next()
+    // if(req.session.admin) {
+    //     next()
+    // } else {
+    //     res.status(401).json('Pleace login with admin account')
+    // }
 }
 
 module.exports = secureRoute
