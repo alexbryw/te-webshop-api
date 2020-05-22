@@ -14,7 +14,7 @@ export default class Layout extends React.Component<Props, State> {
 
     render(){
          return (
-            <BrowserRouter basename="/react-webshop">
+            <BrowserRouter /*basename="/te-webshop-api"*/>
                 <Header/>
                     <div style={stickyFooter}>
                         <Switch>
