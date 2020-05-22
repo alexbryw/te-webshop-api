@@ -6,6 +6,7 @@ const cors = require('cors') // Needed for cross origin.
 const port = 9000   //API server port.
 
 const userRoute = require('./routers/user')
+const sessionRouter = require('./routers/sessionRouter')
 
 app.use(cors({ credentials: true, origin: ['http://localhost:3000']}))
 app.use(cookieSession({
@@ -17,6 +18,7 @@ app.use(cookieSession({
 }))
 app.use(express.json())
 app.use(userRoute)
+app.use(sessionRouter)
 
 app.get('/', (req, res) => res.json({someText: 'From express API! :9000!'}))
 // app.use(errorNotFound) //Add 404 not found error.
