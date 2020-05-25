@@ -1,0 +1,25 @@
+// ALL ORDER RELATED ENDPOINTS
+
+
+// GET // get all orders (ex. admins overview of all placed order)
+// access : Admin
+GET http://localhost:9000/api/orders/
+###
+
+// GET // get one or more specific order/orders  (ex. let an admin filter orders from a specific user, or a user wants to display )
+// access : Admin, User
+GET http://localhost:9000/api/orders/:id
+###
+
+// POST // post order (ex. customer places order)
+// access : User
+POST http://localhost:9000/api/orders/
+###
+
+// PUT // update order (ex. admin changes shippingstatus to 'sent')
+// access : Admin
+PUT http://localhost:9000/api/orders/:id
+###
+
+// DELETE // no delete endpoint, because in no scenario is it relevant to delete an order from the database.
+// If and order has gone through and is confirmed, removing it would never be desirable.

@@ -1,0 +1,34 @@
+// ALL PRODUCT RELATED ENDPOINTS
+
+
+// GET // get all products (ex. display all the products on the frontpage)
+// access : everyone
+GET http://localhost:9000/api/products/
+###
+
+
+// GET // get one specific product (ex. customer clicks on a product )
+// access : everyone
+GET http://localhost:9000/api/products/:id
+###
+
+
+// POST // post product (ex. admin adds new product to the store)
+// access : Admin
+POST http://localhost:9000/api/products/
+###
+
+
+// PUT // update PRODUCT (ex. admin wants to update the price or description of a product, or order goes through and the amountvalue changes.)
+// access : Admin, User
+PUT http://localhost:9000/api/products/:id
+###
+
+
+// DELETE // delete product (ex. admin wants to delete specific product from the store)
+// access : Admin
+DELETE http://localhost:9000/api/products/:id
+###
+
+
+

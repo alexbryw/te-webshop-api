@@ -1,0 +1,31 @@
+ 
+
+//TODO: Se if paths are correct
+
+
+GET http://localhost:9000/api/users/ HTTP/1.1
+
+###
+
+//*********  REGISTER  Create account   ************
+POST http://localhost:9000/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "name": "admin",
+    "password": "admin",
+    "admin": true
+}
+
+###
+POST http://localhost:9000/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "name": "user_2",
+    "password": "123",
+    "admin": false
+}
+
+###
+
