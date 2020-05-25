@@ -3,38 +3,29 @@
 //TODO: Se if paths are correct
 
 
-// Tells us if the user is autherised
-//**********sessionAuthenticate**********
-GET http://localhost:9000/api/login HTTP/1.1
+GET http://localhost:9000/api/users/ HTTP/1.1
 
 ###
 
 //*********  REGISTER  Create account   ************
-# POST http://localhost:9000/api/login HTTP/1.1
-# content-type: application/json
-
-# {
-#     "name": "New User",
-#     "password": "123"
-# }
-
-###
-
-//********LOGIN A EXISTING USER*********
-POST http://localhost:9000/api/login HTTP/1.1
+POST http://localhost:9000/api/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Exicting User",
-    "password": "321"
+    "name": "admin",
+    "password": "admin",
+    "admin": true
 }
 
 ###
-
-//******LOGOUT******
-DELETE http://localhost:9000/api/logout HTTP/1.1
+POST http://localhost:9000/api/users/ HTTP/1.1
 content-type: application/json
 
+{
+    "name": "user_2",
+    "password": "123",
+    "admin": false
+}
 
 ###
 
