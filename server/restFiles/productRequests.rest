@@ -15,7 +15,17 @@ GET http://localhost:9000/api/products/:id
 
 // POST // post product (ex. admin adds new product to the store)
 // access : Admin
-POST http://localhost:9000/api/products/
+POST http://localhost:9000/api/products/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Earl Grey",
+    "description": "Earl Grey är en teblandning som druckits i snart två sekel och härstammar från den tidigare engelske premiärministern Charles Grey. ",
+    "price": "2000",
+    "category": "Svart te",
+    "nrInStock": "400",
+}
+
 ###
 
 
