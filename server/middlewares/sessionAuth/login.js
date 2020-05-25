@@ -23,7 +23,7 @@ function checkLogin(req, res, next){
 function logout(req,res,next) {
     if(req.session.userid) {
         req.session = null
-        res.json({msg: 'You have loggedout ✅'})
+        res.json({msg: 'You have logged out ✅'})
     } else {
         res.status(401).json({msg: 'You have to login to logout'})
     }
