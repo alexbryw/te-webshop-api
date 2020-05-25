@@ -5,10 +5,10 @@ const secureRoute = require('../middleware/sessionAuth/secure-mw')
 const {login, checkLogin, logout} = require('../middleware/sessionAuth/login')
 
 //checks if user is loggedIn
-router.get('/api/login',secureRoute,checkLogin)
+router.get('/api/login', secureRoute,checkLogin)
 
 //logIn.
-router.post('/api/login',login)
+router.post('/api/login', login)
 
 //Logout.
 router.delete('/api/logout',logout)
