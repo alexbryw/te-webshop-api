@@ -5,10 +5,14 @@ require('./connect-db') //Establish connection to mongodb.
 const cors = require('cors') // Needed for cross origin.
 const port = 9000   //API server port.
 
-const userRoute = require('./routers/user')
+const usersRouter = require('./routers/usersRouter')
+// const productsRouter = require('./routers/productsRouter')
+// const ordersRouter = require('./routers/ordersRouter')
+
+
 const sessionRouter = require('./routers/sessionRouter')
 
-app.use(cors({ credentials: true, origin: ['http://localhost:3000']}))
+app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }))
 app.use(cookieSession({
     secret: 'SuperSecretCode',
     maxAge: 1000 * 60 * 1, //1 min cookie timeout.
@@ -17,10 +21,14 @@ app.use(cookieSession({
     secure: false
 }))
 app.use(express.json())
-app.use(userRoute)
-app.use(sessionRouter)
 
-app.get('/', (req, res) => res.json({someText: 'From express API! :9000!'}))
+app.use("/api/users", usersRouter)
+// app.use("/api/products", productsRouter)
+// app.use("/api/orders", ordersRouter)
+
+app.use("/session", sessionRouter)
+
+app.get('/', (req, res) => res.json({ someText: 'From express API! :9000!' }))
 // app.use(errorNotFound) //Add 404 not found error.
 
 app.listen(port, () => console.log(`Server http://localhost:${port}`))
