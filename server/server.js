@@ -1,4 +1,5 @@
 const express = require('express')
+require('express-async-errors')
 const cookieSession = require('cookie-session')
 const app = express()
 require('./connect-db') //Establish connection to mongodb.
