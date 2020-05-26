@@ -14,6 +14,15 @@ GET http://localhost:9000/api/orders/:id
 // POST // post order (ex. customer places order)
 // access : User
 POST http://localhost:9000/api/orders/
+Content-Type: application/json
+
+{
+    "to_firstname": "Test",
+    "to_lastname": "Testson",
+    "to_street": "Testgatan 18",
+    "to_city": "Göteborg",
+    "to_zip": 12345
+}
 ###
 
 // PUT // update order (ex. admin changes shippingstatus to 'sent')

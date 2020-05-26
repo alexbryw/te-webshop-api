@@ -5,26 +5,26 @@ const orderSchema = new mongoose.Schema({
     //user populate
     user: [{
         type: Schema.Types.ObjectId, ref: "User",
-        require: true
+        require: false //TODO require
     }],
     //shipping populate
     shipping: {
         type: Schema.Types.ObjectId, ref: "shipping",
-        require: true
+        require: false //TODO require
     },
     //array[{product:{product_id}, qty: Number, rowPrice: Number}]
     productRow: [{
         product: {
             type: Schema.Types.ObjectId, ref: "Product",
-            require: true
+            require: false //TODO require
         },
         qty: {
             type: Number,
-            require: true
+            require: false //TODO require
         },
         rowPrice: {
             type: Number,
-            require: true
+            require: false //TODO require
         }
     }],
     to_firstname: {
@@ -54,12 +54,10 @@ const orderSchema = new mongoose.Schema({
     },
     isOrderShipped: {
         type: Boolean,
-        required: true
+        default: false
     },
     totalPrice: {
         type: Number,
-        minlength: 1,
-        required: true,
     },
     orderDate: {
         type: Date,

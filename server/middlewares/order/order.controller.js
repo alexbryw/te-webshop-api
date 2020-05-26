@@ -11,7 +11,12 @@ function getMyOrders(req, res, next){
 
 // post placeOrder
 function placeOrder(req, res, next){
-    res.json({msg: "TODO place order."})
+    console.log(req.body)
+    const order = new orderModel(req.body)
+    order.save((err, newOrder) => {
+        if(err) return next(err)
+        res.json(newOrder)
+    })
 }
 
 // updateOrderStatus
