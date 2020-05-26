@@ -1,18 +1,24 @@
 const Product = require("../../models/productModel");
 
 function getAllProducts(req, res, next) {
-  
+  // res.json({ msg: "hej då get" })
+  Product.find({}, (err, result) => {
+    if (err) {
+      next(err)
+    } else {
+      res.json(result)
+    }
+  })
 }
 
 function addProduct(req, res, next) {
-  console.log(req.body)
   const product = new Product(req.body)
-  product.save((err, document) => {
+  product.save((err, product) => {
     if (err) {
       next(err)
+    } else {
+      res.json(product)
     }
-    console.log(product, document)
-    res.json(document)
   })
 }
 
