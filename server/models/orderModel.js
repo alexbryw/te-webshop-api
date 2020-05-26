@@ -1,9 +1,32 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const orderSchema = new mongoose.Schema({
     //user populate
+    user: [{
+        type: Schema.Types.ObjectId, ref: "User",
+        require: true
+    }],
     //shipping populate
-    //product row array[product_id, qty: number, rowPrice: Number]
+    shipping: {
+        type: Schema.Types.ObjectId, ref: "shipping",
+        require: true
+    },
+    //array[{product:{product_id}, qty: Number, rowPrice: Number}]
+    productRow: [{
+        product: {
+            type: Schema.Types.ObjectId, ref: "Product",
+            require: true
+        },
+        qty: {
+            type: Number,
+            require: true
+        },
+        rowPrice: {
+            type: Number,
+            require: true
+        }
+    }],
     to_firstname: {
         type: String,
         minlength: 1,
