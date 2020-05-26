@@ -1,5 +1,5 @@
 const Shipping = require("../../models/shippingModel")
-//Get all users from database..
+//GET all shipping options from database.
 async function getShippings(req, res, next) {
     try {
         const shipping = await Shipping.find();
@@ -13,7 +13,7 @@ async function getShippings(req, res, next) {
 //POST Shipping options from database.
 function addShippings(req, res, next){
     const shipping = new Shipping(req.body)
-    shipping.save((err,shipping) =>{ 
+    shipping.save((err,shipping) => { 
         if (err) {
             next(err)
         } else{
@@ -23,17 +23,3 @@ function addShippings(req, res, next){
 }
 
 module.exports = { addShippings, getShippings }
-
-
-
-
-// async function getShipping(req, res, next) {
-//     try {
-//         const shipping = new ShippingModel(req.body)
-//         await shipping.find({})
-//         res.json(shipping);
-//         next()
-//     } catch (err) {
-//         res.status(500).json({ message: err.message });
-//     }
-// }

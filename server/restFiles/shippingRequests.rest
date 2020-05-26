@@ -1,4 +1,4 @@
-
+//*******GET ALL SHIPPING OPTIONS********
 GET http://localhost:9000/api/shipping/ HTTP/1.1
 
 ###
