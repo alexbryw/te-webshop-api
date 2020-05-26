@@ -3,7 +3,7 @@ GET http://localhost:9000/api/shipping/ HTTP/1.1
 
 ###
 
-//******POST 1
+//******POST SHIPPING OPTION 1
 POST http://localhost:9000/api/shipping/ HTTP/1.1
 Content-Type: application/json
 
@@ -15,7 +15,7 @@ Content-Type: application/json
 
 ###
 
-//******POST 2
+//******POST SHIPPING OPTION 2
 POST http://localhost:9000/api/shipping/ HTTP/1.1
 Content-Type: application/json
 
@@ -27,7 +27,7 @@ Content-Type: application/json
 
 ###
 
-//******POST 3
+//******POST SHIPPING OPTION 3
 POST http://localhost:9000/api/shipping/ HTTP/1.1
 Content-Type: application/json
 
