@@ -3,28 +3,28 @@ const Schema = mongoose.Schema
 
 const orderSchema = new mongoose.Schema({
     //user populate
-    user: [{
+    user: {
         type: Schema.Types.ObjectId, ref: "User",
-        require: false //TODO require
-    }],
+        require: true
+    },
     //shipping populate
     shipping: {
         type: Schema.Types.ObjectId, ref: "shipping",
-        require: false //TODO require
+        require: true
     },
     //array[{product:{product_id}, qty: Number, rowPrice: Number}]
     productRow: [{
         product: {
             type: Schema.Types.ObjectId, ref: "Product",
-            require: false //TODO require
+            require: true
         },
         qty: {
             type: Number,
-            require: false //TODO require
+            require: true
         },
         rowPrice: {
             type: Number,
-            require: false //TODO require
+            require: false //TODO calc later.
         }
     }],
     to_firstname: {
@@ -57,7 +57,7 @@ const orderSchema = new mongoose.Schema({
         default: false
     },
     totalPrice: {
-        type: Number,
+        type: Number, //TODO calc later.
     },
     orderDate: {
         type: Date,

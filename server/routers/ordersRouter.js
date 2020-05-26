@@ -12,7 +12,7 @@ router.get("/:id", getMyOrders)
 router.post("/", placeOrder)
 
 //Admin only can change shipping status. (patch? not post?)
-router.put("/:id", updateOrderStatus)
+router.patch("/:id", updateOrderStatus)
 
 //Delete not needed in order.
 // router.delete()

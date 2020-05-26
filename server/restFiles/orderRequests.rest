@@ -8,7 +8,7 @@ GET http://localhost:9000/api/orders/
 
 // GET // get one or more specific order/orders  (ex. let an admin filter orders from a specific user, or a user wants to display )
 // access : Admin, User
-GET http://localhost:9000/api/orders/:id
+GET http://localhost:9000/api/orders/5ecb88f22b5cb34378cfc047
 ###
 
 // POST // post order (ex. customer places order)
@@ -17,6 +17,12 @@ POST http://localhost:9000/api/orders/
 Content-Type: application/json
 
 {
+    "user": "5ecb88f22b5cb34378cfc047",
+    "shipping": "5ecd10a6c484790f757db5e0",
+    "productRow":[{
+        "product": "5ecd17bdd80bdc3018de9fab",
+        "qty": 2
+    }],
     "to_firstname": "Test",
     "to_lastname": "Testson",
     "to_street": "Testgatan 18",
@@ -27,7 +33,12 @@ Content-Type: application/json
 
 // PUT // update order (ex. admin changes shippingstatus to 'sent')
 // access : Admin
-PUT http://localhost:9000/api/orders/:id
+PATCH  http://localhost:9000/api/orders/5ecd70cbd19af824100d3065
+Content-Type: application/json
+
+{
+    "isOrderShipped": true
+}
 ###
 
 // DELETE // no delete endpoint, because in no scenario is it relevant to delete an order from the database.
