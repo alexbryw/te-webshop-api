@@ -3,7 +3,7 @@
 
 // GET // get all products (ex. display all the products on the frontpage)
 // access : everyone
-GET http://localhost:9000/api/products/
+GET http://localhost:9000/api/products
 ###
 
 
