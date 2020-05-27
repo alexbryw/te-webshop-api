@@ -16,6 +16,16 @@ GET http://localhost:9000/api/products/:id
 // POST // post product (ex. admin adds new product to the store)
 // access : Admin
 POST http://localhost:9000/api/products/
+Content-Type: application/json
+
+{
+    "title": "Original Chai",
+    "description": "Chai - känn vördnaden för denna exotiska blandning av värmen från ingefära, kannelens glöd, kardemummans vitalitet och ett lyft av svart te med stänk av spräcklig lakrits.",
+    "price": 100,
+    "category": ["Koffein", "Svart te"],
+    "nrInStock": 1
+}
+
 ###
 
 
