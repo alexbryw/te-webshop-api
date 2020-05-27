@@ -1,18 +1,20 @@
 import React from 'react';
 import Layout from './components/Layout';
-import { ThemeProvider } from '@material-ui/core/styles';
 import Theme from './MuiTheme'
+
+import UserContextProvider from "./contexts/UserContext"
+import { ThemeProvider } from '@material-ui/core/styles';
 import { CartProvider } from './contexts/cartContext';
 
 function App() {
   return (
-    <CartProvider>
-      <ThemeProvider theme={Theme}>
-        <div style={{minHeight: 'calc(100vh - 11em)'}}>
-          <Layout/>
-        </div>
-      </ThemeProvider>
-    </CartProvider>
+    <UserContextProvider>
+      <CartProvider>
+        <ThemeProvider theme={Theme}>
+          <Layout />
+        </ThemeProvider>
+      </CartProvider>
+    </UserContextProvider>
   );
 }
 
