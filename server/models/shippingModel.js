@@ -10,20 +10,9 @@ const shippingSchema = new mongoose.Schema({
         required: true,
     },
     delivery: {
-        type: Number, 
-        date: Date,
+        type: Number,
         required: true,
     }
 })
-
-
-// Shipping.create({ 
-//     company: 'PostNord Hemleverans',
-//     price: 99,
-//     deliveryDate: 1
-// }, function (err, shipping) {
-//     if (err) return handleError(err);
-//     // saved!
-//   });
 
 module.exports = mongoose.model('Shipping', shippingSchema)
