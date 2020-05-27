@@ -34,4 +34,16 @@ app.use("/session", sessionRouter)
 app.get('/', (req, res) => res.json({ someText: 'From express API! :9000!' }))
 // app.use(errorNotFound) //Add 404 not found error.
 
+app.use((req,res) => {
+    res.status(404).json({msg: "Resource could not be found."})
+})
+
+app.use((err, req, res, next) => {
+    const message = err.message || "Something went wrong."
+    const statusCode = err.status || 500
+
+    res.status(statusCode).json({message})
+})
+
+
 app.listen(port, () => console.log(`Server http://localhost:${port}`))
