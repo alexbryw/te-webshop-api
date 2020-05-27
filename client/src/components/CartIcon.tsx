@@ -1,18 +1,39 @@
-import React,{ useState, CSSProperties } from 'react'
-import { CartContext } from '../contexts/cartContext'
-import { IconButton, Button } from '@material-ui/core'
-import { Typography } from '@material-ui/core'
+import React, { useState, CSSProperties } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
+
+// MATERIAL UI
+import { IconButton, Button, Typography } from '@material-ui/core'
+
+
+// ICONS
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import EmojiFoodBeverageIcon from '@material-ui/icons/EmojiFoodBeverage';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { CartItem } from '../typings'
+
+// COMPONENTS
 import ShoppingCart from './ShoppingCart'
-import { Link as RouterLink} from 'react-router-dom'
+import LoginModal from "./LoginModal/LoginModal"
+
+
+import { CartContext } from '../contexts/cartContext'
+
+
+import { CartItem } from '../typings'
+
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
-export function CartIcon(){
+
+interface Props {
+    cartState: any
+}
+
+export function CartIcon(props: Props) {
+    const [loggedIn, setLoggedIn] = useState(false)
+
     const [isCartShown, setToggled] = useState(false)
     const handleOnClick = () => setToggled(!isCartShown)
 
-    function TotalProductCount(cartList: Array<CartItem>){
+    function TotalProductCount(cartList: Array<CartItem>) {
         let totalCount = 0
         for (const item of cartList) {
             totalCount += item.nrItems
@@ -21,61 +42,59 @@ export function CartIcon(){
     }
 
     let screenSize = useMediaQuery('(min-width:430px)')
-    let divSize = {width: '18.5rem'}
-    if(screenSize === true){
-        divSize = {width: '25rem'}
+    let divSize = { width: '18.5rem' }
+    if (screenSize === true) {
+        divSize = { width: '25rem' }
     }
 
-    function displayCart(){
-        const emptyCart = <Typography variant="h6" color="primary" style = {{margin:'1rem'}}>Kundvagnen är tom</Typography>
-        const filledCart = <><ShoppingCart/>               
-                                <Button
-                                    component={RouterLink} to ='/checkout'
-                                    onClick = {handleOnClick}
-                                    variant="contained" 
-                                    color="primary"
-                                    style={{margin:'1rem'}}                                
-                                    >
-                                    Ta mig till Kassan
+    function displayCart() {
+        const emptyCart = <Typography variant="h6" color="primary" style={{ margin: '1rem' }}>Kundvagnen är tom</Typography>
+        
+        const filledCart =
+            <>
+                <ShoppingCart />
+                {loggedIn ?
+                    <Button
+                        component={RouterLink} to='/checkout'
+                        variant="contained"
+                        color="primary"
+                    >
+                        gå till kassan
                                 </Button>
-                            </>
-        if(isCartShown){
+                    :
+                    <LoginModal />
+                }
+            </>
+        if (props.cartState.showCart) {
             return (
-                <CartContext.Consumer>
-                    {(cartState) => 
-                    <div style = {clickAwayDiv} onClick={handleOnClick}>
-                        <div style={{...shoppingCartContainer, ...divSize}}>
-                        {cartState.cartList.length===0? emptyCart : filledCart}
-                        </div>
+                <div style={clickAwayDiv} onClick={() => props.cartState.toggleCartVisibility()}>
+                    <div style={{ ...shoppingCartContainer, ...divSize }}>
+                        {props.cartState.cartList.length === 0 ? emptyCart : filledCart}
                     </div>
-                }</CartContext.Consumer>
+                </div>
             )
         }
-    } 
+    }
 
-    return(
-        <CartContext.Consumer>
-            { (cartState) =>(
-                <div style={relativeContainer}>
-                    <div style = {{marginRight: '1rem'}}>
-                        <IconButton 
-                            color="secondary" 
-                            style={{border:'solid #9cba98 0.1em'}}
-                            onClick = {handleOnClick}>
-                            <ShoppingCartIcon fontSize="large" color="secondary"/>
-                        </IconButton>
-                        <Typography style={numberOfOrders}>
-                            {cartState.cartList.length > 99? "..." : TotalProductCount(cartState.cartList)}
-                        </Typography>
-                    </div>
-                    {displayCart()}
-                </div>
-            )}
-        </CartContext.Consumer>
+    return (
+        <div style={relativeContainer}>
+            {/* <div style={{ marginRight: '1rem' }}> */}
+            <IconButton
+                color="secondary"
+                style={{ border: 'solid #9cba98 0.1em' }}
+                onClick={() => props.cartState.toggleCartVisibility()}>
+
+                {props.cartState.cartList.length === 0 ?
+                    <LocalCafeIcon fontSize="small" color="secondary" /> :
+                    <EmojiFoodBeverageIcon fontSize="small" color="secondary" />
+                }
+            </IconButton>
+            {displayCart()}
+        </div >
     )
 }
 
-const numberOfOrders:CSSProperties = {
+const numberOfOrders: CSSProperties = {
     border: '0.1em solid #9cba98',
     height: '1.5em',
     width: '1.5em',
@@ -84,31 +103,33 @@ const numberOfOrders:CSSProperties = {
     color: '#9cba98',
     position: 'relative',
     backgroundColor: '#346933',
-    top:'-1.5em',
+    top: '-1.5em',
 }
 
-const relativeContainer:CSSProperties = {
-    display:'flex',
-    position:'relative'
+const relativeContainer: CSSProperties = {
+    display: 'flex',
+    position: 'relative'
 }
 
-const shoppingCartContainer:CSSProperties = {
-    position:'absolute',
-    right: '0',
-    top: '6rem',
-    zIndex: 3,
-    backgroundColor:'white',
-    display:'flex',
+const shoppingCartContainer: CSSProperties = {
+    position: 'absolute',
+    right: 0,
+    top: "4rem",
+    zIndex: 1000,
+
+    backgroundColor: 'white',
+    display: 'flex',
     flexDirection: 'column',
-    alignItems:'center',
+    alignItems: 'center',
     boxShadow: '0 0 0.3rem black'
 }
 
-const clickAwayDiv:CSSProperties = {
-   width: '100vw',
-   height: '100vh',
-   position: 'absolute',
-   zIndex: 1,
-   top:0,
-   right:0,
+const clickAwayDiv: CSSProperties = {
+    position: 'absolute',
+    zIndex: 100,
+    top: 0,
+    right: 0,
+
+    width: '100vw',
+    height: '100vh',
 }
