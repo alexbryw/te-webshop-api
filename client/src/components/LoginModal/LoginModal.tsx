@@ -3,15 +3,17 @@ import React from 'react';
 // MATERIAL UI
 import { Grid, Modal, Container, Typography, Button, TextField, FormControlLabel, Checkbox } from '@material-ui/core';
 
-// ICONS
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountOutlined';
+
+
+// CONTEXT
+import UserContext from "../../contexts/UserContext"
 
 import useStyles from './LoginModalStyles';
 
 type LoginModalView = "login" | "register"
 
 interface Props {
+    userContext: any
     cancelTimeout: (visibility: Boolean, altVisibility: Boolean | null) => void
 }
 
@@ -69,14 +71,13 @@ const LoginModal = (props: Props) => {
             <Grid item xs={6}>
                 <Typography variant="h4" align="center">{view}</Typography>
             </Grid>
-            <Grid item xs={9} justify="center">
+            <Grid item xs={9}>
                 <TextField
                     fullWidth
                     variant="outlined"
                     id="outlined-helperText"
                     label="username"
                     helperText={inputValues.username.length > 20 ? "username can't be longer than 20 characters" : null}
-
                     value={inputValues.username}
                     onChange={(e) => changeInputValues(e, "username")}
                 />
@@ -84,6 +85,7 @@ const LoginModal = (props: Props) => {
             <Grid item xs={9}>
                 <TextField
                     fullWidth
+                    type="password"
                     variant="outlined"
                     id="outlined-helperText"
                     label="password"
@@ -99,6 +101,7 @@ const LoginModal = (props: Props) => {
                     <Grid item xs={9}>
                         <TextField
                             fullWidth
+                            type="password"
                             error={inputValues.password !== inputValues.confirmPassword}
                             variant="outlined"
                             id="outlined-helperText"
@@ -121,10 +124,31 @@ const LoginModal = (props: Props) => {
             )
 
             }
+
+            <Grid item xs={12} justify="center"
+                className={classes.btnWrapper}
+            >
+                {view === "login" ?
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => props.userContext.textLogger("loggar in \nusername: " + inputValues.username + "\npassword: " + inputValues.password)}>
+                        Logga in
+                    </Button>
+                    :
+                    <Button variant="contained"
+                        color="primary"
+                        onClick={() => props.userContext.textLogger("registrera ny användare \nusername: " + inputValues.username + "\npassword: " + inputValues.password)}
+                    >
+                        Registrera
+                    </Button>
+                }
+            </Grid>
+
             <Grid item xs={12}
                 className={classes.registerContainer}>
                 <Typography variant="overline">
-                    {view === "login" ? "No account yet?" : "Have an account?"}
+                    {view === "login" ? "Inget konto än?" : "Har du ett konto?"}
                 </Typography>
                 <Button onClick={() => changeView()}>
                     {view === "register" ? "Login" : "Register"}

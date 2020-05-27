@@ -16,6 +16,7 @@ import LoginModal from "../LoginModal/LoginModal"
 
 // CONTEXTS
 import { CartContext } from "../../contexts/cartContext"
+import { UserContext } from '../../contexts/UserContext'
 
 
 export default function Header() {

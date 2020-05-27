@@ -17,6 +17,8 @@ import LoginModal from "./LoginModal/LoginModal"
 
 import { CartContext } from '../contexts/cartContext'
 
+import { UserContext } from "../contexts/UserContext"
+
 
 import { CartItem } from '../typings'
 
@@ -77,24 +79,29 @@ export function CartIcon(props: Props) {
         divSize = { width: '25rem' }
     }
 
-    const cart = <div className={classes.cart}>
+    const cart = <UserContext.Consumer>
+        {(user: any) => (
 
-        {props.cartState.cartList.length === 0 ?
-            <Typography variant="h6" color="primary" style={{ margin: '1rem' }}>Kundvagnen&nbsp;är&nbsp;tom</Typography> : <>
-                <ShoppingCart />
-                {loggedIn ?
-                    <Button
-                        component={RouterLink} to='/checkout'
-                        variant="contained"
-                        color="primary"
-                    >
-                        gå till kassan
+            <div className={classes.cart}>
+
+                {props.cartState.cartList.length === 0 ?
+                    <Typography variant="h6" color="primary" style={{ margin: '1rem' }}>Kundvagnen&nbsp;är&nbsp;tom</Typography> : <>
+                        <ShoppingCart />
+                        {loggedIn ?
+                            <Button
+                                component={RouterLink} to='/checkout'
+                                variant="contained"
+                                color="primary"
+                            >
+                                gå till kassan
                         </Button>
-                    :
-                    <LoginModal cancelTimeout={props.cartState.setCartVisibility} />
-                }
-            </>}
-    </div>
+                            :
+                            <LoginModal userContext={user} cancelTimeout={props.cartState.setCartVisibility} />
+                        }
+                    </>}
+            </div>
+        )}
+    </UserContext.Consumer>
 
     return (
         <div className={classes.relativeContainer}>

@@ -23,7 +23,7 @@ export const UserContext = createContext<State>({
     textLogger: () => { }
 });
 
-class UserContextProvider extends Component<Props, State> {
+export class UserContextProvider extends Component<Props, State> {
     constructor(props: Props) {
         super(props)
 
