@@ -9,7 +9,7 @@ GET http://localhost:9000/api/products/
 
 // GET // get one specific product (ex. customer clicks on a product )
 // access : everyone
-GET http://localhost:9000/api/products/:id
+GET http://localhost:9000/api/products/5ecd17bdd80bdc3018de9fab
 ###
 
 
@@ -19,11 +19,11 @@ POST http://localhost:9000/api/products/
 Content-Type: application/json
 
 {
-    "title": "Original Chai",
-    "description": "Chai - känn vördnaden för denna exotiska blandning av värmen från ingefära, kannelens glöd, kardemummans vitalitet och ett lyft av svart te med stänk av spräcklig lakrits.",
-    "price": 100,
-    "category": ["Koffein", "Svart te"],
-    "nrInStock": 1
+    "title": "Ta bort te",
+    "description": "Ett te att ta bort",
+    "price": 0,
+    "category": ["Koffein", "Ta bort te"],
+    "nrInStock": 0
 }
 
 ###
@@ -31,13 +31,24 @@ Content-Type: application/json
 
 // PUT // update PRODUCT (ex. admin wants to update the price or description of a product, or order goes through and the amountvalue changes.)
 // access : Admin, User
-PUT http://localhost:9000/api/products/:id
+PUT http://localhost:9000/api/products/5ecd20d3dbdc8908ec03490f
+Content-Type: application/json
+
+{
+    "title": "Original Chai",
+    "description": "Chai - känn vördnaden för denna exotiska blandning av värmen från ingefära, kannelens glöd, kardemummans vitalitet och ett lyft av svart te med stänk av spräcklig lakrits.",
+    "price": 8000,
+    "category": ["Koffein", "Svart te"],
+    "nrInStock": 8000
+}
+
 ###
 
 
 // DELETE // delete product (ex. admin wants to delete specific product from the store)
 // access : Admin
-DELETE http://localhost:9000/api/products/:id
+DELETE http://localhost:9000/api/products/5ece5064ac47c807a027e98b
+
 ###
 
 
