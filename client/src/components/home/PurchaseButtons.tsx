@@ -32,7 +32,10 @@ export default function PurchaseButtons(props: Props) {
     <CartContext.Consumer>
       {(cartState) => (
         <div className={classes.root} style={{ padding: '0 1em 1em' }}>
-          <Button onClick={() => { cartState.setCartVisibility(true); cartState.addProduct(props.itemId, 1) }}
+          <Button onClick={() => {
+                cartState.setCartVisibility(true, false);
+                // cartState.toggleCartVisibility();
+                cartState.addProduct(props.itemId, 1) }}
             variant="contained"
             color="primary"
             fullWidth={true}

@@ -15,9 +15,7 @@ interface Props {
 }
 
 const useStyles = makeStyles({
-  root: {
-    maxWidth: '22em',
-  },
+
   media: {
     height: 200,
   },
@@ -31,24 +29,22 @@ export default function ProductCard(props: Props) {
   const classes = useStyles()
 
   return (
-    <div>
-      <Card className={classes.root}>
-        <Link to={"product/" + props.itemData.id} className={classes.cardTitle}>
-          <div>
-            <CardMedia
-              className={classes.media}
-              image={props.itemData.imgURL}
-              title={props.itemData.imgURL + " Image"}
-            />
-            <CardContent>
-              <Typography variant="h5" component="h1">
-                {props.itemData.name}
-              </Typography>
-            </CardContent>
-          </div>
-        </Link>
-        <PurchaseButtons itemPrice={props.itemData.price} itemId={props.itemData.id} />
-      </Card>
-    </div>
+    <>
+      <Link to={"product/" + props.itemData.id} className={classes.cardTitle}>
+        <div>
+          <CardMedia
+            className={classes.media}
+            image={props.itemData.imgURL}
+            title={props.itemData.imgURL + " Image"}
+          />
+          <CardContent>
+            <Typography variant="h5" component="h1">
+              {props.itemData.name}
+            </Typography>
+          </CardContent>
+        </div>
+      </Link>
+      <PurchaseButtons itemPrice={props.itemData.price} itemId={props.itemData.id} />
+    </>
   )
 }
