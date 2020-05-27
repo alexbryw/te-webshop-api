@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
     },
     //shipping populate
     shipping: {
-        type: Schema.Types.ObjectId, ref: "shipping",
+        type: Schema.Types.ObjectId, ref: "Shipping",
         require: true
     },
     //array[{product:{product_id}, qty: Number, rowPrice: Number}]

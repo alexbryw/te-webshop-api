@@ -3,12 +3,15 @@
 
 // GET // get all orders (ex. admins overview of all placed order)
 // access : Admin
-GET http://localhost:9000/api/order/
+GET http://localhost:9000/api/orders/
 ###
 
 // GET // get one or more specific order/orders  (ex. let an admin filter orders from a specific user, or a user wants to display )
 // access : Admin, User
 GET http://localhost:9000/api/orders/5ecb88f22b5cb34378cfc047
+###
+
+GET http://localhost:9000/api/orders/5ecb89c1e6898b4088e3d9b5
 ###
 
 // POST // post order (ex. customer places order)
@@ -23,6 +26,31 @@ Content-Type: application/json
         "product": "5ecd17bdd80bdc3018de9fab",
         "qty": 2
     }],
+    "to_firstname": "Test",
+    "to_lastname": "Testson",
+    "to_street": "Testgatan 18",
+    "to_city": "Göteborg",
+    "to_zip": 12345
+}
+###
+
+//user_1 add
+POST http://localhost:9000/api/orders/
+Content-Type: application/json
+
+{
+    "user": "5ecb89c1e6898b4088e3d9b5",
+    "shipping": "5ecd10a6c484790f757db5e0",
+    "productRow":[
+        # {
+        #     "product": "5ecd20d3dbdc8908ec03490f",
+        #     "qty": 2
+        # },
+        {
+            "product": "5ecd17bdd80bdc3018de9fab",
+            "qty": 1
+        }
+    ],
     "to_firstname": "Test",
     "to_lastname": "Testson",
     "to_street": "Testgatan 18",
