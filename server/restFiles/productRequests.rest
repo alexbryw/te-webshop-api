@@ -37,9 +37,9 @@ Content-Type: application/json
 {
     "title": "Original Chai",
     "description": "Chai - känn vördnaden för denna exotiska blandning av värmen från ingefära, kannelens glöd, kardemummans vitalitet och ett lyft av svart te med stänk av spräcklig lakrits.",
-    "price": 1000,
+    "price": 8000,
     "category": ["Koffein", "Svart te"],
-    "nrInStock": 1000
+    "nrInStock": 8000
 }
 
 ###
@@ -47,7 +47,7 @@ Content-Type: application/json
 
 // DELETE // delete product (ex. admin wants to delete specific product from the store)
 // access : Admin
-DELETE http://localhost:9000/api/products/5ece38982cec7b27e8819159
+DELETE http://localhost:9000/api/products/5ece5064ac47c807a027e98b
 
 ###
 

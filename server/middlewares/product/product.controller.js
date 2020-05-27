@@ -34,18 +34,13 @@ function addProduct(req, res, next) {
 function updateProduct(req, res, next) {
   Product.findByIdAndUpdate(
     { _id: req.params.id },
-    {
-      title: req.body.title,
-      description: req.body.description,
-      price: req.body.price,
-      category: req.body.category,
-      nrInStock: req.body.nrInStock,
-    },
-    (err) => {
+    req.body,
+    { new: true },
+    (err, result) => {
       if (err) {
         next(err);
       } else {
-        res.json("Product updated!");
+        res.json(result);
       }
     }
   );
