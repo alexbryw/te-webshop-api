@@ -2,6 +2,7 @@ import React from 'react'
 import { Product } from '../items/itemListCore'
 import { items } from '../../ItemList'
 import AdminLayout from './AdminLayout'
+import createTypography from '@material-ui/core/styles/createTypography'
 
 
 interface Props {
@@ -26,12 +27,16 @@ export default class Admin extends React.Component<Props, State> {
             name: itemData.name, 
             price: itemData.price,
             imgURL: itemData.imgURL,
-            description: itemData.description
+            description: itemData.description,
+            nrInStock: itemData.nrInStock,
+            category: itemData.category
         }
         if( itemData.name === "" ||
             isNaN(itemData.price) ||
             itemData.imgURL === "" ||
-            itemData.description === ""){
+            itemData.description === "" ||
+            isNaN(itemData.nrInStock) ||
+            itemData.category === "" ){
             } else {
                 localStorage.setItem('productList', JSON.stringify(this.state.items))
                 this.setState({items: this.state.items})
@@ -63,14 +68,18 @@ export default class Admin extends React.Component<Props, State> {
             name: newItem.name, 
             price: newItem.price,
             imgURL: newItem.imgURL,
-            description: newItem.description
+            description: newItem.description,
+            nrInStock: newItem.nrInStock,
+            category: newItem.caregory
         })
         
         if(
             newItem.name === "" ||
             isNaN(newItem.price) ||
             newItem.imgURL === "" ||
-            newItem.description === ""
+            newItem.description === "" ||
+            isNaN(newItem.nrInStock) ||
+            newItem.caregory === ""
         ){
             } else {
                 localStorage.setItem('productList', JSON.stringify(productList))

@@ -36,14 +36,15 @@ export default function AddedToCart(props:Props){
 
     return(
         <CartContext.Consumer>
-        {(cartState) => 
+        {(((cartState: any ) => 
             <div style = {clickAwayDiv} onClick = {props.handleClosing}>
                 <div style = {{...shoppingCartContainer, ...divSize, ...positionTop, ...positionRight}}>
                     {cartState.cartList.length===0? emptyCart : filledCart}
                 </div>
             </div>
-        }</CartContext.Consumer>
-    )
+        ))}
+        </CartContext.Consumer>
+      )
 }
 
 const shoppingCartContainer:CSSProperties = {

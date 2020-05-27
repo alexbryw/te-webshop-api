@@ -5,8 +5,6 @@ import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import Button from '@material-ui/core/Button'
 
-
-
 interface Props{
     handleNew: any
 }
@@ -18,7 +16,9 @@ interface State{
     name: string, 
     price: number,
     imgURL: string,
-    description: string
+    description: string,
+    nrInStock: number,
+    category: string
 }
 
 export default class NewItem extends React.Component<Props, State> {
@@ -31,7 +31,9 @@ export default class NewItem extends React.Component<Props, State> {
             name: "Namn" , 
             price: 0 ,
             imgURL: "imgURL" ,
-            description: "Beskrivning"
+            description: "Beskrivning",
+            nrInStock: 0,
+            category: "Kategorier"
         }   
     }
 
@@ -40,15 +42,20 @@ export default class NewItem extends React.Component<Props, State> {
     handlePriceInput = (event: { target: { value: any } }) => this.setState({price:event.target.value})
     handleimgURLChange = (event: { target: { value: any } }) => this.setState({imgURL:event.target.value})
     handleDescriptionInput = (event: { target: { value: any } }) => this.setState({description:event.target.value})
+    handleNrInStock = (event: { 
+        target: { value: any } }) => this.setState({nrInStock:event.target.value})
+    handleCategory = (event: { target: { value: any } }) => this.setState({category:event.target.value})
     
-    //Let the user know if they added a item correctly or not
+    //Let the admin know if they added a item correctly or not
     checkInput(){
         let userMassage
         if(
             this.state.name === "" ||
             isNaN(this.state.price) ||
             this.state.imgURL === "" ||
-            this.state.description === ""
+            this.state.description === "" ||
+            isNaN(this.state.nrInStock) ||
+            this.state.category
         ){
             userMassage = "Något blev fel"
         } else {
@@ -68,7 +75,9 @@ export default class NewItem extends React.Component<Props, State> {
             name: this.state.name , 
             price: this.state.price ,
             imgURL: this.state.imgURL ,
-            description: this.state.description
+            description: this.state.description,
+            nrInStock: this.state.nrInStock,
+            category: this.state.category
         }
         let userMassage = this.checkInput()
 
@@ -118,7 +127,28 @@ export default class NewItem extends React.Component<Props, State> {
                         multiline rowsMax="4"
                         error={this.state.description === ""}
                         helperText={this.state.description === "" ? 'Tomt fält' : ' '}
-                    />                        
+                    /> 
+                    <TextField 
+                        fullWidth 
+                        name="nrInStock"
+                        type="number"
+                        label="Produkter i lager" 
+                        variant="outlined" 
+                        value={this.state.nrInStock} 
+                        onChange={this.handleNrInStock}
+                        error={isNaN(this.state.nrInStock)}
+                        helperText={isNaN(this.state.nrInStock)? 'Hur många finns i lager?' : ' '}
+                    />    
+                     <TextField 
+                        fullWidth 
+                        name="category"
+                        label="Kategorier" 
+                        variant="outlined" 
+                        value={this.state.category} 
+                        onChange={this.handleCategory}
+                        error={this.state.category === ""}
+                        helperText={this.state.category === "" ? 'Skriv in en  Ka👏te👏go👏ri👏' : ' '}
+                    />                      
                         <div style={divSpace}/>
                     </form>
                 </FormControl>

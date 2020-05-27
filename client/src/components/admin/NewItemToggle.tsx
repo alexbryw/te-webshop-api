@@ -29,7 +29,7 @@ export default class NewItemToggle extends React.Component<Props, State> {
                 <div style={space}/>
                 <Typography onClick={this.toggle} style={toggleEditPage}>
                     <IconButton>
-                        <AddCircleOutlineOutlinedIcon/>
+                        <AddCircleOutlineOutlinedIcon/> 
                     </IconButton>
                     Ny produkt
                 </Typography>  

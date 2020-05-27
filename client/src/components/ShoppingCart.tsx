@@ -5,15 +5,16 @@ import DeleteRoundedIcon from '@material-ui/icons/DeleteForeverRounded'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 import { Link as RouterLink} from 'react-router-dom'
+import { CartItem } from '../typings'
 
 export default function ShoppingCart() {
     return (
         <CartContext.Consumer>
-            {(cartState) => (
+            {(cartState: any) => (
                 <div>
                     <List>
                         {cartState.cartList?.length > 0 ? 
-                            cartState.cartList.map(cartItem =>
+                            cartState.cartList.map((cartItem: CartItem) =>
                                 <div key={cartItem.id}>
                                     <ListItem >
                                         <Hidden only="xs">
