@@ -10,6 +10,16 @@ function getAllProducts(req, res, next) {
   });
 }
 
+function getProduct(req, res, next) {
+  Product.findById({ _id: req.params.id }, (err, result) => {
+    if (err) {
+      next(err);
+    } else {
+      res.json(result);
+    }
+  });
+}
+
 function addProduct(req, res, next) {
   const product = new Product(req.body);
   product.save((err, product) => {
@@ -21,4 +31,40 @@ function addProduct(req, res, next) {
   });
 }
 
-module.exports = { getAllProducts, addProduct };
+function updateProduct(req, res, next) {
+  Product.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      category: req.body.category,
+      nrInStock: req.body.nrInStock,
+    },
+    (err) => {
+      if (err) {
+        next(err);
+      } else {
+        res.json("Product updated!");
+      }
+    }
+  );
+}
+
+function deleteProduct(req, res, next) {
+  Product.findByIdAndDelete({ _id: req.params.id }, (err, result) => {
+    if (err) {
+      next(err);
+    } else {
+      res.json(result);
+    }
+  });
+}
+
+module.exports = {
+  getAllProducts,
+  getProduct,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+};
