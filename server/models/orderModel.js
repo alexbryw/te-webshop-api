@@ -3,10 +3,10 @@ const Schema = mongoose.Schema
 
 const orderSchema = new mongoose.Schema({
     //user populate
-    user: [{
+    user: {
         type: Schema.Types.ObjectId, ref: "User",
         require: true
-    }],
+    },
     //shipping populate
     shipping: {
         type: Schema.Types.ObjectId, ref: "shipping",
@@ -24,7 +24,7 @@ const orderSchema = new mongoose.Schema({
         },
         rowPrice: {
             type: Number,
-            require: true
+            require: false //TODO calc later.
         }
     }],
     to_firstname: {
@@ -54,12 +54,10 @@ const orderSchema = new mongoose.Schema({
     },
     isOrderShipped: {
         type: Boolean,
-        required: true
+        default: false
     },
     totalPrice: {
-        type: Number,
-        minlength: 1,
-        required: true,
+        type: Number, //TODO calc later.
     },
     orderDate: {
         type: Date,
