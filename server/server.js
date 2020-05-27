@@ -7,7 +7,7 @@ const cors = require('cors') // Needed for cross origin.
 const port = 9000   //API server port.
 
 const usersRouter = require('./routers/usersRouter')
-// const productsRouter = require('./routers/productsRouter')
+const productsRouter = require('./routers/productsRouter')
 const shippingRouter = require('./routers/shippingRouter')
 const ordersRouter = require('./routers/ordersRouter')
 
@@ -25,7 +25,7 @@ app.use(cookieSession({
 app.use(express.json())
 
 app.use("/api/users", usersRouter)
-// app.use("/api/products", productsRouter)
+app.use("/api/products", productsRouter)
 app.use("/api/shipping", shippingRouter)
 app.use("/api/orders", ordersRouter)
 
