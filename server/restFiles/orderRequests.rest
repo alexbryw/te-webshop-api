@@ -3,7 +3,7 @@
 
 // GET // get all orders (ex. admins overview of all placed order)
 // access : Admin
-GET http://localhost:9000/api/order/
+GET http://localhost:9000/api/orders/
 ###
 
 // GET // get one or more specific order/orders  (ex. let an admin filter orders from a specific user, or a user wants to display )

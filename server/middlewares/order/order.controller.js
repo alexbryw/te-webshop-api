@@ -7,19 +7,19 @@ function getOrders(req, res, next) {
         } else{
             res.json(allOrders)
         }
-    }).populate('user','-password')
+    }).populate('user','-password').populate('shipping').populate('productRow.product')
 }
 
 //:id //cookie id getMyOrders
 function getMyOrders(req, res, next){ //TODO test with other users_id.
-    console.log(req.params.id)
+    // console.log(req.params.id)
     const userOrders = orderModel.find({user: req.params.id},(err, allUserOrders) =>{
         if(err){
             next(err)
         } else{
             res.json(allUserOrders)
         }
-    }).populate('user','-password')
+    }).populate('user','-password').populate('shipping').populate('productRow.product')
 }
 
 // post placeOrder
@@ -37,7 +37,7 @@ function placeOrder(req, res, next){ //TODO test multiple productRows.
 
 // updateOrderStatus
 function updateOrderStatus(req, res, next){
-    console.log(req.params.id)
+    // console.log(req.params.id)
     const order = orderModel.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, oneOrders) =>{
         if(err){
             next(err)
