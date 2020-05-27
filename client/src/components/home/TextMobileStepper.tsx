@@ -122,24 +122,6 @@ export default function TextMobileStepper() {
           </Typography>
         </div>
       </div>
-
-      {/* <MobileStepper
-        steps={maxSteps}
-        position="static"
-        variant="dots"
-        activeStep={activeStep}
-
-        nextButton={
-          <Button size="small" onClick={handleNext}>
-            {theme.direction === 'rtl' ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack}>
-            {theme.direction === 'rtl' ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}
-          </Button>
-        }
-      /> */}
     </div>
   )
 }
