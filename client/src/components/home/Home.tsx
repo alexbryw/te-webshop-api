@@ -9,20 +9,20 @@ import TextMobileStepper from './TextMobileStepper'
 export default function Home() {
     return (
         <div>
-            <TextMobileStepper/>
+            <TextMobileStepper />
             <Container>
-                <Grid 
+                <Grid
                     container
                     spacing={3}
                     direction="row"
                     justify="center"
                     alignItems="center"
                 >
-                    {items.map((itemData:Product, index:number) =>
+                    {items.map((itemData: Product, index: number) =>
                         <Grid key={index}
-                        item xs={12} sm={6} md={4}
+                            item xs={12} sm={6} md={4}
                         >
-                            <ProductCard itemData={itemData}/>
+                            <ProductCard itemData={itemData} />
                         </Grid>
                     )}
                 </Grid>
