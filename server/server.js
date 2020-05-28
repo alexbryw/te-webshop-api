@@ -1,6 +1,7 @@
 const express = require('express')
 require('express-async-errors')
 const cookieSession = require('cookie-session')
+const fileUpload = require('express-fileupload')
 const app = express()
 require('./connect-db') //Establish connection to mongodb.
 const cors = require('cors') // Needed for cross origin.
@@ -22,6 +23,7 @@ app.use(cookieSession({
     httpOnly: true,
     secure: false
 }))
+app.use(fileUpload())
 app.use(express.json())
 
 app.use("/api/users", usersRouter)
