@@ -47,4 +47,30 @@ function updateOrderStatus(req, res, next){
     }).populate('user','-password')
 }
 
-module.exports = {getOrders, getMyOrders, placeOrder, updateOrderStatus}
+function checkProductInStock(req, res, next) {
+    let errorFound = false
+    if(!req.body.productRow || req.body.productRow.length < 1){
+        res.status(400).json({msg: "Could not find any products in the order."})
+    } else {
+        console.log("from product row")
+        console.log(req.body.productRow)
+        req.body.productRow.map(productRow => {
+            if(!productRow.product || !productRow.qty || isNaN(productRow.qty) || productRow.qty < 1){
+                return errorFound = true
+            } else {
+                //TODO kolla produkt id och antal i db
+                console.log(productRow.product)
+                console.log(productRow.qty)
+            }
+        })
+        
+        if(!errorFound){
+            //got next() if no errorFound
+            res.json({msg: "test remove later check product in row"})
+        } else {
+            res.status(400).json({msg: "Wrong or missing 'product' and or 'qty'."})
+        }
+    }
+}
+
+module.exports = {getOrders, getMyOrders, placeOrder, updateOrderStatus, checkProductInStock}
