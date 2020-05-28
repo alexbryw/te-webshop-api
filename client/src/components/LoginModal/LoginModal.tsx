@@ -22,6 +22,7 @@ const LoginModal = (props: Props) => {
 
     const [open, setOpen] = React.useState(false);
     const [view, setView] = React.useState("login");
+
     const [inputValues, setInputValues] = React.useState({
         username: "",
         password: "",
@@ -29,22 +30,38 @@ const LoginModal = (props: Props) => {
         requestAdmin: false
     });
     const changeInputValues = (event: any, anchor: string) => {
-
+        clearInputErrors()
         if (anchor === "requestAdmin") {
-
             setInputValues({
                 ...inputValues,
-
                 requestAdmin: !inputValues.requestAdmin
             })
         } else {
-
             setInputValues({
                 ...inputValues,
                 [anchor]: event.target.value
             })
         }
     }
+    const [inputErrors, setInputErrors] = React.useState({
+        login: false,
+        register: false,
+        user: false
+    })
+    const handleSetInputErrors = (error: boolean, anchor: string) => {
+        setInputErrors({
+            ...inputErrors,
+            [anchor]: error
+        })
+    }
+    const clearInputErrors = () => {
+        setInputErrors({
+            login: false,
+            register: false,
+            user: false,
+        });
+    };
+
 
     const changeView = (newView?: LoginModalView): void => {
         if (newView) setView(newView)
@@ -78,8 +95,10 @@ const LoginModal = (props: Props) => {
                     id="outlined-helperText"
                     label="username"
                     helperText={inputValues.username.length > 20 ? "username can't be longer than 20 characters" : null}
+
                     value={inputValues.username}
                     onChange={(e) => changeInputValues(e, "username")}
+                    error={inputErrors.login}
                 />
             </Grid>
             <Grid item xs={9}>
@@ -93,6 +112,7 @@ const LoginModal = (props: Props) => {
 
                     value={inputValues.password}
                     onChange={(e) => changeInputValues(e, "password")}
+                    error={inputErrors.login}
                 />
             </Grid>
 
@@ -132,7 +152,10 @@ const LoginModal = (props: Props) => {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => props.userContext.textLogger("loggar in \nusername: " + inputValues.username + "\npassword: " + inputValues.password)}>
+                        onClick={() => props.userContext.loginUser(
+                            { name: inputValues.username, password: inputValues.password },
+                            handleClose,
+                            handleSetInputErrors)}>
                         Logga in
                     </Button>
                     :
