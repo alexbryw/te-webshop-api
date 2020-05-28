@@ -6,9 +6,9 @@ import { CartItem } from '../typings'
 import { items } from '../ItemList'
 
 export const CartContext = createContext<State>({
-    cartList: [{ id: 1, nrItems: 1, product: { name: "placeholder", id: 0, price: 0, description: "", imgURL: "" } }],
+    cartList: [],
     cartTotalPrice: 0,
-    savedCheckoutCartList: [{ id: 1, nrItems: 1, product: { name: "placeholder", id: 0, price: 0, description: "", imgURL: "" } }],
+    savedCheckoutCartList: [],
     savedCartTotalPrice: 0,
 
     showCart: false,
