@@ -6,13 +6,13 @@ require('./connect-db') //Establish connection to mongodb.
 const cors = require('cors') // Needed for cross origin.
 const port = 9000   //API server port.
 
-const usersRouter = require('./routers/usersRouter')
+const usersRouter = require('./routers/user.router')
 const productsRouter = require('./routers/productsRouter')
 const shippingRouter = require('./routers/shippingRouter')
 const ordersRouter = require('./routers/ordersRouter')
 
+const sessionRouter = require('./routers/session.router')
 
-const sessionRouter = require('./routers/sessionRouter')
 
 app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }))
 app.use(cookieSession({
