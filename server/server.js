@@ -7,7 +7,7 @@ const cors = require('cors') // Needed for cross origin.
 const port = 9000   //API server port.
 
 const usersRouter = require('./routers/user.router')
-const productsRouter = require('./routers/productsRouter')
+const productsRouter = require('./routers/product.router')
 const shippingRouter = require('./routers/shippingRouter')
 const ordersRouter = require('./routers/ordersRouter')
 

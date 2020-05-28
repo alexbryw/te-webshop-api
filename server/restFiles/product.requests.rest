@@ -51,5 +51,16 @@ DELETE http://localhost:9000/api/products/5ece5064ac47c807a027e98b
 
 ###
 
+POST http://localhost:9000/api/products/upload
+Content-Type: multipart/form-data; boundary=FormDataRow
+--FormDataRow
+Content-Disposition: form-data; name="image"; filename="earth.jpg"
+Content-Type: image/jpeg
+< ./earth.jpg
+--FormDataRow--
+### Tänk på följande:
+### ALLA boundary's måste BÖRJA med --
+### SISTA boundary'n måste AVSLUTAS med --
+
 
 
