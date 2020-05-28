@@ -2,13 +2,17 @@
 // Tells us if the user is autherised
 //**********sessionAuthenticate**********
 
+GET http://localhost:9000/session/login HTTP/1.1
+###
+
+
 //********LOGIN A EXISTING USER*********
-POST http://localhost:9000/api/login HTTP/1.1
+POST http://localhost:9000/session/login HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Exicting User",
-    "password": "321"
+    "name": "admin",
+    "password": "admin"
 }
 
 ###

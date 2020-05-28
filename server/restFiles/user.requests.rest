@@ -1,9 +1,12 @@
- 
 
-//TODO: Se if paths are correct
 
 
 GET http://localhost:9000/api/users/ HTTP/1.1
+
+###
+
+// GET ONE USER
+GET http://localhost:9000/api/users/admin HTTP/1.1
 
 ###
 
@@ -14,7 +17,8 @@ content-type: application/json
 {
     "name": "admin",
     "password": "admin",
-    "admin": true
+    "admin": true,
+    "requestsAdmin": true
 }
 
 ###
@@ -22,10 +26,13 @@ POST http://localhost:9000/api/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "name": "user_2",
+    "name": "user_1",
     "password": "123",
-    "admin": false
+    "admin": false,
+    "requestsAdmin": false
 }
 
 ###
+DELETE  http://localhost:9000/api/users/user_1 HTTP/1.1
+
 
