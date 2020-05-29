@@ -57,6 +57,7 @@ export class UserContextProvider extends Component<Props, State> {
         // Create a session
         await fetch(sessionURL + "/login", {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             },
@@ -78,10 +79,15 @@ export class UserContextProvider extends Component<Props, State> {
     logOut = async () => {
         await fetch(sessionURL + "/logout", {
             method: "DELETE",
+            credentials: 'include'
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            this.setUserInState(undefined)
+            this.setUserInState({
+                err: {
+                    msg: ""
+                }
+            })
         })
     }
 
@@ -100,8 +106,8 @@ export class UserContextProvider extends Component<Props, State> {
                 console.log(data);
                 return data
             })
-            
-            console.log(user);
+
+        console.log(user);
         this.setUserInState(user)
     }
 
