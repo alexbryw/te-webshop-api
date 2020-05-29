@@ -54,9 +54,9 @@ DELETE http://localhost:9000/api/products/5ece5064ac47c807a027e98b
 POST http://localhost:9000/api/products/upload
 Content-Type: multipart/form-data; boundary=FormDataRow
 --FormDataRow
-Content-Disposition: form-data; name="image"; filename="earth.jpg"
+Content-Disposition: form-data; name="image"; filename="original-chai_uk.jpg"
 Content-Type: image/jpeg
-< ./earth.jpg
+< ./original-chai_uk.jpg
 --FormDataRow--
 ### Tänk på följande:
 ### ALLA boundary's måste BÖRJA med --
