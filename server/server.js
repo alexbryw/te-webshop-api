@@ -14,14 +14,23 @@ const ordersRouter = require('./routers/ordersRouter')
 const sessionRouter = require('./routers/session.router')
 
 
-app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }))
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+
 app.use(cookieSession({
-    secret: 'SuperSecretCode',
-    maxAge: 1000 * 60 * 1, //1 min cookie timeout.
-    sameSite: 'strict',
+    name: 'LoginSession',
+    secret: 'GuppE4Lyf3-1337',
+    // maxAge: 24 * 60 * 60 * 1000, //24 hours
+    // maxAge: 60 * 60 * 1000, //1 hour
+    // maxAge: 30 * 60 * 1000, //30 minutes
+    maxAge: 60 * 1000, //1 minute
+    // maxAge: 15 * 1000, //15 seconds
+    // maxAge: 10 * 1000, //10 seconds
+    // maxAge: 5 * 1000, //5 seconds
+    sameSite: 'none',
     httpOnly: true,
-    secure: false
+    secure: false,
 }))
+
 app.use(express.json())
 
 app.use("/api/users", usersRouter)
@@ -34,15 +43,15 @@ app.use("/session", sessionRouter)
 app.get('/', (req, res) => res.json({ someText: 'From express API! :9000!' }))
 // app.use(errorNotFound) //Add 404 not found error.
 
-app.use((req,res) => {
-    res.status(404).json({msg: "Resource could not be found."})
+app.use((req, res) => {
+    res.status(404).json({ 404: "Resource could not be found." })
 })
 
 app.use((err, req, res, next) => {
     const message = err.message || "Something went wrong."
     const statusCode = err.status || 500
 
-    res.status(statusCode).json({message})
+    res.status(statusCode).json({ message })
 })
 
 

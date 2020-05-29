@@ -2,7 +2,7 @@ import React, { CSSProperties, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // MATERIAL UI
-import { Typography, Grid, Container, IconButton } from '@material-ui/core'
+import { Typography, Grid, Container, IconButton, Button } from '@material-ui/core'
 
 
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -27,37 +27,45 @@ export default function Header() {
 
 
     return (
-        <CartContext.Consumer>
-            {(cartState: any) => (
-                <>
-                    <Container maxWidth={false} className={classes.root}>
-                        <Grid
-                            container
-                            direction="row"
-                            justify="center"
-                            alignItems="center"
-                        >
+        <UserContext.Consumer>
+            {(user) => (
 
-                            <Link to="/" className={classes.logoContainer}>
+                <CartContext.Consumer>
+                    {(cartState: any) => (
+                        <>
+                            <Container maxWidth={false} className={classes.root}>
                                 <Grid
                                     container
                                     direction="row"
-                                    justify="space-between"
+                                    justify="center"
                                     alignItems="center"
                                 >
-                                    <Grid item className={classes.logoWrapper}>
-                                        <img src={logo} alt="logo" className={classes.logoImg} />
-                                    </Grid>
+
+                                    <Link to="/" className={classes.logoContainer}>
+                                        <Grid
+                                            container
+                                            direction="row"
+                                            justify="space-between"
+                                            alignItems="center"
+                                        >
+                                            <Grid item className={classes.logoWrapper}>
+                                                <img src={logo} alt="logo" className={classes.logoImg} />
+                                            </Grid>
+                                        </Grid>
+                                    </Link>
                                 </Grid>
-                            </Link>
-                        </Grid>
-                    </Container>
-                    <div className={classes.cartIcon}>
-                        <CartIcon cartState={cartState} />
-                    </div>
-                </>
+                            </Container>
+
+                            {user.admin && <Button onClick={() => user.logOut()}> logout </Button>}
+
+                            <div className={classes.cartIcon}>
+                                <CartIcon cartState={cartState} />
+                            </div>
+                        </>
+                    )}
+                </CartContext.Consumer>
             )}
-        </CartContext.Consumer>
+        </UserContext.Consumer>
     )
 }
 
