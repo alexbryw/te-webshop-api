@@ -1,15 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const { login, logout, checkLoginSession, checkAuthorization } = require('../middlewares/session/session.controller')
+const { login, logout, checkLoginSession, checkAuthorization, setSession } = require('../middlewares/session/session.controller')
 const { findUser } = require("../middlewares/user/user.controller")
 
 //checks if user is loggedIn
-router.get('/login', checkLoginSession)
+router.get('/', checkLoginSession, setSession)
 
 //logIn.
 router.post('/login', findUser, login)
 
 //Logout.
-router.delete('/logout', checkLoginSession, logout)
+router.delete('/logout', logout)
 
 module.exports = router
