@@ -1,5 +1,5 @@
 const orderModel = require('../../models/orderModel')
-const productModel = require('../../models/productModel')
+const productModel = require('../../models/product.model')
 
 function getOrders(req, res, next) {
     const orders = orderModel.find((err, allOrders) =>{
