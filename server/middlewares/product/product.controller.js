@@ -21,14 +21,18 @@ function getProduct(req, res, next) {
 }
 
 function addProduct(req, res, next) {
-  const product = new Product(req.body);
-  product.save((err, product) => {
-    if (err) {
-      next(err);
-    } else {
-      res.json(product);
-    }
-  });
+  console.log(req)
+  console.log("fiiiles", req.files)
+  console.log(req.body, "booody")
+  // const product = new Product(req.body);
+  // product.save((err, product) => {
+  //   if (err) {
+  //     next(err);
+  //   } else {
+  //     res.json(product);
+  //   }
+  // });
+  res.json({msg: "test"})
 }
 
 function updateProduct(req, res, next) {

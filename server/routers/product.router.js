@@ -16,7 +16,7 @@ router.get("/", getAllProducts);
 router.get("/:id", getProduct);
 
 // Add new product
-router.post("/", fileUpload, addProduct);
+router.post("/", addProduct);
 
 // Update one product
 router.put("/:id", updateProduct);

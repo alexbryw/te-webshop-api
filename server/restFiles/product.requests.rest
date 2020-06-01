@@ -51,13 +51,39 @@ DELETE http://localhost:9000/api/products/5ece5064ac47c807a027e98b
 
 ###
 
-POST http://localhost:9000/api/products/upload
+POST http://localhost:9000/api/products/
 Content-Type: multipart/form-data; boundary=FormDataRow
+
 --FormDataRow
 Content-Disposition: form-data; name="image"; filename="original-chai_uk.jpg"
 Content-Type: image/jpeg
+
 < ./original-chai_uk.jpg
+--FormDataRow
+
+Content-Disposition: form-data; title="mindata";
+Content-Type: application/json
+
+{
+    "title": "Test",
+    "description": "Test",
+    "price": 0,
+    "category": ["Koffein", "Ta bort te"],
+    "nrInStock": 0
+}
 --FormDataRow--
+
+# Content-Type: application/json
+
+# {
+#     "title": "Test",
+#     "description": "Test",
+#     "price": 0,
+#     "category": ["Koffein", "Ta bort te"],
+#     "nrInStock": 0
+# }
+
+
 ### Tänk på följande:
 ### ALLA boundary's måste BÖRJA med --
 ### SISTA boundary'n måste AVSLUTAS med --
