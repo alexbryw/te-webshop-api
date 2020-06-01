@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getAllProducts,
   getProduct,
+  fileUpload,
   addProduct,
   updateProduct,
   deleteProduct,

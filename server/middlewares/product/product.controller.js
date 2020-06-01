@@ -1,4 +1,4 @@
-const Product = require("../../models/productModel");
+const Product = require("../../models/product.model");
 
 function getAllProducts(req, res, next) {
   Product.find({}, (err, result) => {
@@ -11,16 +11,19 @@ function getAllProducts(req, res, next) {
 }
 
 function getProduct(req, res, next) {
-  Product.findById({ _id: req.params.id }, (err, result) => {
+  const product = Product.findById({ _id: req.params.id }, (err, result) => {
     if (err) {
       next(err);
     } else {
       res.json(result);
     }
-  });
+  }).populate('file')
 }
 
 function addProduct(req, res, next) {
+  // console.log(req)
+  // console.log("fiiiles", req.files)
+  // console.log(req.body, "booody")
   const product = new Product(req.body);
   product.save((err, product) => {
     if (err) {
@@ -28,7 +31,8 @@ function addProduct(req, res, next) {
     } else {
       res.json(product);
     }
-  });
+  })
+  // res.json({msg: "test"})
 }
 
 function updateProduct(req, res, next) {

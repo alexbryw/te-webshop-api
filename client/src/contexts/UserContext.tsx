@@ -2,7 +2,7 @@ import React, { createContext, Component } from "react";
 
 
 const apiURL = "http://localhost:9000/api/";
-const sessionURL = "http://localhost:9000/session";
+const sessionURL = "http://localhost:9000/session/";
 
 interface Props { }
 interface State {
@@ -13,6 +13,7 @@ interface State {
 
     textLogger: (text: String) => void
     loginUser: (text: String, closeModal: () => void, errCb: (error: boolean, anchor: string) => void) => void
+    logOut: () => void
 }
 
 export const UserContext = createContext<State>({
@@ -23,6 +24,7 @@ export const UserContext = createContext<State>({
 
     textLogger: () => { },
     loginUser: () => { },
+    logOut: () => { },
 
 });
 
@@ -37,7 +39,8 @@ export class UserContextProvider extends Component<Props, State> {
             name: "Halvdan",
 
             textLogger: this.textLogger,
-            loginUser: this.loginUser
+            loginUser: this.loginUser,
+            logOut: this.logOut
         }
     }
 
@@ -54,6 +57,7 @@ export class UserContextProvider extends Component<Props, State> {
         // Create a session
         await fetch(sessionURL + "/login", {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             },
@@ -68,8 +72,65 @@ export class UserContextProvider extends Component<Props, State> {
             else {
                 errCb(true, "login")
             }
-            console.log(data);
+            this.setUserInState(data)
         })
+    }
+
+    logOut = async () => {
+        await fetch(sessionURL + "/logout", {
+            method: "DELETE",
+            credentials: 'include'
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            this.setUserInState({
+                err: {
+                    msg: ""
+                }
+            })
+        })
+    }
+
+
+    async componentDidMount() {
+
+        let user = await fetch(sessionURL, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                console.log(response);
+                return response.json()
+            })
+            .then((data) => {
+                console.log(data);
+                return data
+            })
+
+        console.log(user);
+        this.setUserInState(user)
+    }
+
+    async setUserInState(user: any) {
+        console.log(user);
+
+        if (user.err) console.log(user.err);
+
+        if (user && !user.err) {
+            this.setState({
+                loggedIn: true,
+                admin: user.admin,
+                name: user.name
+            }, () => console.log("logged in", this.state)
+            )
+        } else {
+            this.setState({
+                loggedIn: false,
+                admin: false,
+                name: ""
+            }, () => console.log("not logged in", this.state)
+            )
+        }
     }
 
 

@@ -2,7 +2,7 @@
 // Tells us if the user is autherised
 //**********sessionAuthenticate**********
 
-GET http://localhost:9000/session/login HTTP/1.1
+GET http://localhost:9000/session/ HTTP/1.1
 ###
 
 
@@ -18,7 +18,7 @@ content-type: application/json
 ###
 
 //******LOGOUT******
-DELETE http://localhost:9000/api/logout HTTP/1.1
+DELETE http://localhost:9000/session/logout HTTP/1.1
 content-type: application/json
 
 
