@@ -1,0 +1,26 @@
+
+POST http://localhost:9000/api/files/
+Content-Type: multipart/form-data; boundary=FormDataRow
+
+--FormDataRow
+Content-Disposition: form-data; name="image"; filename="test.png"
+Content-Type: image/png
+
+< ./test.png
+--FormDataRow--
+
+###
+
+POST http://localhost:9000/api/products/
+Content-Type: application/json
+
+{
+    "file": "5ed4f3f3312bb323a0958180",
+    "title": "Ta bort te",
+    "description": "Ett te att ta bort",
+    "price": 0,
+    "category": ["Koffein", "Ta bort te"],
+    "nrInStock": 0
+}
+
+###
