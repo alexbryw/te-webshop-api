@@ -1,7 +1,6 @@
 const express = require('express')
 require('express-async-errors')
 const cookieSession = require('cookie-session')
-const fileUpload = require('express-fileupload')
 const app = express()
 require('./connect-db') //Establish connection to mongodb.
 const cors = require('cors') // Needed for cross origin.
@@ -11,6 +10,7 @@ const usersRouter = require('./routers/user.router')
 const productsRouter = require('./routers/product.router')
 const shippingRouter = require('./routers/shippingRouter')
 const ordersRouter = require('./routers/ordersRouter')
+const filesRouter = require('./routers/files.router')
 
 const sessionRouter = require('./routers/session.router')
 
@@ -31,7 +31,6 @@ app.use(cookieSession({
     httpOnly: true,
     secure: false,
 }))
-app.use(fileUpload())
 
 app.use(express.json())
 
@@ -39,6 +38,7 @@ app.use("/api/users", usersRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/shipping", shippingRouter)
 app.use("/api/orders", ordersRouter)
+app.use("/api/files", filesRouter)
 
 app.use("/session", sessionRouter)
 

@@ -9,7 +9,7 @@ GET http://localhost:9000/api/products/
 
 // GET // get one specific product (ex. customer clicks on a product )
 // access : everyone
-GET http://localhost:9000/api/products/5ecd17bdd80bdc3018de9fab
+GET http://localhost:9000/api/products/5ed4f42ce0d9e350ac7964e6
 ###
 
 

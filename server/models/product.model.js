@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema
 
 const productSchema = new mongoose.Schema({
-  img: {
-    data: Buffer,
-    contentType: String,
-    required: false,
+  file: {
+    type: Schema.Types.ObjectId, ref: "File",
+    required: true,
   },
   title: {
     type: String,
