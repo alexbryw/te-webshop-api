@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
   button: {
     // margin: theme.spacing(1),
-    margin: "auto",
+    // margin: "auto",
     padding: theme.spacing(1, 2)
   },
   registerContainer: {

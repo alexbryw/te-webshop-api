@@ -11,8 +11,15 @@ interface State {
 
     name: String,
 
-    textLogger: (text: String) => void
-    loginUser: (text: String, closeModal: () => void, errCb: (error: boolean, anchor: string) => void) => void
+    registerUser: (
+        newUser: { name: string, password: string, requestsAdmin: boolean },
+        closeModal: () => void,
+        errCb: (error: boolean, anchor: string) => void) => void
+
+    loginUser: (
+        user: { name: string, password: string },
+        closeModal: () => void,
+        errCb: (error: boolean, anchor: string) => void) => void
     logOut: () => void
 }
 
@@ -22,7 +29,7 @@ export const UserContext = createContext<State>({
 
     name: "",
 
-    textLogger: () => { },
+    registerUser: () => { },
     loginUser: () => { },
     logOut: () => { },
 
@@ -38,14 +45,42 @@ export class UserContextProvider extends Component<Props, State> {
             admin: false,
             name: "Halvdan",
 
-            textLogger: this.textLogger,
+            registerUser: this.registerUser,
             loginUser: this.loginUser,
             logOut: this.logOut
         }
     }
 
-    textLogger = (text: String): void => {
-        console.log(text);
+    registerUser = async (
+        newUser: { name: string, password: string, requestsAdmin: boolean },
+        closeModal: () => void,
+        errCb: (error: boolean, anchor: string) => void) => {
+        console.log("register new user");
+
+        await fetch("http://localhost:9000/api/users/", {
+            method: "POST",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: newUser.name,
+                password: newUser.password,
+                requestsAdmin: newUser.requestsAdmin,
+                admin: false,
+            }),
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            if (!data.err) {
+                console.log(data)
+                this.loginUser(data, closeModal, errCb)
+            }
+            else {
+                errCb(true, "register")
+            }
+        })
+
     }
 
 

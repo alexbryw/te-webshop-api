@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
         left: "50%",
         transform: "translatex(-50%)"
     },
-
     cartIcon: {
         position: "fixed",
         top: 0,
@@ -31,7 +30,11 @@ const useStyles = makeStyles((theme) => ({
         left: "100%",
         padding: theme.spacing(1),
         transform: "translatex(-100%)"
-    }
+    }, button: {
+        // margin: theme.spacing(1),
+        margin: 0,
+        padding: theme.spacing(1, 2)
+    },
 }));
 
 export default useStyles;

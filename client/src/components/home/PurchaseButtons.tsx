@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import { CartContext } from '../../contexts/cartContext'
 import AddedToCart from './../../components/AddedToCart'
-import { CartIcon } from "../CartIcon"
+import { Cart } from "../Cart"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -9,7 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 // STYLES
 import useStyles from "./headerStyles"
-import { CartIcon } from '../CartIcon'
+import { Cart } from '../Cart'
 
 // COMPONENTS
 import LoginModal from "../LoginModal/LoginModal"
@@ -28,39 +28,39 @@ export default function Header() {
 
     return (
         <UserContext.Consumer>
-            {(user) => (
-
+            {(userContext) => (
                 <CartContext.Consumer>
                     {(cartState: any) => (
                         <>
-                            <Container maxWidth={false} className={classes.root}>
+                            <Grid container className={classes.root}>
+                                {userContext.loggedIn ?
+                                    <Button variant="contained"
+                                        color="primary"
+                                        className={classes.button}
+                                        onClick={() => userContext.logOut()}
+                                    >logga ut </Button>
+                                    :
+                                    <LoginModal userContext={userContext} buttonHandle="logga in" />}
                                 <Grid
                                     container
                                     direction="row"
                                     justify="center"
                                     alignItems="center"
                                 >
-
                                     <Link to="/" className={classes.logoContainer}>
-                                        <Grid
-                                            container
-                                            direction="row"
-                                            justify="space-between"
-                                            alignItems="center"
-                                        >
-                                            <Grid item className={classes.logoWrapper}>
-                                                <img src={logo} alt="logo" className={classes.logoImg} />
-                                            </Grid>
+
+                                        <Grid item className={classes.logoWrapper}>
+                                            <img src={logo} alt="logo" className={classes.logoImg} />
                                         </Grid>
+
                                     </Link>
                                 </Grid>
-                            </Container>
+                                <div className={classes.cartIcon}>
+                                    <Cart cartState={cartState} userContext={userContext} />
+                                </div>
+                            </Grid>
 
-                            {user.admin && <Button onClick={() => user.logOut()}> logout </Button>}
 
-                            <div className={classes.cartIcon}>
-                                <CartIcon cartState={cartState} />
-                            </div>
                         </>
                     )}
                 </CartContext.Consumer>
