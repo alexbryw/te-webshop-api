@@ -16,11 +16,11 @@ Content-Type: application/json
 
 {
     "file": "5ed4f3f3312bb323a0958180",
-    "title": "Ta bort te",
-    "description": "Ett te att ta bort",
-    "price": 0,
+    "title": "Original Chai2",
+    "description": "te good",
+    "price": 100,
     "category": ["Koffein", "Ta bort te"],
-    "nrInStock": 0
+    "nrInStock": 100
 }
 
 ###

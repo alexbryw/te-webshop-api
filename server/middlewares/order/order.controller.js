@@ -48,7 +48,7 @@ function updateOrderStatus(req, res, next){
     }).populate('user','-password')
 }
 
-function checkProductInStock(req, res, next) {
+async function checkProductInStock(req, res, next) {
     let errorFound = false
     let errorMessage = ""
     if(!req.body.productRow || req.body.productRow.length < 1){
@@ -56,31 +56,25 @@ function checkProductInStock(req, res, next) {
     }
 
     for (const product of req.body.productRow) {
-        if(product.product && ((product.product instanceof String) || (typeof product.product === "string")) &&
-        product.product.length > 0 && product.qty && Number.isInteger(product.qty) && product.qty >= 1){
-            productModel.findById({_id: product.product}, (err, foundProduct) => {
-                if(err){
-                    console.log("error from find: " + err.message)
-                    errorFound = true
-                    errorMessage += err.message
-                    // throw new Error
-                    // console.log(errorMessage)
-                    // next(err)
-                } else {
-                    console.log("from product db")
-                    console.log(foundProduct.nrInStock)
-                    console.log(product.qty)
-                }
-            })
+        if(product.product && product.qty && Number.isInteger(product.qty) && product.qty >= 1){
+            const foundProduct = await productModel.findById({_id: product.product})
+            if(foundProduct && foundProduct.nrInStock && (foundProduct.nrInStock >= product.qty)){
+                console.log("Yes order can be filled.")
+                console.log(foundProduct.nrInStock + " in stock")
+                console.log(product.qty + " qty in order.")
+            } else {
+                console.log("No order can not be filled.")
+                errorFound = true
+                errorMessage += " Problem adding product: " + product.product
+                // console.log(foundProduct)
+            }
         } else {
             console.log("From not found in req.")
             errorFound = true
             errorMessage += "Product not found in request and or wrong qty."
         }
-        
-
     }
-
+    console.log(errorFound , " 2.bool error found.")
     if(!errorFound){
         //got next() if no errorFound
         res.json({msg: "test remove later check product in row"})
@@ -88,50 +82,6 @@ function checkProductInStock(req, res, next) {
         res.status(400).json({err: errorMessage})
         // next(errorMessage)
     }
-
-    // if(idList.length > 0){
-    //     console.log("checking db")
-    //     const productsFound = productModel.find().where('_id').in(idList).exec((err, products) => {
-    //         if(err){
-    //             next(err)
-    //         } else {
-    //             console.log(products)
-    //             res.json({msg: "ok"})
-    //         }
-    //     })
-    // }
-
-
-    // for (const productRow of req.body.productRow) {
-    //     if(!productRow.product || !productRow.qty || isNaN(productRow.qty) || productRow.qty < 1 || errorFound){
-    //         errorFound = true
-    //         break
-    //     } else {
-    //         //TODO kolla produkt id och antal i db
-    //         console.log(productRow.product)
-    //         console.log(productRow.qty)
-    //         const productFound = productModel.findById({_id: productRow.product}, (err, product) => {
-    //             if(err){
-    //                 errorFound = true
-    //                 errorMessage = err
-    //                 throw new Error
-    //                 // console.log(errorMessage)
-    //                 // next(err)
-    //             } else {
-    //                 console.log("from product db")
-    //                 console.log(product)
-    //             }
-    //         })
-    //     }
-    // }
-    
-    // if(!errorFound){
-    //     //got next() if no errorFound
-    //     res.json({msg: "test remove later check product in row"})
-    // } else {
-    //     // res.status(400).json({msg: "Wrong or missing 'product' and or 'qty'."})
-    //     // next(errorMessage)
-    // }
 }
 
 module.exports = {getOrders, getMyOrders, placeOrder, updateOrderStatus, checkProductInStock}
