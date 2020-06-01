@@ -50,31 +50,56 @@ function updateOrderStatus(req, res, next){
 
 function checkProductInStock(req, res, next) {
     let errorFound = false
-    let errorMessage
+    let errorMessage = ""
     if(!req.body.productRow || req.body.productRow.length < 1){
         return res.status(400).json({msg: "Could not find any products in the order."})
     }
 
-    console.log("from product row")
-    console.log(req.body.productRow)
-    let idList = []
     for (const product of req.body.productRow) {
-        if(product.product || product.product.length < 1){
-            idList.push(product.product)
+        if(product.product && ((product.product instanceof String) || (typeof product.product === "string")) &&
+        product.product.length > 0 && product.qty && Number.isInteger(product.qty) && product.qty >= 1){
+            productModel.findById({_id: product.product}, (err, foundProduct) => {
+                if(err){
+                    console.log("error from find: " + err.message)
+                    errorFound = true
+                    errorMessage += err.message
+                    // throw new Error
+                    // console.log(errorMessage)
+                    // next(err)
+                } else {
+                    console.log("from product db")
+                    console.log(foundProduct.nrInStock)
+                    console.log(product.qty)
+                }
+            })
         } else {
-            res.status(400).json({msg: "Product missing."})
-            break
+            console.log("From not found in req.")
+            errorFound = true
+            errorMessage += "Product not found in request and or wrong qty."
         }
+        
+
     }
 
-    const productFound = productModel.find().where('_id').in(idList).exec((err, product) => {
-        if(err){
-            next(err)
-        } else {
-            console.log(product)
-            res.json({msg: "ok"})
-        }
-    })
+    if(!errorFound){
+        //got next() if no errorFound
+        res.json({msg: "test remove later check product in row"})
+    } else {
+        res.status(400).json({err: errorMessage})
+        // next(errorMessage)
+    }
+
+    // if(idList.length > 0){
+    //     console.log("checking db")
+    //     const productsFound = productModel.find().where('_id').in(idList).exec((err, products) => {
+    //         if(err){
+    //             next(err)
+    //         } else {
+    //             console.log(products)
+    //             res.json({msg: "ok"})
+    //         }
+    //     })
+    // }
 
 
     // for (const productRow of req.body.productRow) {
