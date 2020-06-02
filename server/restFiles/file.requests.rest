@@ -1,4 +1,9 @@
+// GET one specific file
+GET http://localhost:9000/api/files/5ed4f3f3312bb323a0958180
 
+###
+
+// POST a new file to the database
 POST http://localhost:9000/api/files/
 Content-Type: multipart/form-data; boundary=FormDataRow
 
@@ -11,6 +16,8 @@ Content-Type: image/png
 
 ###
 
+
+// POST a new product to the database with the ID of the associated file included
 POST http://localhost:9000/api/products/
 Content-Type: application/json
 
