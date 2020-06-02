@@ -10,7 +10,7 @@ const usersRouter = require('./routers/user.router')
 const productsRouter = require('./routers/product.router')
 const shippingRouter = require('./routers/shippingRouter')
 const ordersRouter = require('./routers/ordersRouter')
-const filesRouter = require('./routers/files.router')
+const filesRouter = require('./routers/file.router')
 
 const sessionRouter = require('./routers/session.router')
 
