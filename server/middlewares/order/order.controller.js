@@ -30,9 +30,9 @@ async function placeOrder(req, res, next){
     // console.log(orderSaved)
     if(orderSaved){
         for (const product of req.body.productRow) {
-            console.log(product.product, product.qty)
+            // console.log(product.product, product.qty)
             const updatedProductStock = await productModel.findByIdAndUpdate({_id: product.product},{$inc: {nrInStock:-product.qty}},{new: true})
-            console.log(updatedProductStock)
+            // console.log(updatedProductStock)
         }
     }
 
@@ -65,6 +65,7 @@ async function checkProductInStock(req, res, next) {
     //---- Loop over all products in order req and see if they are in stock.
     for (const product of req.body.productRow) {
         if(product.product && product.qty && Number.isInteger(product.qty) && product.qty >= 1){
+            // duplicateProduct = req.body.pro
             const foundProduct = await productModel.findById({_id: product.product})
             if(foundProduct && foundProduct.nrInStock && (foundProduct.nrInStock >= product.qty)){
                 // console.log("Yes order can be filled.")
@@ -82,12 +83,28 @@ async function checkProductInStock(req, res, next) {
         }
     }
 
+    //Check for duplicate product id's in order request.
+    if(!errorFound){
+        //Create array of product_id string only.
+        let productList = req.body.productRow.map(function(product) {
+            return product.product
+        })
+
+        //Set will not allow duplicates. Will be true if there are duplicates.
+        let isDuplicate = (new Set(productList)).size !== productList.length
+        if(isDuplicate) { 
+            errorFound = true
+            errorMessage += "Duplicate product id found. "
+        }
+        // console.log("dupe bool = ", isDuplicate)
+        // console.log(productList)
+    }
+
     //---- If all products are in stock place order and update stock in next middleware.
     if(!errorFound){
         next()
     } else {
         res.status(400).json({err: errorMessage})
-        // next(errorMessage)
     }
 }
 

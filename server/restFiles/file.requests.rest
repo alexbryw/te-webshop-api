@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
     "file": "5ed4f3f3312bb323a0958180",
-    "title": "Original Chai2",
+    "title": "Original Chai4",
     "description": "te good",
     "price": 100,
     "category": ["Koffein", "Ta bort te"],

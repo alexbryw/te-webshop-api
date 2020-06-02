@@ -23,7 +23,7 @@ Content-Type: application/json
     "user": "5ecb88f22b5cb34378cfc047",
     "shipping": "5ecd10a6c484790f757db5e0",
     "productRow":[{
-        "product": "5ed5085f6b1c6e36c44c7da6",
+        "product": "5ed61679014caf1c608dcce2",
         "qty": 2
     }],
     "to_firstname": "Test",
@@ -43,11 +43,15 @@ Content-Type: application/json
     "shipping": "5ecd10a6c484790f757db5e0",
     "productRow":[
         {
-            "product": "5ed505176b1c6e36c44c7da5",
+            "product": "5ed60fb19365341918bb5b3e",
             "qty": 2
         },
+        # {
+        #     "product": "5ed61679014caf1c608dcce2",
+        #     "qty": 5
+        # },
         {
-            "product": "5ed5085f6b1c6e36c44c7da6",
+            "product": "5ed61679014caf1c608dcce2",
             "qty": 1
         }
     ],
