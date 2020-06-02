@@ -31,10 +31,10 @@ export default class NewItem extends React.Component<Props, State> {
             addedMessage: false,
             userMassage: "",
             id: 0 ,
-            name: "Namn" , 
+            name: "" , 
             price: 0 ,
-            imgURL: "imgURL" ,
-            description: "Beskrivning",
+            imgURL: "" ,
+            description: "",
             nrInStock: 0,
             category: ''
         }   
@@ -51,10 +51,10 @@ export default class NewItem extends React.Component<Props, State> {
     checkInput(){
         let userMassage
         if(
-            this.state.name === "" ||
+            this.state.name === " " ||
             isNaN(this.state.price) ||
-            this.state.imgURL === "" ||
-            this.state.description === "" ||
+            this.state.imgURL === " " ||
+            this.state.description === " " ||
             isNaN(this.state.nrInStock) ||
             this.state.category
         ){
@@ -76,7 +76,9 @@ export default class NewItem extends React.Component<Props, State> {
             name: this.state.name , 
             price: this.state.price ,
             imgURL: this.state.imgURL ,
-            description: this.state.description
+            description: this.state.description,
+            nrInStock: this.state.nrInStock,
+            category: this.state.category
         }
         let userMassage = this.checkInput()
 
@@ -95,8 +97,8 @@ export default class NewItem extends React.Component<Props, State> {
                                     variant="outlined" 
                                     value={this.state.name} 
                                     onChange={this.handleNameInput}
-                                    error={this.state.name === ""}
-                                    helperText={this.state.name === "" ? 'Tomt fält' : ' '}
+                                    error={this.state.name === " "}
+                                    helperText={this.state.name === " " ? 'Tomt fält' : ' '}
                                 />
                             </Grid>
 
@@ -105,6 +107,7 @@ export default class NewItem extends React.Component<Props, State> {
                                     fullWidth 
                                     name="price"
                                     label="Pris" 
+                                    type="number"
                                     variant="outlined" 
                                     value={this.state.price} 
                                     onChange={this.handlePriceInput}
@@ -121,8 +124,8 @@ export default class NewItem extends React.Component<Props, State> {
                                     variant="outlined" 
                                     value={this.state.imgURL} 
                                     onChange={this.handleimgURLChange}
-                                    error={this.state.imgURL === ""}
-                                    helperText={this.state.imgURL === "" ? 'Tomt fält' : ' '}
+                                    error={this.state.imgURL === " "}
+                                    helperText={this.state.imgURL === " " ? 'Tomt fält' : ' '}
                                 />
                             </Grid>
 
@@ -135,8 +138,8 @@ export default class NewItem extends React.Component<Props, State> {
                                     value={this.state.description} 
                                     onChange={this.handleDescriptionInput} 
                                     multiline rowsMax="4"
-                                    error={this.state.description === ""}
-                                    helperText={this.state.description === "" ? 'Tomt fält' : ' '}
+                                    error={this.state.description === " "}
+                                    helperText={this.state.description === " " ? 'Tomt fält' : ' '}
                                 />    
                             </Grid>
 
@@ -150,8 +153,8 @@ export default class NewItem extends React.Component<Props, State> {
                                     value={this.state.nrInStock}
                                     onChange={this.handleNumberInStockInput}
                                     //onChange={(e) => this.handleNewItemInputs(e, 'nrInStock')}
-                                    error={this.state.nrInStock === 0}
-                                    helperText={this.state.nrInStock === 0 ? 'Hur många finns i lager?' : ' '}
+                                    error={isNaN(this.state.nrInStock)}
+                                    helperText={isNaN(this.state.nrInStock) ? 'Hur många finns i lager?' : ' '}
                                 />
                             </Grid>   
 
@@ -173,15 +176,11 @@ export default class NewItem extends React.Component<Props, State> {
                                         variant="outlined"
                                         //value={this.state.categories} 
                                         onChange={this.handleCategoryInput}
-                                        error={this.state.category === ''}
+                                        error={this.state.category === ' '}
                                         
                                         helperText={
-                                            this.state.category === '' ? (
-                                                'Skriv in en  Ka👏te👏go👏ri👏'
-                                            ) : (
-                                                ' '
-                                            ) 
-                                        }
+                                            this.state.category === ' ' ? (
+                                                'Skriv in en  Ka👏te👏go👏ri👏') : (' ') }
                                         />
                                             {/*<Button
                                                 fullWidth
@@ -209,7 +208,7 @@ export default class NewItem extends React.Component<Props, State> {
                 </Typography>
                 {this.state.addedMessage?<Typography color="primary" >Tillagd</Typography>:null}
                 <Button 
-                    variant="outlined"
+                    variant='contained'
                     color="primary" 
                     fullWidth 
                     onClick={() => {
