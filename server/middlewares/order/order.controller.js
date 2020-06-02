@@ -23,17 +23,24 @@ function getMyOrders(req, res, next){ //TODO test with other users_id.
     }).populate('user','-password').populate('shipping').populate('productRow.product')
 }
 
-// post placeOrder
-function placeOrder(req, res, next){ //TODO test multiple productRows.
-    // console.log(req.body)
+// post placeOrder.
+async function placeOrder(req, res, next){
     const order = new orderModel(req.body)
-    order.save((err, newOrder) => {
-        if(err) {
-            next(err)
-        } else {
-            res.json(newOrder)
+    const orderSaved = await order.save()
+    // console.log(orderSaved)
+    if(orderSaved){
+        for (const product of req.body.productRow) {
+            console.log(product.product, product.qty)
+            const updatedProductStock = await productModel.findByIdAndUpdate({_id: product.product},{$inc: {nrInStock:-product.qty}},{new: true})
+            console.log(updatedProductStock)
         }
-    })
+    }
+
+    if(orderSaved){
+        res.json(orderSaved)
+    } else {
+        res.status(400).json({err: "Could not place order."})
+    }
 }
 
 // updateOrderStatus
@@ -51,49 +58,33 @@ function updateOrderStatus(req, res, next){
 async function checkProductInStock(req, res, next) {
     let errorFound = false
     let errorMessage = ""
-    let stockProductUpdateList = []
     if(!req.body.productRow || req.body.productRow.length < 1){
         return res.status(400).json({msg: "Could not find any products in the order."})
     }
 
+    //---- Loop over all products in order req and see if they are in stock.
     for (const product of req.body.productRow) {
         if(product.product && product.qty && Number.isInteger(product.qty) && product.qty >= 1){
             const foundProduct = await productModel.findById({_id: product.product})
             if(foundProduct && foundProduct.nrInStock && (foundProduct.nrInStock >= product.qty)){
-                console.log("Yes order can be filled.")
-                console.log(foundProduct.nrInStock + " in stock")
-                console.log(product.qty + " qty in order.")
-                stockProductUpdateList.push({product: foundProduct, qty: product.qty})
+                // console.log("Yes order can be filled.")
+                // console.log(foundProduct.nrInStock + " in stock")
+                // console.log(product.qty + " qty in order.")
             } else {
-                console.log("No order can not be filled.")
+                console.log("No. Order can not be filled.")
                 errorFound = true
                 errorMessage += " Problem adding product: " + product.product
             }
         } else {
-            console.log("From not found in req.")
+            // console.log("From not found in req.")
             errorFound = true
-            errorMessage += "Product not found in request and or wrong qty."
+            errorMessage += "Product not found in request and or wrong qty. "
         }
     }
-    console.log(errorFound , " 2.bool error found.")
-    if(!errorFound){
 
-        const order = new orderModel(req.body)
-        const orderSaved = await order.save()
-        console.log(orderSaved)
-        if(orderSaved){
-            for (const product of req.body.productRow) {
-                console.log(product.product, product.qty)
-                const updatedProductStock = await productModel.findByIdAndUpdate({_id: product.product},{$inc: {nrInStock:-product.qty}},{new: true})
-                console.log(updatedProductStock)
-            }
-        } else {
-            console.log("Order not saved?")
-        }
-        // got next() if no errorFound
-        // await order
-        // update stock
-        res.json({msg: "test remove later check product in row"})
+    //---- If all products are in stock place order and update stock in next middleware.
+    if(!errorFound){
+        next()
     } else {
         res.status(400).json({err: errorMessage})
         // next(errorMessage)
