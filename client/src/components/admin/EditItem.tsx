@@ -11,8 +11,7 @@ interface Props {
     handleSubmit: any
     isDeleted: any
     deleted: boolean
-    nrInStock: number
-    category: string
+ 
 }
 
 interface State {
@@ -182,12 +181,12 @@ export default class EditItem extends React.Component<Props, State> {
                         </form>
                     </FormControl>
                 }
-                {this.props.deleted?null:
+                {this.props.deleted ? null:
                     <Typography color="primary">
                         {userMassage + this.state.isSentMessage}
                     </Typography>
                 }
-                {this.props.deleted?null:
+                {this.props.deleted ? null:
                 <Button 
                     variant="outlined"
                     color="primary" 
