@@ -24,11 +24,11 @@ Content-Type: application/json
 
 {
     "file": "5ed4f3f3312bb323a0958180",
-    "title": "Original Chai4",
+    "title": "Original Chai8",
     "description": "te good",
     "price": 100,
     "category": ["Koffein", "Ta bort te"],
-    "nrInStock": 100
+    "nrInStock": 50
 }
 
 ###

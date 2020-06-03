@@ -1,10 +1,18 @@
 import React from 'react'
-import Container from '@material-ui/core/Container'
-import { Product } from '../../../interfaces/interfaces'
-import { items } from '../../../ItemList'
-import Card from '@material-ui/core/Card'
+
+// COMPONENTS
 import ProductAdminList from './ProductAdminList'
 import NewItemToggle from './NewItemToggle'
+import { items } from '../../../ItemList'
+
+// INTERFACES
+import { Product } from '../../../interfaces/interfaces'
+
+// MATERIAL UI
+import { Container, Card } from '@material-ui/core/'
+
+// CONTEXTS
+import { OrderContext } from "../../../contexts/OrderContext"
 
 interface Props {
     items: Product[]
@@ -80,14 +88,17 @@ const ManageProducts = () => {
 
 
     return (
-        <Container>
-            <Card variant="outlined">
-                <NewItemToggle handleNew={handleNew} />
-            </Card>
-            {items.map((itemData: Product, index: number) =>
-                <ProductAdminList itemData={itemData} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
-            )}
-        </Container>
+        <OrderContext.Consumer>{(Order) => (
+            <Container>
+                {/* <OrderListTemp Order={Order} /> */}
+                <Card variant="outlined">
+                    <NewItemToggle handleNew={handleNew} />
+                </Card>
+                {items.map((itemData: Product, index: number) =>
+                    <ProductAdminList itemData={itemData} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
+                )}
+            </Container>
+        )}</OrderContext.Consumer>
     )
 
 }
