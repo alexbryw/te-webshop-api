@@ -34,18 +34,18 @@ export class ProductContextProvider extends Component<Props, State> {
 
   fetchProducts = async () => {
     const products = await fetch("http://localhost:9000/api/products/", {
-                method: "GET",
-                credentials: "include",
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log(data);
-                    return data
-                });
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
     return products;
   };
 
-  fetchImages= () => {}
+  fetchImage = () => {};
 
   textLogger = (text: String): void => {
     console.log(text);

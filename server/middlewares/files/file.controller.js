@@ -24,7 +24,11 @@ function getFile(req, res, next) {
     if (err) {
       next(err);
     } else {
-      res.json(result);
+      console.log(result);
+
+      res.set("Content-Type", "image/png");
+      res.send(result.data);
+      // res.json(result);
     }
   });
 }

@@ -35,7 +35,10 @@ export default function Home(props: Props) {
         >
           {products.map((product: Product, index: number) => (
             <Grid key={index} item xs={12} sm={6} md={4}>
-              <ProductCard product={product} productContext={productContext} />
+              <ProductCard
+                product={product}
+                productContext={props.productContext}
+              />
             </Grid>
           ))}
         </Grid>
