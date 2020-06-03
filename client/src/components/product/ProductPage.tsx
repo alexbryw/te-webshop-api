@@ -55,6 +55,7 @@ class ProductPage extends React.Component<Props, State> {
         ) : (
           <h3>Product not found.</h3>
         )}
+        {}
       </>
     );
   }

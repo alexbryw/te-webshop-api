@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         top: 0,
         left: "50%",
-        transform: "translatex(-50%)",
-        
+        transform: "translatex(-25%)",
+
         display: "flex",
         alignItems: "center",
 

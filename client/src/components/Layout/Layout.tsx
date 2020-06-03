@@ -29,13 +29,13 @@ const Layout = () => {
 
 
                                 <Switch>
-                                    <Route exact path={userContext.admin ? "/home" : "/"}>
-                                        <Home productContext={productContext} />
+                                    <Route exact path="/home">
+                                        <Home productContext={productContext} userContext={userContext} />
                                     </Route>
-                                    <Route exact path={userContext.admin ? "/" : ""}>
+                                    <Route exact path="/admin">
                                         <AdminLayout userContext={userContext} />
                                     </Route>
-                                    <Route path={userContext.loggedIn ? "/checkout" : ""}>
+                                    <Route path="/checkout">
                                         <CheckoutWrapper />
                                     </Route>
                                     <Route exact path="/product">

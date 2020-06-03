@@ -43,7 +43,7 @@ export default function Header() {
                                     :
                                     <LoginModal userContext={userContext} buttonHandle="logga in" />}
 
-                                <Link to={userContext.admin ? "/home" : "/"} className={classes.logo}>
+                                <Link to="/home" className={classes.logo}>
                                     <img src={logo} alt="logo" className={classes.logoImg} />
                                 </Link>
 
@@ -62,21 +62,21 @@ export default function Header() {
                                     className={classes.adminBar}
                                 >
                                     <Grid item>
-                                        <Link to="/">
+                                        <Link to="/admin">
                                             <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("products")}>
                                                 products
                                         </Button>
                                         </Link>
                                     </Grid>
                                     <Grid item>
-                                        <Link to="/">
+                                        <Link to="/admin">
                                             <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("orders")}>
                                                 orders
                                         </Button>
                                         </Link>
                                     </Grid>
                                     <Grid item>
-                                        <Link to="/">
+                                        <Link to="/admin">
                                             <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("users")}>
                                                 users
                                         </Button>
