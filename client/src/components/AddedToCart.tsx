@@ -42,7 +42,8 @@ export default function AddedToCart(props:Props){
                     {cartState.cartList.length===0? emptyCart : filledCart}
                 </div>
             </div>
-        }</CartContext.Consumer>
+        }
+        </CartContext.Consumer>
     )
 }
 
