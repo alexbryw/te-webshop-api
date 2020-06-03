@@ -5,6 +5,8 @@ import { items } from '../../ItemList'
 import Card from '@material-ui/core/Card'
 import ProductAdminList from './ProductAdminList'
 import NewItemToggle from './NewItemToggle'
+import { OrderContext } from '../../contexts/OrderContext'
+import OrderListTemp from './OrderListTemp'
 
 interface Props {
     items: Product[]
@@ -25,7 +27,9 @@ export default class AdminLayout extends React.Component<Props, State> {
 
     render(){
         return(
+            <OrderContext.Consumer>{(Order)=> (
             <Container>
+                {/* <OrderListTemp Order={Order} /> */}
                 <Card variant="outlined">
                     <NewItemToggle handleNew={this.props.handleNew}/>
                 </Card>
@@ -33,6 +37,7 @@ export default class AdminLayout extends React.Component<Props, State> {
                     <ProductAdminList itemData={itemData} key={index} arrayIndex={index} delete={this.props.delete} handleSubmit={this.props.handleSubmit}/>
                 )}
             </Container>
+            )}</OrderContext.Consumer>
         )
     }
 }
