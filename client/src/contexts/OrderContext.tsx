@@ -14,7 +14,7 @@ interface State {
     // textLogger: (text: String) => void
     // loginUser: (text: String, closeModal: () => void, errCb: (error: boolean, anchor: string) => void) => void
     // logOut: () => void
-    getAllOrders: () => void
+    getAllOrders: () => any
 }
 
 export const OrderContext = createContext<State>({
