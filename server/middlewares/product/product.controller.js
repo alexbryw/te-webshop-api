@@ -1,13 +1,13 @@
 const Product = require("../../models/product.model");
 
 function getAllProducts(req, res, next) {
-  Product.find({}, (err, result) => {
+ const product = Product.find({}, (err, result) => {
     if (err) {
       next(err);
     } else {
       res.json(result);
     }
-  });
+  }).populate('file')
 }
 
 function getProduct(req, res, next) {

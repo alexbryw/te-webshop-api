@@ -144,6 +144,9 @@ export default class EditItem extends React.Component<Props, State> {
                                 error={this.state.imgURL === ""}
                                 helperText={this.state.imgURL === "" ? 'Tomt fält' : ' '}
                             />
+                            <input type="file">
+                            </input>
+
                             <TextField
                                 fullWidth
                                 name="description" 
