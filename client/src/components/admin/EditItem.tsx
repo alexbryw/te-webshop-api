@@ -100,7 +100,7 @@ export default class EditItem extends React.Component<Props, State> {
             <Container>
                 {this.props.deleted?null:
                 <Button 
-                    variant="contained"
+                    variant="outlined"
                     color="primary" 
                     fullWidth 
                     onClick={() => {this.props.delete(this.props.arrayIndex)
@@ -188,7 +188,7 @@ export default class EditItem extends React.Component<Props, State> {
                 }
                 {this.props.deleted ? null:
                 <Button 
-                    variant="outlined"
+                    variant="contained"
                     color="primary" 
                     fullWidth
                     onClick={() => {this.props.handleSubmit(this.props.arrayIndex, itemData);
