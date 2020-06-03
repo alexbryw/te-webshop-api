@@ -1,13 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    adminBtn: {
-        position: "absolute",
-        top: 0,
-        right: 0,
+    root: {
 
-        margin:"1rem"
-
+        backgroundColor: '#346933',
+        width: '100vw',
+        position: 'relative',
+        height: '8rem',
+        padding: '1em',
+        margin: '1em 0 0 0',
+        bottom: 0
     }
 }));
 
