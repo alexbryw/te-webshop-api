@@ -23,16 +23,17 @@ export default function Header() {
     const classes = useStyles()
     const logo: any = require("../items/images/logo.png")
 
-
-
-
     return (
         <UserContext.Consumer>
-            {(userContext) => (
+            {userContext => (
                 <CartContext.Consumer>
-                    {(cartState: any) => (
+                    {(cartState) => (
                         <>
-                            <Grid container className={classes.root}>
+                            <Grid container
+                                direction="row"
+                                alignItems="center"
+                                className={classes.root}>
+
                                 {userContext.loggedIn ?
                                     <Button variant="contained"
                                         color="primary"
@@ -41,53 +42,52 @@ export default function Header() {
                                     >logga ut </Button>
                                     :
                                     <LoginModal userContext={userContext} buttonHandle="logga in" />}
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justify="center"
-                                    alignItems="center"
-                                >
-                                    <Link to="/" className={classes.logoContainer}>
 
-                                        <Grid item className={classes.logoWrapper}>
-                                            <img src={logo} alt="logo" className={classes.logoImg} />
-                                        </Grid>
+                                <Link to={userContext.admin ? "/home" : "/"} className={classes.logo}>
+                                    <img src={logo} alt="logo" className={classes.logoImg} />
+                                </Link>
 
-                                    </Link>
-                                </Grid>
+
                                 <div className={classes.cartIcon}>
                                     <Cart cartState={cartState} userContext={userContext} />
                                 </div>
                             </Grid>
 
-
+                            {userContext.admin &&
+                                <Grid
+                                    container
+                                    direction="row"
+                                    justify="space-evenly"
+                                    alignItems="center"
+                                    className={classes.adminBar}
+                                >
+                                    <Grid item>
+                                        <Link to="/">
+                                            <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("products")}>
+                                                products
+                                        </Button>
+                                        </Link>
+                                    </Grid>
+                                    <Grid item>
+                                        <Link to="/">
+                                            <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("orders")}>
+                                                orders
+                                        </Button>
+                                        </Link>
+                                    </Grid>
+                                    <Grid item>
+                                        <Link to="/">
+                                            <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("users")}>
+                                                users
+                                        </Button>
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            }
                         </>
                     )}
                 </CartContext.Consumer>
             )}
         </UserContext.Consumer>
     )
-}
-
-const headerStyle: CSSProperties = {
-    backgroundColor: '#346933',
-    width: '100vw',
-    height: '8em',
-    padding: '1em',
-    margin: '0 0 1em 0',
-}
-
-const textLogoStyle: CSSProperties = {
-    WebkitTextStroke: '0.02em black',
-}
-
-const shoppingLogoPos: CSSProperties = {
-    position: 'relative',
-}
-
-const wave: CSSProperties = {
-    // backgroundImage: `url(${require("./items/images/wave.png")})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    backgroundPosition: 'center'
 }

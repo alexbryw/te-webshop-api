@@ -1,15 +1,21 @@
 import React, { createContext, Component } from "react";
+import { AdminView } from "../types/types"
 
 
 const apiURL = "http://localhost:9000/api/";
 const sessionURL = "http://localhost:9000/session/";
 
+
 interface Props { }
 interface State {
     loggedIn: Boolean,
     admin: Boolean,
-
     name: String,
+
+    adminView: AdminView,
+    changeAdminView: (view: AdminView) => void,
+
+    getUsers: () => {},
 
     registerUser: (
         newUser: { name: string, password: string, requestsAdmin: boolean },
@@ -26,8 +32,12 @@ interface State {
 export const UserContext = createContext<State>({
     loggedIn: false,
     admin: false,
-
     name: "",
+
+    adminView: "products",
+    changeAdminView: () => { },
+
+    getUsers: () => { return {} },
 
     registerUser: () => { },
     loginUser: () => { },
@@ -38,17 +48,35 @@ export const UserContext = createContext<State>({
 export class UserContextProvider extends Component<Props, State> {
     constructor(props: Props) {
         super(props)
-
-        // not true state, this i template
         this.state = {
             loggedIn: false,
             admin: false,
-            name: "Halvdan",
+            name: "",
+
+            adminView: "products",
+            changeAdminView: this.changeAdminView,
+
+            getUsers: this.getUsers,
 
             registerUser: this.registerUser,
             loginUser: this.loginUser,
             logOut: this.logOut
         }
+    }
+
+
+    getUsers = async () => {
+        const users = await fetch("http://localhost:9000/api/users/", {
+            method: "GET",
+            credentials: 'include',
+        }).then((response) => response.json()).then((data) => data)
+        return users
+    }
+
+    changeAdminView = (view: AdminView) => {
+        this.setState({
+            adminView: view
+        })
     }
 
     registerUser = async (

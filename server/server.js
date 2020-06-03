@@ -21,8 +21,9 @@ app.use(cookieSession({
     secret: 'GuppE4Lyf3-1337',
     // maxAge: 24 * 60 * 60 * 1000, //24 hours
     // maxAge: 60 * 60 * 1000, //1 hour
-    // maxAge: 30 * 60 * 1000, //30 minutes
-    maxAge: 60 * 1000, //1 minute
+    maxAge: 30 * 60 * 1000, //30 minutes
+    // maxAge: 60 * 1000 * 5, //5 minute
+    // maxAge: 60 * 1000, //1 minute
     // maxAge: 15 * 1000, //15 seconds
     // maxAge: 10 * 1000, //10 seconds
     // maxAge: 5 * 1000, //5 seconds

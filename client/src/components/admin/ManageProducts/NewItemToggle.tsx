@@ -3,7 +3,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import NewItem from './NewItem'
+import NewItem from "./NewItem"
 
 interface Props{
     handleNew:any

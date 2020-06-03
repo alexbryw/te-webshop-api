@@ -32,7 +32,7 @@ const tutorialSteps = [
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
+      width: '100vw',
       flexGrow: 1,
 
       display: "flex",
@@ -67,7 +67,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-
 
       "&:after": {
         content: "open-quote",

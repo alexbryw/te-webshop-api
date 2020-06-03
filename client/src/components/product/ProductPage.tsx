@@ -1,7 +1,6 @@
 import React, { CSSProperties } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { RouteMatch } from '../../interfaces/interfaces'
-import { Product } from '../../interfaces/interfaces'
+import { RouteMatch, Product } from '../../interfaces/interfaces'
 import { items } from '../../ItemList'
 import ViewProduct from './ViewProduct'
 import { Link } from 'react-router-dom'
