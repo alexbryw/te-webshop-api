@@ -17,6 +17,7 @@ interface Props {
     handleSubmit: any
     isDeleted: any
     deleted: boolean
+
 }
 
 interface State {
@@ -26,6 +27,8 @@ interface State {
     price: number,
     imgURL: string,
     description: string
+    nrInStock?: number
+    category?: string
 }
 
 export default class EditItem extends React.Component<Props, State> {
@@ -37,7 +40,9 @@ export default class EditItem extends React.Component<Props, State> {
             name: props.itemData.name,
             price: props.itemData.price,
             imgURL: props.itemData.imgURL,
-            description: props.itemData.description
+            description: props.itemData.description,
+            nrInStock: props.itemData.nrInStock,
+            category: props.itemData.category
         }
     }
 
@@ -47,6 +52,8 @@ export default class EditItem extends React.Component<Props, State> {
     handlePriceInput = (event: { target: { value: any } }) => this.setState({ price: event.target.value })
     handleimgURLChange = (event: { target: { value: any } }) => this.setState({ imgURL: event.target.value })
     handleDescriptionInput = (event: { target: { value: any } }) => this.setState({ description: event.target.value })
+    handleNumberInStockInput = (event: { target: { value: any } }) => this.setState({ nrInStock: event.target.value })
+    handleCategoryInput = (event: { target: { value: any } }) => this.setState({ category: event.target.value })
 
     //Disables the button if there is no content or the number value is NaN
     checkInput() {
@@ -55,7 +62,9 @@ export default class EditItem extends React.Component<Props, State> {
             this.state.name === "" ||
             isNaN(this.state.price) ||
             this.state.imgURL === "" ||
-            this.state.description === ""
+            this.state.description === "" ||
+            // isNaN( this.state.nrInStock ) ||
+            this.state.category
         ) {
             userMassage = "Kan inte skicka"
         } else {
@@ -71,7 +80,9 @@ export default class EditItem extends React.Component<Props, State> {
             this.state.name === "" ||
             isNaN(this.state.price) ||
             this.state.imgURL === "" ||
-            this.state.description === ""
+            this.state.description === "" ||
+            // isNaN(this.state.nrInStock) ||
+            this.state.category
         ) {
             this.setState({ isSentMessage: "Uppdaterade inte" })
         } else {
@@ -86,14 +97,16 @@ export default class EditItem extends React.Component<Props, State> {
             name: this.state.name,
             price: this.state.price,
             imgURL: this.state.imgURL,
-            description: this.state.description
+            description: this.state.description,
+            nrInStock: this.state.nrInStock,
+            category: this.state.category
         }
         let userMassage = this.checkInput()
         return (
             <Container>
                 {this.props.deleted ? null :
                     <Button
-                        variant="contained"
+                        variant="outlined"
                         color="primary"
                         fullWidth
                         onClick={() => {
@@ -138,6 +151,9 @@ export default class EditItem extends React.Component<Props, State> {
                                 error={this.state.imgURL === ""}
                                 helperText={this.state.imgURL === "" ? 'Tomt fält' : ' '}
                             />
+                            <input type="file">
+                            </input>
+
                             <TextField
                                 fullWidth
                                 name="description"
@@ -150,6 +166,28 @@ export default class EditItem extends React.Component<Props, State> {
                                 error={this.state.description === ""}
                                 helperText={this.state.description === "" ? 'Tomt fält' : ' '}
                             />
+                            <TextField
+                                fullWidth
+                                name="nrInStock"
+                                type="number"
+                                label="Produkter i lager"
+                                variant="outlined"
+                                value={this.state.nrInStock}
+                                onChange={this.handleNumberInStockInput}
+                                //onChange={(e) => this.handleNewItemInputs(e, 'nrInStock')}
+                                error={this.state.nrInStock ? true : false}
+                                helperText={this.state.nrInStock ? 'Hur många finns i lager?' : ' '}
+                            />
+                            <TextField
+                                fullWidth
+                                name="category"
+                                label="Kategorier"
+                                variant="outlined"
+                                value={this.state.category}
+                                onChange={this.handleCategoryInput}
+                                error={this.state.category === ' '}
+                                helperText={this.state.category === ' ' ? ('Skriv in en  Ka👏te👏go👏ri👏') : (' ')}
+                            />
                         </form>
                     </FormControl>
                 }
@@ -160,7 +198,7 @@ export default class EditItem extends React.Component<Props, State> {
                 }
                 {this.props.deleted ? null :
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         color="primary"
                         fullWidth
                         onClick={() => {

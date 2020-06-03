@@ -1,36 +1,51 @@
-import React from 'react'
-import ProductCard from './ProductCard'
-import { Product } from '../../interfaces/interfaces'
-import { items } from '../../ItemList'
-import Grid from '@material-ui/core/Grid'
-import Container from '@material-ui/core/Container'
-import TextMobileStepper from './TextMobileStepper'
+import React, { useEffect } from "react";
 
+// COMPONENTS
+import ProductCard from "./ProductCard";
+import TextMobileStepper from "./TextMobileStepper";
 
-export default function Home() {
+// INTERFACES
+import { Product } from "../../interfaces/interfaces"
 
-    return (
-        <>
-            <TextMobileStepper />
-            <Container>
-                <Grid
-                    container
-                    spacing={3}
-                    direction="row"
-                    justify="center"
-                    alignItems="center"
-                >
-                    {items.map((itemData: Product, index: number) =>
-                        <Grid key={index}
-                            item xs={12} sm={6} md={4}
-                        >
-                            <ProductCard itemData={itemData} />
-                        </Grid>
-                    )}
-                </Grid>
-            </Container>
-        </>
+// MATERIAL UI
+import {Grid, Container} from "@material-ui/core/";
 
-    )
+interface Props {
+  productContext: any;
 }
 
+export default function Home(props: Props) {
+  const [products, setProducts] = React.useState([]);
+
+  const getProducts = async () => {
+    setProducts(await props.productContext.fetchProducts());
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  return (
+    <>
+      <TextMobileStepper />
+      <Container>
+        <Grid
+          container
+          spacing={3}
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          {products.map((product: Product, index: number) => (
+            <Grid key={index} item xs={12} sm={6} md={4}>
+              <ProductCard
+                product={product}
+                productContext={props.productContext}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </>
+  );
+}

@@ -1,50 +1,56 @@
-import React, { CSSProperties } from 'react'
-import { Product } from '../../interfaces/interfaces'
-import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Typography from '@material-ui/core/Typography'
-import PurchaseButtons from './PurchaseButtons'
-import { Link } from 'react-router-dom'
+import React, { CSSProperties, useEffect } from "react";
+import { Link } from "react-router-dom";
 
+// COMPONENTS
+import PurchaseButtons from "./PurchaseButtons";
+
+// MATERIAL UI
+import {
+  makeStyles,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@material-ui/core/";
 
 interface Props {
-  itemData: Product
+  product: any;
+  productContext: any;
 }
 
 const useStyles = makeStyles({
-
   media: {
     height: 200,
   },
   cardTitle: {
-    color: '#000',
-    textDecoration: 'none'
-  }
-})
+    color: "#000",
+    textDecoration: "none",
+  },
+});
 
 export default function ProductCard(props: Props) {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <>
-      <Link to={"product/" + props.itemData.id} className={classes.cardTitle}>
+      <Link to={"product/" + props.product._id} className={classes.cardTitle}>
         <div>
           <CardMedia
             className={classes.media}
-            image={props.itemData.imgURL}
-            title={props.itemData.imgURL + " Image"}
+            image={"http://localhost:9000/api/files/" + props.product.file._id}
+            title={props.product.imgURL + " Image"}
           />
           <CardContent>
             <Typography variant="h5" component="h1">
-              {props.itemData.name}
+              {/* {props.product.name} */}
+              {console.log(props.product.file._id)}
             </Typography>
           </CardContent>
         </div>
       </Link>
-      <PurchaseButtons itemPrice={props.itemData.price} itemId={props.itemData.id} />
+      <PurchaseButtons
+        itemPrice={props.product.price}
+        itemId={props.product.id}
+      />
     </>
-  )
+  );
 }

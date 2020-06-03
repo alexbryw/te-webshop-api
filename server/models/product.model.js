@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema
 
 const productSchema = new mongoose.Schema({
-  img: {
-    data: Buffer,
-    contentType: String,
-    required: false,
+  file: {
+    type: Schema.Types.ObjectId, ref: "File",
+    required: true,
   },
   title: {
     type: String,
@@ -16,6 +16,7 @@ const productSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
+    min: [0, "The price must be greater than 0"],
     required: true,
   },
   category: [{
@@ -24,6 +25,7 @@ const productSchema = new mongoose.Schema({
   }],
   nrInStock: {
     type: Number,
+    min: [0, "Stock can't be less than 0"],
     required: true,
   },
 });

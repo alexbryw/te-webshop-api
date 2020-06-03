@@ -4,7 +4,10 @@ export interface Product {
     name: string,
     price: number,
     description: string
-    imgURL: string        
+    imgURL: string
+
+    nrInStock?: number
+    category?: string
 }
 
 
@@ -13,12 +16,12 @@ export interface RouteMatch {
     path: string
     url: string
     isExact: boolean
-    params:{
+    params: {
         id: string
     }
 }
 
-export interface CartItem{
+export interface CartItem {
     id: number
     nrItems: number
     product: Product
@@ -34,8 +37,8 @@ export interface CustomerInfo {
     email: any
     mobile: any
     shippingMethod: string
-    shippingCost:any
-    deliveryDate:any
+    shippingCost: any
+    deliveryDate: any
 
     isFirstNameError: boolean
     firstNameErrorText: string
@@ -57,15 +60,15 @@ export interface CustomerInfo {
 
 export interface CustomerPaymentInfo {
     paymentMethod: string
-    cardOwner:string
+    cardOwner: string
     cardNr: any
     cardExp: any
     cardCVC: any
     swishNr: any
-    emailFaktura:any
+    emailFaktura: any
 
     isPaymentError: boolean
-    paymentErrorText:string
+    paymentErrorText: string
     isCardOwnerError: boolean,
     cardOwnerErrorText: string,
     isCardNrError: boolean,
