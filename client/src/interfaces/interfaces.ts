@@ -1,4 +1,12 @@
-import { Product } from "./components/items/itemListCore";
+
+export interface Product {
+    id: number,
+    name: string,
+    price: number,
+    description: string
+    imgURL: string        
+}
+
 
 //For Url path props in React Router in Product component.
 export interface RouteMatch {

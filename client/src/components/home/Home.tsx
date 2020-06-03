@@ -1,14 +1,16 @@
 import React from 'react'
 import ProductCard from './ProductCard'
-import { Product } from '../items/itemListCore'
+import { Product } from '../../interfaces/interfaces'
 import { items } from '../../ItemList'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import TextMobileStepper from './TextMobileStepper'
 
+
 export default function Home() {
+
     return (
-        <div>
+        <>
             <TextMobileStepper />
             <Container>
                 <Grid
@@ -27,7 +29,8 @@ export default function Home() {
                     )}
                 </Grid>
             </Container>
-        </div>
+        </>
+
     )
 }
 

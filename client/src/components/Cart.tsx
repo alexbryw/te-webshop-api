@@ -20,7 +20,7 @@ import { CartContext } from '../contexts/cartContext'
 import { UserContext } from "../contexts/UserContext"
 
 
-import { CartItem } from '../typings'
+import { CartItem } from '../interfaces/interfaces'
 
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
@@ -88,7 +88,7 @@ export function Cart(props: Props) {
                 {props.userContext.loggedIn ?
                     <Button
                         onClick={() => props.cartState.toggleCartVisibility()}
-                        component={RouterLink} to='/checkout'
+                        component={RouterLink} to={props.userContext.loggedIn ? '/checkout' : ""}
                         variant="contained"
                         color="primary"
                     >
