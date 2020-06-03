@@ -1,5 +1,5 @@
 import React,{CSSProperties} from 'react'
-import { Product } from '../items/itemListCore'
+import { Product } from '../../../interfaces/interfaces'
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import EditItem from './EditItem'

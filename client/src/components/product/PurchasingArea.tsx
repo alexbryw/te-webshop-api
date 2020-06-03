@@ -1,5 +1,5 @@
 import React,{ CSSProperties, useState } from 'react'
-import { Product } from '../items/itemListCore'
+import { Product } from '../../interfaces/interfaces'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'

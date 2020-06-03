@@ -20,13 +20,14 @@ import { CartContext } from '../contexts/cartContext'
 import { UserContext } from "../contexts/UserContext"
 
 
-import { CartItem } from '../typings'
+import { CartItem } from '../interfaces/interfaces'
 
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 
 interface Props {
     cartState: any
+    userContext: any
 }
 
 
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }))
 
-export function CartIcon(props: Props) {
+export function Cart(props: Props) {
 
     const classes = useStyles()
 
@@ -79,29 +80,25 @@ export function CartIcon(props: Props) {
         divSize = { width: '25rem' }
     }
 
-    const cart = <UserContext.Consumer>
-        {(user: any) => (
+    const cart = <div className={classes.cart}>
 
-            <div className={classes.cart}>
-
-                {props.cartState.cartList.length === 0 ?
-                    <Typography variant="h6" color="primary" style={{ margin: '1rem' }}>Kundvagnen&nbsp;är&nbsp;tom</Typography> : <>
-                        <ShoppingCart />
-                        {loggedIn ?
-                            <Button
-                                component={RouterLink} to='/checkout'
-                                variant="contained"
-                                color="primary"
-                            >
-                                gå till kassan
+        {props.cartState.cartList.length === 0 ?
+            <Typography variant="h6" color="primary" style={{ margin: '1rem' }}>Kundvagnen&nbsp;är&nbsp;tom</Typography> : <>
+                <ShoppingCart />
+                {props.userContext.loggedIn ?
+                    <Button
+                        onClick={() => props.cartState.toggleCartVisibility()}
+                        component={RouterLink} to={props.userContext.loggedIn ? '/checkout' : ""}
+                        variant="contained"
+                        color="primary"
+                    >
+                        gå till kassan
                         </Button>
-                            :
-                            <LoginModal userContext={user} cancelTimeout={props.cartState.setCartVisibility} />
-                        }
-                    </>}
-            </div>
-        )}
-    </UserContext.Consumer>
+                    :
+                    <LoginModal userContext={props.userContext} buttonHandle="logga in för att gå till kassan" />
+                }
+            </>}
+    </div>
 
     return (
         <div className={classes.relativeContainer}>

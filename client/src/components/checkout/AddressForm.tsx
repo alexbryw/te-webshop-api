@@ -7,7 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormLabel from '@material-ui/core/FormLabel'
-import { CustomerInfo} from '../../typings'
+import { CustomerInfo} from '../../interfaces/interfaces'
 import { Typography } from '@material-ui/core/'
 import { Grid } from '@material-ui/core/'
 

@@ -9,7 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 // STYLES
 import useStyles from "./headerStyles"
-import { CartIcon } from '../CartIcon'
+import { Cart } from '../Cart'
 
 // COMPONENTS
 import LoginModal from "../LoginModal/LoginModal"
@@ -23,71 +23,71 @@ export default function Header() {
     const classes = useStyles()
     const logo: any = require("../items/images/logo.png")
 
-
-
-
     return (
         <UserContext.Consumer>
-            {(user) => (
-
+            {userContext => (
                 <CartContext.Consumer>
-                    {(cartState: any) => (
+                    {(cartState) => (
                         <>
-                            <Container maxWidth={false} className={classes.root}>
+                            <Grid container
+                                direction="row"
+                                alignItems="center"
+                                className={classes.root}>
+
+                                {userContext.loggedIn ?
+                                    <Button variant="contained"
+                                        color="primary"
+                                        className={classes.button}
+                                        onClick={() => userContext.logOut()}
+                                    >logga ut </Button>
+                                    :
+                                    <LoginModal userContext={userContext} buttonHandle="logga in" />}
+
+                                <Link to="/home" className={classes.logo}>
+                                    <img src={logo} alt="logo" className={classes.logoImg} />
+                                </Link>
+
+
+                                <div className={classes.cartIcon}>
+                                    <Cart cartState={cartState} userContext={userContext} />
+                                </div>
+                            </Grid>
+
+                            {userContext.admin &&
                                 <Grid
                                     container
                                     direction="row"
-                                    justify="center"
+                                    justify="space-evenly"
                                     alignItems="center"
+                                    className={classes.adminBar}
                                 >
-
-                                    <Link to="/" className={classes.logoContainer}>
-                                        <Grid
-                                            container
-                                            direction="row"
-                                            justify="space-between"
-                                            alignItems="center"
-                                        >
-                                            <Grid item className={classes.logoWrapper}>
-                                                <img src={logo} alt="logo" className={classes.logoImg} />
-                                            </Grid>
-                                        </Grid>
-                                    </Link>
+                                    <Grid item>
+                                        <Link to="/admin">
+                                            <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("products")}>
+                                                products
+                                        </Button>
+                                        </Link>
+                                    </Grid>
+                                    <Grid item>
+                                        <Link to="/admin">
+                                            <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("orders")}>
+                                                orders
+                                        </Button>
+                                        </Link>
+                                    </Grid>
+                                    <Grid item>
+                                        <Link to="/admin">
+                                            <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("users")}>
+                                                users
+                                        </Button>
+                                        </Link>
+                                    </Grid>
                                 </Grid>
-                            </Container>
-
-                            {user.admin && <Button onClick={() => user.logOut()}> logout </Button>}
-
-                            <div className={classes.cartIcon}>
-                                <CartIcon cartState={cartState} />
-                            </div>
+                            }
                         </>
                     )}
                 </CartContext.Consumer>
             )}
         </UserContext.Consumer>
     )
-}
-
-const headerStyle: CSSProperties = {
-    backgroundColor: '#346933',
-    width: '100vw',
-    height: '8em',
-    padding: '1em',
-    margin: '0 0 1em 0',
-}
-
-const textLogoStyle: CSSProperties = {
-    WebkitTextStroke: '0.02em black',
-}
-
-const shoppingLogoPos: CSSProperties = {
-    position: 'relative',
-}
-
-const wave: CSSProperties = {
-    // backgroundImage: `url(${require("./items/images/wave.png")})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    backgroundPosition: 'center'
 }

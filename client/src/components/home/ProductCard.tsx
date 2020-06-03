@@ -1,17 +1,16 @@
 import React, { CSSProperties, useEffect } from "react";
-import { Product } from "../items/itemListCore";
-import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
+// COMPONENTS
+import PurchaseButtons from "./PurchaseButtons";
+
+// MATERIAL UI
 import {
-  Card,
-  CardActionArea,
+  makeStyles,
   CardContent,
   CardMedia,
   Typography,
 } from "@material-ui/core/";
-
-import PurchaseButtons from "./PurchaseButtons";
-import { Link } from "react-router-dom";
 
 interface Props {
   product: any;

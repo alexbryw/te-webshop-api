@@ -1,4 +1,4 @@
-import { CustomerPaymentInfo } from "./typings"
+import { CustomerPaymentInfo } from "./interfaces/interfaces"
 
 export default async function serverAPI(customerInfo: CustomerPaymentInfo){
     // console.log(customerInfo)

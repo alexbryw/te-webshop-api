@@ -1,10 +1,10 @@
 import React, { createContext, Component } from "react";
 
-import { Product } from "../components/items/itemListCore";
+import { Product } from "../interfaces/interfaces";
 
 const apiURL = "http://localhost:9000/api/";
 
-interface Props {}
+interface Props { }
 interface State {
   products: Product[];
 
@@ -18,7 +18,7 @@ export const ProductContext = createContext<State>({
   fetchProducts: () => {
     return [];
   },
-  textLogger: () => {},
+  textLogger: () => { },
 });
 
 export class ProductContextProvider extends Component<Props, State> {
@@ -45,7 +45,7 @@ export class ProductContextProvider extends Component<Props, State> {
     return products;
   };
 
-  fetchImage = () => {};
+  fetchImage = () => { };
 
   textLogger = (text: String): void => {
     console.log(text);

@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
+
+// COMPONENTS
 import ProductCard from "./ProductCard";
 import TextMobileStepper from "./TextMobileStepper";
-import { Product } from "../items/itemListCore";
-// import { items } from '../../ItemList'
 
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
+// INTERFACES
+import { Product } from "../../interfaces/interfaces"
+
+// MATERIAL UI
+import { Grid, Container } from "@material-ui/core/";
+import { Redirect } from "react-router-dom";
 
 interface Props {
   productContext: any;
+  userContext: any;
 }
 
 export default function Home(props: Props) {
@@ -43,6 +48,7 @@ export default function Home(props: Props) {
           ))}
         </Grid>
       </Container>
+
     </>
   );
 }

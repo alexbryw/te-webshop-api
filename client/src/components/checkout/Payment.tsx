@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import { CustomerPaymentInfo } from './../../typings'
+import { CustomerPaymentInfo } from '../../interfaces/interfaces'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
 interface Props{
