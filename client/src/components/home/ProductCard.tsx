@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, useEffect } from 'react'
 import { Product } from '../items/itemListCore'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -28,13 +28,27 @@ const useStyles = makeStyles({
 export default function ProductCard(props: Props) {
   const classes = useStyles()
 
+  const[products, setProducts] = React.useState([])
+  const fetchProducts = async () => {
+      await fetch("http://localhost:9000/api/products/", {
+          method: "GET",
+          credentials: 'include',
+      }).then((response) => response.json()).then((data) => {
+          console.log(data);
+          setProducts(data)
+      })
+  } 
+  useEffect(() => {
+    fetchProducts()
+  }, [])
+
   return (
     <>
       <Link to={"product/" + props.itemData.id} className={classes.cardTitle}>
         <div>
           <CardMedia
             className={classes.media}
-            image={props.itemData.imgURL}
+            //image={setProducts.}
             title={props.itemData.imgURL + " Image"}
           />
           <CardContent>
