@@ -21,7 +21,7 @@ Content-Type: application/json
 
 {
     "user": "5ecb88f22b5cb34378cfc047",
-    "shipping": "5ecd10a6c484790f757db5e0",
+    "shipping": "5ed0edb39781da7e89d7cb4f",
     "productRow":[{
         "product": "5ed61679014caf1c608dcce2",
         "qty": 2
@@ -40,23 +40,31 @@ Content-Type: application/json
 
 {
     "user": "5ecb89c1e6898b4088e3d9b5",
-    "shipping": "5ecd10a6c484790f757db5e0",
+    "shipping": "5ed0edb39781da7e89d7cb4f",
     "productRow":[
         {
             "product": "5ed60fb19365341918bb5b3e",
             "qty": 2
         },
-        # {
-        #     "product": "5ed61679014caf1c608dcce2",
-        #     "qty": 5
-        # },
+        {
+            "product": "5ed64be9cbdbbf4a6cb7acd7",
+            "qty": 12
+        },
         {
             "product": "5ed61679014caf1c608dcce2",
             "qty": 1
+        },
+                {
+            "product": "5ed64c16cbdbbf4a6cb7acd8",
+            "qty": 3
+        },
+        {
+            "product": "5ed65b6ecbdbbf4a6cb7ace3",
+            "qty": 13
         }
     ],
-    "to_firstname": "Test",
-    "to_lastname": "Testson",
+    "to_firstname": "Roger",
+    "to_lastname": "Moore",
     "to_street": "Testgatan 18",
     "to_city": "Göteborg",
     "to_zip": 12345
