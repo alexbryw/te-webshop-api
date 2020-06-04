@@ -9,6 +9,8 @@ interface State {
   products: Product[];
 
   fetchProducts: () => any;
+  fetchProduct: (id: string) => any;
+
   textLogger: (text: String) => void;
 }
 
@@ -17,6 +19,9 @@ export const ProductContext = createContext<State>({
 
   fetchProducts: () => {
     return [];
+  },
+  fetchProduct: () => {
+    return {};
   },
   textLogger: () => { },
 });
@@ -28,8 +33,24 @@ export class ProductContextProvider extends Component<Props, State> {
       products: [],
 
       fetchProducts: this.fetchProducts,
+      fetchProduct: this.fetchProduct,
       textLogger: this.textLogger,
     };
+  }
+
+  fetchProduct = async (id: string) => {
+    const product = await fetch("http://localhost:9000/api/products/" + id, {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+      
+    return product;
+
   }
 
   fetchProducts = async () => {

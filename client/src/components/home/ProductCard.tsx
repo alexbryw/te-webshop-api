@@ -36,12 +36,12 @@ export default function ProductCard(props: Props) {
         <div>
           <CardMedia
             className={classes.media}
-            // image={"http://localhost:9000/api/files/" + props.product.file._id}
+            image={"http://localhost:9000/api/files/" + props.product.file._id}
             title={props.product.imgURL + " Image"}
           />
           <CardContent>
             <Typography variant="h5" component="h1">
-              {/* {props.product.name} */}
+              {props.product.title}
               {/* {console.log(props.product.file._id)} */}
             </Typography>
           </CardContent>
