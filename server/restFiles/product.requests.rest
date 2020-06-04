@@ -3,7 +3,7 @@
 
 // GET // get all products (ex. display all the products on the frontpage)
 // access : everyone
-GET http://localhost:9000/api/products/
+GET http://localhost:9000/api/products/category/vitt
 ###
 
 
@@ -11,6 +11,9 @@ GET http://localhost:9000/api/products/
 // access : everyone
 GET http://localhost:9000/api/products/5ed4f42ce0d9e350ac7964e6
 ###
+
+// GET products by category
+GET http://localhost:9000/api/products/
 
 
 // POST // post product (ex. admin adds new product to the store)

@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getAllProducts,
   getProduct,
-  fileUpload,
+  getProductsByCategory,
   addProduct,
   updateProduct,
   deleteProduct,
@@ -14,6 +14,9 @@ router.get("/", getAllProducts);
 
 // Get one product by id
 router.get("/:id", getProduct);
+
+// Get products by category
+router.get("/category/:category", getProductsByCategory);
 
 // Add new product
 router.post("/", addProduct);

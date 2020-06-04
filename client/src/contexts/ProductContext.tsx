@@ -4,7 +4,7 @@ import { Product } from "../interfaces/interfaces";
 
 const apiURL = "http://localhost:9000/api/";
 
-interface Props { }
+interface Props {}
 interface State {
   products: Product[];
 
@@ -18,7 +18,7 @@ export const ProductContext = createContext<State>({
   fetchProducts: () => {
     return [];
   },
-  textLogger: () => { },
+  textLogger: () => {},
 });
 
 export class ProductContextProvider extends Component<Props, State> {
@@ -32,20 +32,40 @@ export class ProductContextProvider extends Component<Props, State> {
     };
   }
 
-  fetchProducts = async () => {
-    const products = await fetch("http://localhost:9000/api/products/", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
-    return products;
+  fetchProducts = async (filter?: String) => {
+    if (filter === "") {
+      const products = await fetch("http://localhost:9000/api/products/", {
+        method: "GET",
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
+      return products;
+    } else {
+      const products = await fetch(
+        "http://localhost:9000/api/products/category/" + filter,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
+      return products;
+    }
   };
 
-  fetchImage = () => { };
+  fetchProductsByCategory = async () => {
+    const products = await fetch("http://localhost");
+  };
+
+  fetchImage = () => {};
 
   textLogger = (text: String): void => {
     console.log(text);

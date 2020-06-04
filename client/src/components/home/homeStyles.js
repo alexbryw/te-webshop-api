@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
         borderBottom: ".1rem solid #0002",
 
-        height: "4rem",
+        height: "5rem",
         padding: theme.spacing(1),
         '& .MuiButtonBase-root': {
             padding: theme.spacing(0, 3),
