@@ -42,7 +42,7 @@ const Layout = () => {
                                         <div><h2>Select a product</h2></div>
                                     </Route>
                                     <Route path="/product/:id">
-                                        <ProductPage />
+                                        <ProductPage productContext={productContext} />
                                     </Route>
                                 </Switch>
 

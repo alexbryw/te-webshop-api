@@ -1,75 +1,101 @@
-import React, { CSSProperties } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Product } from '../../interfaces/interfaces'
 
-// COMPONENTS
-import { items } from '../../ItemList'
-import ViewProduct from './ViewProduct'
+import {
+    makeStyles,
+    Card,
+    CardMedia,
+    Typography,
+    CardContent,
+    Grid,
+    IconButton,
+    Button
+} from '@material-ui/core/'
 
-// INTERFACES
-import { RouteMatch, Product } from '../../interfaces/interfaces'
 
-// MATERIAL UI
-import IconButton from '@material-ui/core/IconButton'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import { RouteMatch } from "../../interfaces/interfaces"
+import { CartContext } from '../../contexts/cartContext'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import { withRouter } from 'react-router-dom'
 
-interface Props extends RouteComponentProps {
-  match: RouteMatch;
+
+
+interface Props {
+    match: RouteMatch
+    productContext: any
 }
-interface State {
-  selectedItem: Product | undefined;
-}
 
-class ProductPage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      selectedItem: undefined,
-    };
-  }
-
-  findProduct(inUrlId: string) {
-    for (let item of items) {
-      if (item.id === parseInt(inUrlId)) {
-        this.setState({ selectedItem: item });
-      }
+const useStyles = makeStyles({
+    media: {
+        height: '50vh',
+    },
+    buyBtn: {
+        width: "80%",
+        margin: "2rem",
+        '& > * > * ': {
+            margin: "0 0.2rem"
+        }
+    },
+    productPageWrapper: {
+        minHeight: "calc(100vh - 13rem)"
     }
-  }
-  componentDidMount() {
-    console.log(this.props);
+})
 
-    this.findProduct(this.props.match.params.id);
-    window.scrollTo(0, 0);
-  }
+function ProductPage(props: Props) {
+    const classes = useStyles()
 
-  render() {
+    console.log(props);
+    
+
     return (
-      <>
-        <Link to="/" style={backButtonLink}>
-          <IconButton color="primary">
-            <ArrowBackIcon />
-          </IconButton>
-        </Link>
-        {this.state.selectedItem ? (
-          <ViewProduct itemData={this.state.selectedItem} />
-        ) : (
-          <h3>Product not found.</h3>
-        )}
-        {}
-      </>
-    );
-  }
+        <CartContext.Consumer>
+            {(cartState => (
+                <div className={classes.productPageWrapper}>
+                    <Grid
+                        container
+                        spacing={5}
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Grid item xs={12} sm={6} md={4}>
+                            <CardMedia
+                                className={classes.media}
+                                // image={props.itemData?.imgURL}
+                                // title={props.itemData?.name + " image"}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={4}>
+                            <CardContent>
+                                <Typography gutterBottom variant="h3" component="h2">
+                                    {/* {props.itemData?.name} */}
+                                </Typography>
+                                <Typography gutterBottom variant="h5" color="textSecondary" component="h2">
+                                    {/* {props.itemData?.price + ' kr'} */}
+                                </Typography>
+                                <Typography gutterBottom variant="body2" color="textPrimary" component="p">
+                                    {/* {props.itemData?.description} */}
+                                </Typography>
+
+                                <Button variant="contained" color="primary" className={classes.buyBtn}
+                                    onClick={() => {
+                                        cartState.setCartVisibility(true, false);
+                                        // cartState.toggleCartVisibility();
+                                        // cartState.addProduct(props.itemData?.id, 1)
+                                    }} >
+                                    <Typography variant="overline">
+                                        köp
+                                        </Typography>
+                                    <ShoppingCartIcon />
+                                </Button>
+                            </CardContent>
+                        </Grid>
+                    </Grid>
+
+                </div>
+            ))}
+        </CartContext.Consumer>
+    )
 }
 
-export default withRouter(ProductPage);
-
-const backButtonLink: CSSProperties = {
-  border: "solid 0.15em #558b2f",
-  position: "absolute",
-  left: "1em",
-  borderRadius: "3em",
-  textDecoration: "none",
-};
-const page: CSSProperties = {
-  height: "auto",
-};
+export default withRouter(ProductPage)
