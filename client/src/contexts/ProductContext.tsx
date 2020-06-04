@@ -32,6 +32,7 @@ export class ProductContextProvider extends Component<Props, State> {
     };
   }
 
+
   fetchProducts = async () => {
     const products = await fetch("http://localhost:9000/api/products/", {
       method: "GET",
@@ -46,6 +47,28 @@ export class ProductContextProvider extends Component<Props, State> {
   };
 
   fetchImage = () => { };
+
+ 
+
+//   postImage = async () => {
+//     const dbimage = await fetch("http://localhost:9000/api/files/", {
+//       method: "POST",
+//       credentials: "include",
+//     })
+//       .then((res) => res.json())
+//       .then((json) => {
+//         console.log('************************',json);
+//         return json;
+//       });
+//     return dbimage;
+    
+//   };
+
+//   async componentDidMount(){
+//     const data = await this.postImage()
+//     console.log("from product Context ****HELLO****")
+//     console.log(data)
+// }
 
   textLogger = (text: String): void => {
     console.log(text);

@@ -22,10 +22,10 @@ interface Props {
 
 interface State {
     isSentMessage: string,
-    id: number,
-    name: string,
-    price: number,
-    imgURL: string,
+    id: number
+    name: string
+    price: number
+    imgURL: string
     description: string
     nrInStock?: number
     category?: string
@@ -46,11 +46,27 @@ export default class EditItem extends React.Component<Props, State> {
         }
     }
 
+    
+    
     //Updates states so it matches the textboxes content
     handleIdInput = (event: { target: { value: any } }) => this.setState({ id: event.target.value })
     handleNameInput = (event: { target: { value: any } }) => this.setState({ name: event.target.value })
     handlePriceInput = (event: { target: { value: any } }) => this.setState({ price: event.target.value })
-    handleimgURLChange = (event: { target: { value: any } }) => this.setState({ imgURL: event.target.value })
+    
+
+
+
+    // TODO FLYTTA TILL ProductContext
+    handleimgURLChange = (event: any ) => {
+        const input: any = document.querySelector('.imageUploader')
+        if(input) {
+            this.uploadFile(input.files[0])
+        }
+    }
+    // TODO FLYTTA TILL ProductContext
+
+
+
     handleDescriptionInput = (event: { target: { value: any } }) => this.setState({ description: event.target.value })
     handleNumberInStockInput = (event: { target: { value: any } }) => this.setState({ nrInStock: event.target.value })
     handleCategoryInput = (event: { target: { value: any } }) => this.setState({ category: event.target.value })
@@ -90,6 +106,38 @@ export default class EditItem extends React.Component<Props, State> {
         }
         return userMassage
     }
+
+  // TODO FLYTTA TILL ProductContext
+    uploadFile = (file:any) => {
+
+        console.log(file.size)
+        // add file to FormData object
+        const fd = new FormData();
+        //fd.append('name','bild')
+        fd.append( 'image', file);
+        console.log(fd)
+        // send `POST` request
+        fetch('http://localhost:9000/api/files/', {
+            method: 'POST',
+            body: fd
+        })
+        .then(res => res.json())
+        .then(json => console.log(json))
+        .catch(err => console.error(err));
+
+        if(!['image/jpeg', 'image/gif', 'image/png'].includes(file.type)) {
+            console.log('Only images are allowed.');
+            return;
+        }
+    
+        // check file size (< 2MB)
+        if(file.size > 2 * 1024 * 1024) {
+            console.log('File must be less than 2MB.');
+            return;
+        }
+    
+    }    
+    // TODO FLYTTA TILL ProductContext
 
     render() {
         let itemData = {
@@ -141,19 +189,25 @@ export default class EditItem extends React.Component<Props, State> {
                                 error={isNaN(this.state.price)}
                                 helperText={isNaN(this.state.price) ? 'Inte en siffra' : ' '}
                             />
-                            <TextField
+                            {/* <TextField
                                 fullWidth
                                 name="imgURL"
                                 label="ImgURL"
                                 variant="outlined"
-                                value={this.state.imgURL}
-                                onChange={this.handleimgURLChange}
+                                //value={this.state.imgURL}
+                                //onChange={this.handleimgURLChange}
                                 error={this.state.imgURL === ""}
                                 helperText={this.state.imgURL === "" ? 'Tomt fält' : ' '}
-                            />
-                            <input type="file">
-                            </input>
-
+                            /> */}
+                            <Button variant="contained" style={buttonForUpload}>
+                                <input 
+                                    style={inputForUpload}
+                                    className={'imageUploader'}
+                                    name="imgURL"
+                                    type="file"
+                                    onChange={this.handleimgURLChange}
+                                />
+                            </Button>
                             <TextField
                                 fullWidth
                                 name="description"
@@ -216,4 +270,12 @@ export default class EditItem extends React.Component<Props, State> {
 
 const divSpace: CSSProperties = {
     margin: "0 0 1em 0"
+}
+
+const inputForUpload: CSSProperties = {
+    padding: "0 0 2em 0"
+}
+
+const buttonForUpload: CSSProperties = {
+    margin: "0 0 2em 0"
 }
