@@ -45,6 +45,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     cartIcon: {
+        background: "#9cba98",
+        transition: ".22s ease-in-out",
+        '& path': {
+            color: "#fff"
+        },
+        '&:hover': {
+            background: "#558b2f"
+        }
     },
     relativeContainer: {
         width: "100%",
@@ -104,8 +112,7 @@ export function Cart(props: Props) {
         <div className={classes.relativeContainer}>
             <IconButton
                 className={classes.cartIcon}
-                color="secondary"
-                style={{ border: 'solid #9cba98 0.1em' }}
+                // color="secondary"
                 onClick={() => props.cartState.toggleCartVisibility()}>
 
                 {props.cartState.cartList.length === 0 ?

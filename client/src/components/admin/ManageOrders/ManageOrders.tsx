@@ -110,7 +110,7 @@ const ManageOrders = () => {
             )
             )
                 :
-                <Grid container xs={12} className={classes.product}>
+                <Grid container className={classes.product}>
                     <Typography variant="h4"> loading orders </Typography>
                 </Grid>
 

@@ -1,8 +1,5 @@
 import React, { useEffect } from "react"
 
-// TYPES
-import { AdminView } from "../../../types/types"
-
 // MATERIAL UI
 import { Typography, Grid, Container, IconButton, Button, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
 
@@ -21,6 +18,7 @@ const ManageUsers = (props: Props) => {
     const classes = useStyles()
 
     const [users, setUsers] = React.useState([])
+    const [acceptAdmin, setAcceptAdmin] = React.useState(false)
 
     const gatherUsers = async () => {
         setUsers(await props.userContext.getUsers())
@@ -56,7 +54,7 @@ const ManageUsers = (props: Props) => {
                                 <ListItemText primary={user.admin ? "admin" : "user"} />
                                 <ListItemText primary={user._id} />
 
-                                {user.requestsAdmin ?
+                                {user.requestsAdmin && !user.admin ?
                                     <ListItem>
                                         <ListItemText primary="Requests&nbsp;admin" />
                                         <IconButton onClick={() => console.log("Accept user :", user.name)}>
