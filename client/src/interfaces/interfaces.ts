@@ -36,7 +36,7 @@ export interface CartItem {
     id: string
     nrItems: number
     // product: Product
-    product: NewProduct
+    product: any //or NewProduct
 }
 
 //Sorry for long lump of code

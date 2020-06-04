@@ -31,7 +31,7 @@ export interface State {
     toggleCartVisibility: () => void,
     setCartVisibility: (visibility: Boolean, clear: Boolean) => void,
 
-    addProduct: (inItemId: string, inNrItems: number) => void
+    addProduct: (inItemId: any, inNrItems: number) => void
     removeItemFromCart: (inItemId: string) => void
     emptyCart: () => void
 }
@@ -91,8 +91,8 @@ export class CartProvider extends React.Component<Props, State>{
 
     // Add a product to cartList array, Id and Number of items to add.
     // Number of items can be negative -1 to remove a product or positive to add.
-    addProduct = async (inItemId: string, inNrItems: number) =>  {
-        console.log(inItemId,inNrItems)
+    addProduct = async (inItemId: any, inNrItems: number) =>  {
+        console.log(inItemId,inNrItems,"  from addProduct cartContext")
         console.log(this.state.cartList)
         const cartListPosition = this.findItemInCart(inItemId)
         const updatedCartList = [...this.state.cartList]
@@ -112,7 +112,7 @@ export class CartProvider extends React.Component<Props, State>{
         } else {    //If item is not in list then a new item is pushed to list.
             if (inNrItems > 0) {
                 const fetchedProducts = await fetchProducts()
-                const newProduct = fetchedProducts.find(({ _id }) => _id === inItemId)
+                const newProduct = fetchedProducts.find(({ _id }) => _id === inItemId) //cant find on await promise <any>?
                 if (newProduct) {
                     updatedCartList.push({ id: inItemId, nrItems: inNrItems, product: newProduct })
                 }
