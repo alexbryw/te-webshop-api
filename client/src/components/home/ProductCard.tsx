@@ -42,8 +42,7 @@ export default function ProductCard(props: Props) {
           
           <CardContent>
             <Typography variant="h5" component="h1">
-              {/* {props.product.name} */}
-              {/* {console.log(props.product.file._id)} */}
+              {props.product.title}
             </Typography>
           </CardContent>
         </div>

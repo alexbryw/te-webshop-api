@@ -20,6 +20,16 @@ function getProduct(req, res, next) {
   }).populate('file')
 }
 
+function getProductsByCategory(req, res, next) {
+  const products = Product.find({ category: req.params.category }, (err, result) => {
+    if (err) {
+      next(err)
+    } else {
+      res.json(result)
+    }
+  }).populate('file')
+}
+
 function addProduct(req, res, next) {
   // console.log(req)
   // console.log("fiiiles", req.files)
@@ -63,6 +73,7 @@ function deleteProduct(req, res, next) {
 module.exports = {
   getAllProducts,
   getProduct,
+  getProductsByCategory,
   addProduct,
   updateProduct,
   deleteProduct,
