@@ -4,7 +4,7 @@ import { Product } from "../interfaces/interfaces";
 
 const apiURL = "http://localhost:9000/api/";
 
-interface Props { }
+interface Props {}
 interface State {
   products: Product[];
 
@@ -18,7 +18,7 @@ export const ProductContext = createContext<State>({
   fetchProducts: () => {
     return [];
   },
-  textLogger: () => { },
+  textLogger: () => {},
 });
 
 export class ProductContextProvider extends Component<Props, State> {
@@ -46,7 +46,11 @@ export class ProductContextProvider extends Component<Props, State> {
     return products;
   };
 
-  fetchImage = () => { };
+  fetchProductsByCategory = async () => {
+    const products = await fetch("http://localhost");
+  };
+
+  fetchImage = () => {};
 
  
 
