@@ -29,7 +29,7 @@ const Layout = () => {
 
 
                                 <Switch>
-                                    <Route exact path="/home">
+                                    <Route exact path="/">
                                         <Home productContext={productContext} userContext={userContext} />
                                     </Route>
                                     <Route exact path="/admin">

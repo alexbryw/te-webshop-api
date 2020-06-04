@@ -43,7 +43,7 @@ export default function Header() {
                                     :
                                     <LoginModal userContext={userContext} buttonHandle="logga in" />}
 
-                                <Link to="/home" className={classes.logo}>
+                                <Link to="/" className={classes.logo}>
                                     <img src={logo} alt="logo" className={classes.logoImg} />
                                 </Link>
 
