@@ -10,6 +10,17 @@ export interface Product {
     category?: string
 }
 
+export interface NewProduct {
+    _id: string,
+    name: string,
+    price: number,
+    description: string
+    file: any
+    nrInStock: number
+    category: [string]
+    __v: any
+}
+
 
 //For Url path props in React Router in Product component.
 export interface RouteMatch {
@@ -22,9 +33,10 @@ export interface RouteMatch {
 }
 
 export interface CartItem {
-    id: number
+    id: string
     nrItems: number
-    product: Product
+    // product: Product
+    product: NewProduct
 }
 
 //Sorry for long lump of code
