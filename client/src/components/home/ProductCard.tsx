@@ -1,17 +1,16 @@
 import React, { CSSProperties, useEffect } from "react";
-import { Product } from "../items/itemListCore";
-import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
+// COMPONENTS
+import PurchaseButtons from "./PurchaseButtons";
+
+// MATERIAL UI
 import {
-  Card,
-  CardActionArea,
+  makeStyles,
   CardContent,
   CardMedia,
   Typography,
 } from "@material-ui/core/";
-
-import PurchaseButtons from "./PurchaseButtons";
-import { Link } from "react-router-dom";
 
 interface Props {
   product: any;
@@ -37,13 +36,13 @@ export default function ProductCard(props: Props) {
         <div>
           <CardMedia
             className={classes.media}
-            image={"http://localhost:9000/api/files/" + props.product.file._id}
+            // image={"http://localhost:9000/api/files/" + props.product.file._id}
             title={props.product.imgURL + " Image"}
           />
           <CardContent>
             <Typography variant="h5" component="h1">
               {/* {props.product.name} */}
-              {console.log(props.product.file._id)}
+              {/* {console.log(props.product.file._id)} */}
             </Typography>
           </CardContent>
         </div>

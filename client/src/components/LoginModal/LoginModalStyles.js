@@ -19,8 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    // margin: theme.spacing(1),
-    margin: "auto",
     padding: theme.spacing(1, 2)
   },
   registerContainer: {
@@ -32,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(0, 1),
     },
   },
+
   btnWrapper: {
     display: "flex",
     justifyContent: "center"

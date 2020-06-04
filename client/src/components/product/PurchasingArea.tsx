@@ -1,47 +1,46 @@
-import React,{ CSSProperties, useState } from 'react'
-import { Product } from '../items/itemListCore'
-import CardActions from '@material-ui/core/CardActions'
-import Button from '@material-ui/core/Button'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { CartContext } from '../../contexts/cartContext'
+import React, { CSSProperties, useState } from 'react'
+
+//COMPONENTS
 import AddedToCart from './../AddedToCart'
 
+// MATERIAL UI
+import { Button, CardActions } from '@material-ui/core/'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
-interface Props{
+
+// INTERFACES
+import { Product } from '../../interfaces/interfaces'
+
+// CONTEXT
+import { CartContext } from '../../contexts/cartContext'
+
+
+interface Props {
     itemData: Product
 }
 
-export default function PurchasingArea( props: Props ){
-    const [isCartShown, setToggled] = useState(false)
-    const handleOnClick = () => setToggled(!isCartShown)
-
-    //Displays cart
-    function displayCart(){
-        if(isCartShown){
-            return <AddedToCart handleClosing = {handleOnClick}/>
-        }
-    }
+export default function PurchasingArea(props: Props) {
+    const handleOnClick = (toggleCart: () => void) => toggleCart()
 
 
-    return(
+
+    return (
         <CartContext.Consumer>
             {(cartState => (
-            <div>
-                {displayCart()}
-                <CardActions>
-                    <Button 
-                        size="large"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        onClick={() => {handleOnClick();cartState.addProduct(props.itemData?.id, 1)}}
-                    >
-                    Köp
-                    <ShoppingCartIcon
-                        style={ShoppingCartIconStyle}/>
-                    </Button>
-                </CardActions>
-            </div>
+                <>
+                    <CardActions>
+                        <Button
+                            size="large"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            onClick={() => { handleOnClick(cartState.toggleCartVisibility); cartState.addProduct(props.itemData?.id, 1) }}
+                        >
+                            Köp
+                    <ShoppingCartIcon />
+                        </Button>
+                    </CardActions>
+                </>
             ))}
         </CartContext.Consumer>
 
@@ -49,7 +48,3 @@ export default function PurchasingArea( props: Props ){
     )
 }
 
-const ShoppingCartIconStyle:CSSProperties={
-    fontSize: 15,
-    margin: '0 0 0 0.5em' 
-}

@@ -1,29 +1,46 @@
 
 import React, { createContext, Component } from "react";
+import { AdminView } from "../types/types"
 
 
 const apiURL = "http://localhost:9000/api/";
 const sessionURL = "http://localhost:9000/session/";
 
+
 interface Props { }
 interface State {
     loggedIn: Boolean,
     admin: Boolean,
-
     name: String,
 
-    textLogger: (text: String) => void
-    loginUser: (text: String, closeModal: () => void, errCb: (error: boolean, anchor: string) => void) => void
+    adminView: AdminView,
+    changeAdminView: (view: AdminView) => void,
+
+    getUsers: () => {},
+
+    registerUser: (
+        newUser: { name: string, password: string, requestsAdmin: boolean },
+        closeModal: () => void,
+        errCb: (error: boolean, anchor: string) => void) => void
+
+    loginUser: (
+        user: { name: string, password: string },
+        closeModal: () => void,
+        errCb: (error: boolean, anchor: string) => void) => void
     logOut: () => void
 }
 
 export const UserContext = createContext<State>({
     loggedIn: false,
     admin: false,
-
     name: "",
 
-    textLogger: () => { },
+    adminView: "products",
+    changeAdminView: () => { },
+
+    getUsers: () => { return {} },
+
+    registerUser: () => { },
     loginUser: () => { },
     logOut: () => { },
 
@@ -32,21 +49,67 @@ export const UserContext = createContext<State>({
 export class UserContextProvider extends Component<Props, State> {
     constructor(props: Props) {
         super(props)
-
-        // not true state, this i template
         this.state = {
             loggedIn: false,
             admin: false,
-            name: "Halvdan",
+            name: "",
 
-            textLogger: this.textLogger,
+            adminView: "products",
+            changeAdminView: this.changeAdminView,
+
+            getUsers: this.getUsers,
+
+            registerUser: this.registerUser,
             loginUser: this.loginUser,
             logOut: this.logOut
         }
     }
 
-    textLogger = (text: String): void => {
-        console.log(text);
+
+    getUsers = async () => {
+        const users = await fetch("http://localhost:9000/api/users/", {
+            method: "GET",
+            credentials: 'include',
+        }).then((response) => response.json()).then((data) => data)
+        return users
+    }
+
+    changeAdminView = (view: AdminView) => {
+        this.setState({
+            adminView: view
+        })
+    }
+
+    registerUser = async (
+        newUser: { name: string, password: string, requestsAdmin: boolean },
+        closeModal: () => void,
+        errCb: (error: boolean, anchor: string) => void) => {
+        console.log("register new user");
+
+        await fetch("http://localhost:9000/api/users/", {
+            method: "POST",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: newUser.name,
+                password: newUser.password,
+                requestsAdmin: newUser.requestsAdmin,
+                admin: false,
+            }),
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            if (!data.err) {
+                console.log(data)
+                this.loginUser(data, closeModal, errCb)
+            }
+            else {
+                errCb(true, "register")
+            }
+        })
+
     }
 
 

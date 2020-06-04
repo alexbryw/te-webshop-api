@@ -1,6 +1,6 @@
-import React from "react";
-import Layout from "./components/Layout";
-import Theme from "./MuiTheme";
+import React from 'react';
+import Layout from './components/Layout/Layout';
+import Theme from './MuiTheme'
 
 import UserContextProvider from "./contexts/UserContext"
 import { ThemeProvider } from '@material-ui/core/styles';

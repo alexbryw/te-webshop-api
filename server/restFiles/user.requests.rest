@@ -18,10 +18,11 @@ content-type: application/json
     "name": "admin",
     "password": "admin",
     "admin": true,
-    "requestsAdmin": true
+    "requestsAdmin": false
 }
 
 ###
+
 POST http://localhost:9000/api/users/ HTTP/1.1
 content-type: application/json
 
@@ -33,6 +34,7 @@ content-type: application/json
 }
 
 ###
-DELETE  http://localhost:9000/api/users/user_1 HTTP/1.1
+
+DELETE  http://localhost:9000/api/users/user HTTP/1.1
 
 

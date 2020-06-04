@@ -1,12 +1,17 @@
-import React, { CSSProperties } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import { RouteMatch } from "../../typings";
-import { Product } from "../items/itemListCore";
-import { items } from "../../ItemList";
-import ViewProduct from "./ViewProduct";
-import { Link } from "react-router-dom";
-import IconButton from "@material-ui/core/IconButton";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import React, { CSSProperties } from 'react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
+// COMPONENTS
+import { items } from '../../ItemList'
+import ViewProduct from './ViewProduct'
+
+// INTERFACES
+import { RouteMatch, Product } from '../../interfaces/interfaces'
+
+// MATERIAL UI
+import IconButton from '@material-ui/core/IconButton'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 interface Props extends RouteComponentProps {
   match: RouteMatch;
@@ -50,6 +55,7 @@ class ProductPage extends React.Component<Props, State> {
         ) : (
           <h3>Product not found.</h3>
         )}
+        {}
       </>
     );
   }

@@ -7,9 +7,8 @@ async function getUsers(req, res, next) {
     try {
         const users = await User.find();
         res.json(users);
-        next()
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -51,10 +50,10 @@ async function createUser(req, res, next) {
     });
     try {
         const newUser = await user.save();
-        res.status(201).json({ name: newUser.name, admin: newUser.admin });
-        next()
+        res.status(201).json({ name: newUser.name, password: req.body.password });
+
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json({ err: err.message });
     }
 }
 
@@ -64,7 +63,7 @@ async function deleteUser(req, res, next) {
         await res.user.remove()
         res.json({ msg: "deleted user: " + res.user.name })
     } catch (err) {
-        res.status(500).json({ message: err.mesage })
+        res.status(500).json({ err: err.mesage })
     }
 }
 

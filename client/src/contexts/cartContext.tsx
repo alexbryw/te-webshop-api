@@ -2,7 +2,7 @@
 //The state content is provided to the rest of the app to consume with <CartContext.Consumer>.
 
 import React, { createContext } from 'react'
-import { CartItem } from '../typings'
+import { CartItem } from '../interfaces/interfaces'
 import { items } from '../ItemList'
 
 export const CartContext = createContext<State>({

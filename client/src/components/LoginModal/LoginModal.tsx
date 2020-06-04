@@ -13,8 +13,9 @@ import useStyles from './LoginModalStyles';
 type LoginModalView = "login" | "register"
 
 interface Props {
-    userContext: any
-    cancelTimeout: (visibility: Boolean, altVisibility: Boolean | null) => void
+    userContext: any,
+    buttonHandle: string
+    // cancelTimeout: (visibility: Boolean, altVisibility: Boolean | null) => void
 }
 
 const LoginModal = (props: Props) => {
@@ -71,7 +72,7 @@ const LoginModal = (props: Props) => {
     const handleOpen = () => {
         setOpen(true);
 
-        props.cancelTimeout(true, true)
+        // props.cancelTimeout(true, true)
     };
 
     const handleClose = () => {
@@ -94,11 +95,12 @@ const LoginModal = (props: Props) => {
                     variant="outlined"
                     id="outlined-helperText"
                     label="username"
-                    helperText={inputValues.username.length > 20 ? "username can't be longer than 20 characters" : null}
+                    helperText={inputErrors.register ? "username is unavailable" :
+                        inputValues.username.length > 20 ? "username can't be longer than 20 characters" : null}
 
                     value={inputValues.username}
                     onChange={(e) => changeInputValues(e, "username")}
-                    error={inputErrors.login}
+                    error={inputErrors.login || inputErrors.register}
                 />
             </Grid>
             <Grid item xs={9}>
@@ -110,7 +112,7 @@ const LoginModal = (props: Props) => {
                     label="password"
                     helperText={inputValues.password.length > 20 ? "password can't be longer than 20 characters" : null}
 
-                    value={inputValues.password}
+                    value={inputErrors.login ? "" : inputValues.password}
                     onChange={(e) => changeInputValues(e, "password")}
                     error={inputErrors.login}
                 />
@@ -145,7 +147,7 @@ const LoginModal = (props: Props) => {
 
             }
 
-            <Grid item xs={12} justify="center"
+            <Grid item xs={12}
                 className={classes.btnWrapper}
             >
                 {view === "login" ?
@@ -155,13 +157,26 @@ const LoginModal = (props: Props) => {
                         onClick={() => props.userContext.loginUser(
                             { name: inputValues.username, password: inputValues.password },
                             handleClose,
-                            handleSetInputErrors)}>
+                            handleSetInputErrors
+                        )}>
                         Logga in
                     </Button>
                     :
-                    <Button variant="contained"
+                    <Button
+                        variant="contained"
                         color="primary"
-                        onClick={() => props.userContext.textLogger("registrera ny användare \nusername: " + inputValues.username + "\npassword: " + inputValues.password)}
+                        disabled={inputValues.password !== inputValues.confirmPassword
+                            || inputValues.password.length < 3
+                            || inputValues.username.length < 3}
+                        onClick={() => props.userContext.registerUser(
+                            {
+                                name: inputValues.username,
+                                password: inputValues.password,
+                                requestsAdmin: inputValues.requestAdmin
+                            },
+                            handleClose,
+                            handleSetInputErrors
+                        )}
                     >
                         Registrera
                     </Button>
@@ -186,8 +201,8 @@ const LoginModal = (props: Props) => {
                 color="primary"
                 onClick={() => handleOpen()}
                 className={classes.button} >
-                Logga in & gå till kassan
-        </Button>
+                {props.buttonHandle}
+            </Button>
             <Modal
                 open={open}
                 onClose={handleClose}

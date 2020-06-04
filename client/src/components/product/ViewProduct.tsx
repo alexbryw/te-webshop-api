@@ -1,5 +1,5 @@
 import React from 'react'
-import { Product } from '../items/itemListCore'
+import { Product } from '../../interfaces/interfaces'
 
 import {
     makeStyles,
