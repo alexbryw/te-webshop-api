@@ -11,6 +11,7 @@ interface State {
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
 
+  getCategories: () => any;
 }
 
 export const ProductContext = createContext<State>({
@@ -21,6 +22,10 @@ export const ProductContext = createContext<State>({
   },
   fetchProduct: () => {
     return {};
+  },
+
+  getCategories: () => {
+    return [];
   }
 });
 
@@ -32,36 +37,50 @@ export class ProductContextProvider extends Component<Props, State> {
 
       fetchProducts: this.fetchProducts,
       fetchProduct: this.fetchProduct,
+
+      getCategories: this.getCategories
     };
   }
 
+  getCategories = async () => {
+    const products = await this.fetchProducts("")
+    let categories: string[] = [""]
+
+    products.forEach((product: any) => {
+      product.category.forEach((cate: string) => {
+        const found = categories.find(x => x === cate)
+
+        if (!found) categories.push(cate)
+        console.log(cate, found);
+      });
+    });
+    console.log(categories);
+
+    return categories
+  }
+
   fetchProducts = async (filter?: String) => {
+    let filterURL: string;
+
     if (filter === "") {
-      const products = await fetch("http://localhost:9000/api/products/", {
+      filterURL = "http://localhost:9000/api/products/"
+
+    } else {
+      filterURL = "http://localhost:9000/api/products/category/" + filter
+    }
+
+    const products = await fetch(filterURL,
+      {
         method: "GET",
         credentials: "include",
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          return data;
-        });
-      return products;
-    } else {
-      const products = await fetch(
-        "http://localhost:9000/api/products/category/" + filter,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          return data;
-        });
-      return products;
-    }
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+    return products;
   };
 
   fetchProduct = async (id: string) => {

@@ -21,9 +21,8 @@ interface Props {
 
 export default function Home(props: Props) {
   const classes = useStyles();
-  
-  const categories = ["", "svart", "vitt", "grönt", "koffeinfritt"]
 
+  const [categories, setCategories] = React.useState<[]>([]);
   const [products, setProducts] = React.useState<[]>([]);
 
   const [filter, setFilter] = React.useState<String>("");
@@ -32,13 +31,19 @@ export default function Home(props: Props) {
     setFilter(x);
   };
 
+  const getCategories = async () => {
+    setCategories(
+      await props.productContext.getCategories()
+    )
+  }
+
   const getProducts = async () => {
     setProducts(await props.productContext.fetchProducts(filter));
   };
 
   useEffect(() => {
+    getCategories()
     getProducts()
-    console.log(filter)
   }, [filter]);
 
   return (
