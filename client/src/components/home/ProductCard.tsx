@@ -49,7 +49,7 @@ export default function ProductCard(props: Props) {
       </Link>
       <PurchaseButtons
         itemPrice={props.product.price}
-        itemId={props.product.id}
+        itemId={props.product._id}
       />
     </>
   );
