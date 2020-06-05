@@ -1,7 +1,7 @@
 const Product = require("../../models/product.model");
 
 function getAllProducts(req, res, next) {
- const product = Product.find({}, (err, result) => {
+  const product = Product.find({}, (err, result) => {
     if (err) {
       next(err);
     } else {
@@ -31,9 +31,6 @@ function getProductsByCategory(req, res, next) {
 }
 
 function addProduct(req, res, next) {
-  // console.log(req)
-  // console.log("fiiiles", req.files)
-  // console.log(req.body, "booody")
   const product = new Product(req.body);
   product.save((err, product) => {
     if (err) {
@@ -42,7 +39,6 @@ function addProduct(req, res, next) {
       res.json(product);
     }
   })
-  // res.json({msg: "test"})
 }
 
 function updateProduct(req, res, next) {

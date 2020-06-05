@@ -15,7 +15,6 @@ async function login(req, res, next) {
             req.session.admin = res.user.admin
 
             console.log("created client session");
-            console.log(req.session);
 
 
             // return successful login
@@ -54,7 +53,6 @@ async function checkLoginSession(req, res, next) {
 
     try {
         console.log("checking if session is active")
-        console.log("req", req.session);
 
         let user
         if (req.session.id) {

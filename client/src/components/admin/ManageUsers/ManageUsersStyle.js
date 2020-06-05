@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
         position: "relative",
         width: "100%",
 
+        "& .MuiIconButton-root": {
+            padding: "0 0 0 12px"
+        },
+
         "& .MuiListItemText-root": {
             flex: "0 1 auto",
         },
