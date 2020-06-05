@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-
         backgroundColor: '#346933',
         width: '100vw',
         position: 'relative',

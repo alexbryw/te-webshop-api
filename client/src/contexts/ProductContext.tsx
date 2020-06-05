@@ -4,12 +4,13 @@ import { Product } from "../interfaces/interfaces";
 
 const apiURL = "http://localhost:9000/api/";
 
-interface Props {}
+interface Props { }
 interface State {
   products: Product[];
 
   fetchProducts: () => any;
-  textLogger: (text: String) => void;
+  fetchProduct: (id: string) => any;
+
 }
 
 export const ProductContext = createContext<State>({
@@ -18,7 +19,9 @@ export const ProductContext = createContext<State>({
   fetchProducts: () => {
     return [];
   },
-  textLogger: () => {},
+  fetchProduct: () => {
+    return {};
+  }
 });
 
 export class ProductContextProvider extends Component<Props, State> {
@@ -28,7 +31,7 @@ export class ProductContextProvider extends Component<Props, State> {
       products: [],
 
       fetchProducts: this.fetchProducts,
-      textLogger: this.textLogger,
+      fetchProduct: this.fetchProduct,
     };
   }
 
@@ -61,15 +64,20 @@ export class ProductContextProvider extends Component<Props, State> {
     }
   };
 
-  fetchProductsByCategory = async () => {
-    const products = await fetch("http://localhost");
-  };
+  fetchProduct = async (id: string) => {
+    const product = await fetch("http://localhost:9000/api/products/" + id, {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
 
-  fetchImage = () => {};
+    return product;
 
-  textLogger = (text: String): void => {
-    console.log(text);
-  };
+  }
 
   render() {
     return (
