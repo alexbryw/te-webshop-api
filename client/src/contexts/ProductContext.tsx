@@ -8,12 +8,17 @@ interface Props {}
 interface State {
   products: Product[];
 
+  uploadFile:(file:any) => any
   fetchProducts: () => any;
   textLogger: (text: String) => void;
 }
 
 export const ProductContext = createContext<State>({
   products: [],
+
+  uploadFile: () => {
+    return ""
+  },
 
   fetchProducts: () => {
     return [];
@@ -27,6 +32,7 @@ export class ProductContextProvider extends Component<Props, State> {
     this.state = {
       products: [],
 
+      uploadFile: this.uploadFile,
       fetchProducts: this.fetchProducts,
       textLogger: this.textLogger,
     };
@@ -52,8 +58,48 @@ export class ProductContextProvider extends Component<Props, State> {
 
   fetchImage = () => {};
 
- 
 
+
+  //   // TODO FLYTTA TILL ProductContext
+  //   handleimgURLChange = (event: any ) => {
+  //     const input: any = document.querySelector('.imageUploader')
+  //     if(input) {
+  //         this.uploadFile(input.files[0])
+  //     }
+  // }
+// TODO FLYTTA TILL ProductContext
+
+    // TODO FLYTTA TILL ProductContext
+    uploadFile = (file:any) => {
+
+      console.log(file.size)
+      // add file to FormData object
+      const fd = new FormData();
+      //fd.append('name','bild')
+      fd.append( 'image', file);
+      console.log(fd)
+      // send `POST` request
+      fetch('http://localhost:9000/api/files/', {
+          method: 'POST',
+          body: fd
+      })
+      .then(res => res.json())
+      .then(json => console.log(json))
+      .catch(err => console.error(err));
+
+      if(!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+          console.log('Only images are allowed.');
+          return;
+      }
+
+      // check file size (< 2MB)
+      if(file.size > 2 * 1024 * 1024) {
+          console.log('File must be less than 2MB.');
+          return;
+      }
+
+    }    
+    // TODO FLYTTA TILL ProductContext
 //   postImage = async () => {
 //     const dbimage = await fetch("http://localhost:9000/api/files/", {
 //       method: "POST",
