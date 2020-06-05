@@ -1,5 +1,5 @@
 // GET one specific file
-GET http://localhost:9000/api/files/5ed8b26e4e7960d8ba6a7be6
+GET http://localhost:9000/api/files/5ed900d53e855d0c5758150e
 
 
 ###

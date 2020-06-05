@@ -12,7 +12,7 @@ import { Product } from '../../../interfaces/interfaces'
 import { Container, Card } from '@material-ui/core/'
 
 // CONTEXTS
-import { OrderContext } from "../../../contexts/OrderContext"
+import { ProductContext } from '../../../contexts/ProductContext';
 
 interface Props {
     items: Product[]
@@ -88,17 +88,17 @@ const ManageProducts = () => {
 
 
     return (
-        <OrderContext.Consumer>{(Order) => (
+        <ProductContext.Consumer>{(productContext) => (
             <Container>
-                {/* <OrderListTemp Order={Order} /> */}
                 <Card variant="outlined">
-                    <NewItemToggle handleNew={handleNew} />
+                    <NewItemToggle handleNew={handleNew} productContext={productContext}/>
+                    
                 </Card>
                 {items.map((itemData: Product, index: number) =>
                     <ProductAdminList itemData={itemData} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
                 )}
             </Container>
-        )}</OrderContext.Consumer>
+        )}</ProductContext.Consumer>
     )
 
 }

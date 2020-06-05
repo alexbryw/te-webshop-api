@@ -8,6 +8,7 @@ interface Props { }
 interface State {
   products: Product[];
 
+  uploadFile:(file:any) => any
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
 
@@ -16,6 +17,10 @@ interface State {
 
 export const ProductContext = createContext<State>({
   products: [],
+
+  uploadFile: () => {
+    return ""
+  },
 
   fetchProducts: () => {
     return [];
@@ -35,6 +40,7 @@ export class ProductContextProvider extends Component<Props, State> {
     this.state = {
       products: [],
 
+      uploadFile: this.uploadFile,
       fetchProducts: this.fetchProducts,
       fetchProduct: this.fetchProduct,
 
@@ -92,11 +98,62 @@ export class ProductContextProvider extends Component<Props, State> {
       .then((data) => {
         console.log(data);
         return data;
-      });
+      });}
 
-    return product;
 
-  }
+    uploadFile = (file:any) => {
+
+      console.log(file.size)
+      // add file to FormData object
+      const fd = new FormData();
+      //fd.append('name','bild')
+      fd.append( 'image', file);
+      console.log(fd)
+      // send `POST` request
+      fetch('http://localhost:9000/api/files/', {
+          method: 'POST',
+          body: fd
+      })
+      .then(res => res.json())
+      .then(json => console.log(json))
+      .catch(err => console.error(err));
+
+      if(!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+          console.log('Only images are allowed.');
+          return;
+      }
+
+      // check file size (< 2MB)
+      if(file.size > 2 * 1024 * 1024) {
+          console.log('File must be less than 2MB.');
+          return;
+      }
+
+    }    
+
+//   postImage = async () => {
+//     const dbimage = await fetch("http://localhost:9000/api/files/", {
+//       method: "POST",
+//       credentials: "include",
+//     })
+//       .then((res) => res.json())
+//       .then((json) => {
+//         console.log('************************',json);
+//         return json;
+//       });
+//     return dbimage;
+    
+//   };
+
+//   async componentDidMount(){
+//     const data = await this.postImage()
+//     console.log("from product Context ****HELLO****")
+//     console.log(data)
+// }
+
+  textLogger = (text: String): void => {
+    console.log(text);
+  };
 
   render() {
     return (

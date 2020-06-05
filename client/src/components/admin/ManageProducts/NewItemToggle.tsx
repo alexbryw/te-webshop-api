@@ -7,6 +7,7 @@ import NewItem from "./NewItem"
 
 interface Props{
     handleNew:any
+    productContext: any
 }
 
 interface State {
@@ -33,7 +34,7 @@ export default class NewItemToggle extends React.Component<Props, State> {
                     </IconButton>
                     Ny produkt
                 </Typography>  
-                {this.state.toggleItem? <NewItem handleNew={this.props.handleNew}/> : null}
+                {this.state.toggleItem? <NewItem handleNew={this.props.handleNew}  productContext={this.props.productContext}/> : null}
                 <div style={space}/>
             </Container>
         )

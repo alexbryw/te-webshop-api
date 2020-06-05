@@ -4,11 +4,14 @@ import React, { CSSProperties } from 'react'
 import { Product } from '../../../interfaces/interfaces'
 
 // MATERIAL
-import { TextField, Typography, FormControl, Container, Button } from '@material-ui/core/'
+import { TextField, Typography, FormControl, Container, Button, makeStyles, Theme, createStyles } from '@material-ui/core/'
 
 // ICONS
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import useStyles from '../../Footer/FooterStyle';
+import { ProductContext } from '../../../contexts/ProductContext';
 
 interface Props {
     itemData: Product
@@ -22,16 +25,18 @@ interface Props {
 
 interface State {
     isSentMessage: string,
-    id: number,
-    name: string,
-    price: number,
-    imgURL: string,
+    id: number
+    name: string
+    price: number
+    imgURL: string
     description: string
     nrInStock?: number
     category?: string
 }
 
 export default class EditItem extends React.Component<Props, State> {
+   
+
     constructor(props: Props) {
         super(props)
         this.state = {
@@ -46,11 +51,27 @@ export default class EditItem extends React.Component<Props, State> {
         }
     }
 
+    
+    
     //Updates states so it matches the textboxes content
     handleIdInput = (event: { target: { value: any } }) => this.setState({ id: event.target.value })
     handleNameInput = (event: { target: { value: any } }) => this.setState({ name: event.target.value })
     handlePriceInput = (event: { target: { value: any } }) => this.setState({ price: event.target.value })
-    handleimgURLChange = (event: { target: { value: any } }) => this.setState({ imgURL: event.target.value })
+    
+
+
+
+    // // TODO FLYTTA TILL ProductContext
+    // handleimgURLChange = (event: any ) => {
+    //     const input: any = document.querySelector('.imageUploader')
+    //     if(input) {
+    //         this.uploadFile(input.files[0])
+    //     }
+    // }
+    // // TODO FLYTTA TILL ProductContext
+
+
+
     handleDescriptionInput = (event: { target: { value: any } }) => this.setState({ description: event.target.value })
     handleNumberInStockInput = (event: { target: { value: any } }) => this.setState({ nrInStock: event.target.value })
     handleCategoryInput = (event: { target: { value: any } }) => this.setState({ category: event.target.value })
@@ -91,6 +112,38 @@ export default class EditItem extends React.Component<Props, State> {
         return userMassage
     }
 
+//   // TODO FLYTTA TILL ProductContext
+//     uploadFile = (file:any) => {
+
+//         console.log(file.size)
+//         // add file to FormData object
+//         const fd = new FormData();
+//         //fd.append('name','bild')
+//         fd.append( 'image', file);
+//         console.log(fd)
+//         // send `POST` request
+//         fetch('http://localhost:9000/api/files/', {
+//             method: 'POST',
+//             body: fd
+//         })
+//         .then(res => res.json())
+//         .then(json => console.log(json))
+//         .catch(err => console.error(err));
+
+//         if(!['image/jpeg', 'image/gif', 'image/png'].includes(file.type)) {
+//             console.log('Only images are allowed.');
+//             return;
+//         }
+    
+//         // check file size (< 2MB)
+//         if(file.size > 2 * 1024 * 1024) {
+//             console.log('File must be less than 2MB.');
+//             return;
+//         }
+    
+//     }    
+//     // TODO FLYTTA TILL ProductContext
+   
     render() {
         let itemData = {
             id: this.state.id,
@@ -103,7 +156,10 @@ export default class EditItem extends React.Component<Props, State> {
         }
         let userMassage = this.checkInput()
         return (
-            <Container>
+            <ProductContext.Consumer>
+                {
+                    (productContext) => (
+                        <Container>
                 {this.props.deleted ? null :
                     <Button
                         variant="outlined"
@@ -117,6 +173,7 @@ export default class EditItem extends React.Component<Props, State> {
                     </Button>
                 }
                 {this.props.deleted ? null :
+                // <div className={classes.divSpace}/>
                     <div style={divSpace} />}
                 {this.props.deleted ? null :
                     <FormControl fullWidth>
@@ -141,19 +198,30 @@ export default class EditItem extends React.Component<Props, State> {
                                 error={isNaN(this.state.price)}
                                 helperText={isNaN(this.state.price) ? 'Inte en siffra' : ' '}
                             />
-                            <TextField
+                            {/* <TextField
                                 fullWidth
                                 name="imgURL"
                                 label="ImgURL"
                                 variant="outlined"
-                                value={this.state.imgURL}
-                                onChange={this.handleimgURLChange}
+                                //value={this.state.imgURL}
+                                //onChange={this.handleimgURLChange}
                                 error={this.state.imgURL === ""}
                                 helperText={this.state.imgURL === "" ? 'Tomt fält' : ' '}
-                            />
-                            <input type="file">
-                            </input>
-
+                            /> */}
+                          
+                            
+                            <span style={buttonForUpload}>
+                                <CloudUploadIcon />
+                                    Välj bild
+                                <input 
+                                    style={inputForUpload}
+                                    className={'imageUploader'}
+                                    name="imgURL"
+                                    type="file"
+                                    //onChange={this.handleimgURLChange}
+                                />       
+                            </span>
+                           
                             <TextField
                                 fullWidth
                                 name="description"
@@ -210,10 +278,31 @@ export default class EditItem extends React.Component<Props, State> {
                     </Button>
                 }
             </Container>
+                    )
+                }
+            </ProductContext.Consumer>
+            
         )
     }
 }
 
 const divSpace: CSSProperties = {
     margin: "0 0 1em 0"
+}
+
+const inputForUpload: CSSProperties = {
+    zIndex: 1,
+    cursor: "pointer",
+    opacity: 0.7,
+    position: "relative",
+    padding: "2rem",
+    marginRight: "5rem",
+    marginBottom: "1.5rem"
+}
+
+const buttonForUpload: CSSProperties = {
+    marginTop: "2rem",
+    margin: "0 0 0em 0",
+    top: "50%",
+    left:" 50%",
 }
