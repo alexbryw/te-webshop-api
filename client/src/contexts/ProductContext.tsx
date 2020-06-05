@@ -25,7 +25,7 @@ export const ProductContext = createContext<State>({
   },
 
   getCategories: () => {
-    return {};
+    return [];
   }
 });
 
@@ -42,7 +42,22 @@ export class ProductContextProvider extends Component<Props, State> {
     };
   }
 
-  getCategories = async () => { }
+  getCategories = async () => {
+    const products = await this.fetchProducts("")
+    let categories: string[] = [""]
+
+    products.forEach((product: any) => {
+      product.category.forEach((cate: string) => {
+        const found = categories.find(x => x === cate)
+
+        if (!found) categories.push(cate)
+        console.log(cate, found);
+      });
+    });
+    console.log(categories);
+
+    return categories
+  }
 
   fetchProducts = async (filter?: String) => {
     let filterURL: string;
