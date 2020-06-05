@@ -11,7 +11,6 @@ interface State {
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
 
-  textLogger: (text: String) => void;
 }
 
 export const ProductContext = createContext<State>({
@@ -22,8 +21,7 @@ export const ProductContext = createContext<State>({
   },
   fetchProduct: () => {
     return {};
-  },
-  textLogger: () => { },
+  }
 });
 
 export class ProductContextProvider extends Component<Props, State> {
@@ -34,9 +32,37 @@ export class ProductContextProvider extends Component<Props, State> {
 
       fetchProducts: this.fetchProducts,
       fetchProduct: this.fetchProduct,
-      textLogger: this.textLogger,
     };
   }
+
+  fetchProducts = async (filter?: String) => {
+    if (filter === "") {
+      const products = await fetch("http://localhost:9000/api/products/", {
+        method: "GET",
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
+      return products;
+    } else {
+      const products = await fetch(
+        "http://localhost:9000/api/products/category/" + filter,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
+      return products;
+    }
+  };
 
   fetchProduct = async (id: string) => {
     const product = await fetch("http://localhost:9000/api/products/" + id, {
@@ -48,29 +74,10 @@ export class ProductContextProvider extends Component<Props, State> {
         console.log(data);
         return data;
       });
-      
+
     return product;
 
   }
-
-  fetchProducts = async () => {
-    const products = await fetch("http://localhost:9000/api/products/", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
-    return products;
-  };
-
-  fetchImage = () => { };
-
-  textLogger = (text: String): void => {
-    console.log(text);
-  };
 
   render() {
     return (

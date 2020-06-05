@@ -42,6 +42,7 @@ export class CartProvider extends React.Component<Props, State>{
         this.state = {
             cartList: [],
             cartTotalPrice: 0,
+            
             savedCheckoutCartList: [],
             savedCartTotalPrice: 0,
 
