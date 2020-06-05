@@ -1,5 +1,5 @@
 import { itemsCore } from './components/items/itemListCore'
-import { Product } from "./interfaces/interfaces"
+import { Product, NewProduct } from "./interfaces/interfaces"
 
 export const items: Array<Product> = getList()
 
@@ -14,3 +14,15 @@ function getList() {
     return itemList
 }
 
+export async function fetchProducts() {
+    const products: [NewProduct] = await fetch("http://localhost:9000/api/products/", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+    return products;
+  };

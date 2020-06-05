@@ -39,7 +39,7 @@ export default function ProductCard(props: Props) {
             image={"http://localhost:9000/api/files/" + props.product.file._id}
             title={props.product.title}
           />
-          
+
           <CardContent>
             <Typography variant="h5" component="h1">
               {props.product.title}
@@ -49,7 +49,7 @@ export default function ProductCard(props: Props) {
       </Link>
       <PurchaseButtons
         itemPrice={props.product.price}
-        itemId={props.product.id}
+        itemId={props.product._id}
       />
     </>
   );

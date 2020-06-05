@@ -80,21 +80,6 @@ export class OrderContextProvider extends Component<Props, State> {
     //     })
     // }
 
-    // logOut = async () => {
-    //     await fetch(orderURL + "/logout", {
-    //         method: "DELETE",
-    //         credentials: 'include'
-    //     }).then((response) => {
-    //         return response.json()
-    //     }).then((data) => {
-    //         this.setUserInState({
-    //             err: {
-    //                 msg: ""
-    //             }
-    //         })
-    //     })
-    // }
-
 
     // async componentDidMount() {
 
@@ -115,32 +100,12 @@ export class OrderContextProvider extends Component<Props, State> {
     //     this.setUserInState(user)
     // }
 
-    // async setUserInState(user: any) {
-    //     console.log(user);
 
-    //     if (user.err) console.log(user.err);
-
-    //     if (user && !user.err) {
-    //         this.setState({
-    //             loggedIn: true,
-    //             admin: user.admin,
-    //             name: user.name
-    //         }, () => console.log("logged in", this.state)
-    //         )
-    //     } else {
-    //         this.setState({
-    //             loggedIn: false,
-    //             admin: false,
-    //             name: ""
-    //         }, () => console.log("not logged in", this.state)
-    //         )
-    //     }
+    // async componentDidMount(){
+    //     const data = await this.getAllOrders()
+    //     console.log("from mount")
+    //     console.log(data)
     // }
-    async componentDidMount(){
-        const data = await this.getAllOrders()
-        console.log("from mount")
-        console.log(data)
-    }
 
 
     getAllOrders = async () => {
@@ -151,21 +116,7 @@ export class OrderContextProvider extends Component<Props, State> {
         const data = await order.json()
         console.log(data)
         return(data)
-        // await fetch(orderURL, {
-        //     method: "GET",
-        //     credentials: 'include'
-        // }).then((response) => {
-        //     return response.json()
-        // }).then((data)=> {
-        //     // this.setUserInState({
-        //     //     err: {
-        //     //         msg: ""
-        //     //     }
-        //     // })
-        //     console.log("from getAllOrders.")
-        //     console.log(data)
-        //     return data
-        // })
+
     }
 
 

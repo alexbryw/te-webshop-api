@@ -2,8 +2,8 @@
 //The state content is provided to the rest of the app to consume with <CartContext.Consumer>.
 
 import React, { createContext } from 'react'
-import { CartItem } from '../interfaces/interfaces'
-import { items } from '../ItemList'
+import { CartItem , NewProduct } from '../interfaces/interfaces'
+import { items, fetchProducts } from '../ItemList'
 
 export const CartContext = createContext<State>({
     cartList: [],
@@ -31,8 +31,8 @@ export interface State {
     toggleCartVisibility: () => void,
     setCartVisibility: (visibility: Boolean, clear: Boolean) => void,
 
-    addProduct: (inItemId: number, inNrItems: number) => void
-    removeItemFromCart: (inItemId: number) => void
+    addProduct: (inItemId: any, inNrItems: number) => void
+    removeItemFromCart: (inItemId: string) => void
     emptyCart: () => void
 }
 
@@ -42,6 +42,7 @@ export class CartProvider extends React.Component<Props, State>{
         this.state = {
             cartList: [],
             cartTotalPrice: 0,
+            
             savedCheckoutCartList: [],
             savedCartTotalPrice: 0,
 
@@ -91,7 +92,9 @@ export class CartProvider extends React.Component<Props, State>{
 
     // Add a product to cartList array, Id and Number of items to add.
     // Number of items can be negative -1 to remove a product or positive to add.
-    addProduct = (inItemId: number, inNrItems: number) => {
+    addProduct = async (inItemId: any, inNrItems: number) =>  {
+        console.log(inItemId,inNrItems,"  from addProduct cartContext")
+        console.log(this.state.cartList)
         const cartListPosition = this.findItemInCart(inItemId)
         const updatedCartList = [...this.state.cartList]
 
@@ -109,9 +112,10 @@ export class CartProvider extends React.Component<Props, State>{
             }
         } else {    //If item is not in list then a new item is pushed to list.
             if (inNrItems > 0) {
-                const product = items.find(({ id }) => id === inItemId)
-                if (product) {
-                    updatedCartList.push({ id: inItemId, nrItems: inNrItems, product: product })
+                const fetchedProducts = await fetchProducts()
+                const newProduct = fetchedProducts.find(({ _id }) => _id === inItemId) //cant find on await promise <any>?
+                if (newProduct) {
+                    updatedCartList.push({ id: inItemId, nrItems: inNrItems, product: newProduct })
                 }
 
                 this.setState({
@@ -134,7 +138,7 @@ export class CartProvider extends React.Component<Props, State>{
 
     //Because itemId and cartList array position are different this function 
     //returns the item cartList array position given an itemId.
-    findItemInCart = (InItemId: number) => {
+    findItemInCart = (InItemId: string) => {
         let itemFound = false
         let cartListPosition = 0
         for (let i = 0; i < this.state.cartList.length; i++) {
@@ -153,7 +157,7 @@ export class CartProvider extends React.Component<Props, State>{
 
     }
 
-    removeItemFromCart = (InItemId: number) => {
+    removeItemFromCart = (InItemId: string) => {
         const cartListPosition = this.findItemInCart(InItemId)
         let updatedCartList = [...this.state.cartList]
         if (cartListPosition !== false) {

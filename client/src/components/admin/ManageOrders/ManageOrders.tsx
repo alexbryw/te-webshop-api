@@ -35,6 +35,8 @@ const ManageOrders = () => {
 
     return (
         <Grid container>
+            {console.log(orders)
+            }
             <Typography variant="h5">
                 Manage orders
                 </Typography>
@@ -66,7 +68,7 @@ const ManageOrders = () => {
                             </List>
                         </Grid>
                         <Grid item xs={4}>
-                            <List dense className={classes.billingInfo}>
+                            <List dense className={classes.shippingInfo}>
                                 <ListItem >
                                     <ListItemText primary="shipping info" color="red" />
                                 </ListItem>
@@ -94,15 +96,20 @@ const ManageOrders = () => {
                                 <ListItemText primary="price" secondary="total" />
                             </ListItem>
                             {order.productRow.map((row: any) => (
-                                <ListItem>
-                                    <ListItemText primary={row.qty} />
-                                    <ListItemText primary={row.product.title} />
-                                    <ListItemText primary={row.product.price + ":-"} />
-                                    <ListItemText primary={row.qty * row.product.price + ":-"} />
-                                </ListItem>
+                                row.product != null ?
+                                    <ListItem>
+                                        <ListItemText primary={row.qty} />
+                                        <ListItemText primary={row.product.title} />
+                                        <ListItemText primary={row.product.price + ":-"} />
+                                        <ListItemText primary={row.qty * row.product.price + ":-"} />
+                                    </ListItem> :
+                                    <ListItem>
+                                        <ListItemText primary="invalid product" />
+                                    </ListItem>
                             ))}
                             <ListItem className={classes.totalPrice}>
-                                <ListItemText primary={"total : " + getTotal(order) + ":-"} />
+                                <ListItemText primary={
+                                    order.productRow[0].product != null ? "total : " + getTotal(order) + ":-" : "no total"} />
                             </ListItem>
                         </List>
                     </Grid>

@@ -22,6 +22,7 @@ interface Props {
 export default function Home(props: Props) {
   const classes = useStyles();
 
+  const [categories, setCategories] = React.useState<[]>([]);
   const [products, setProducts] = React.useState<[]>([]);
 
   const [filter, setFilter] = React.useState<String>("");
@@ -30,13 +31,19 @@ export default function Home(props: Props) {
     setFilter(x);
   };
 
+  const getCategories = async () => {
+    setCategories(
+      await props.productContext.getCategories()
+    )
+  }
+
   const getProducts = async () => {
     setProducts(await props.productContext.fetchProducts(filter));
   };
 
   useEffect(() => {
+    getCategories()
     getProducts()
-    console.log(filter)
   }, [filter]);
 
   return (
@@ -50,38 +57,20 @@ export default function Home(props: Props) {
         alignItems="center"
         className={classes.categoriesBar}
       >
-        {/* <Typography>Kategorier</Typography> */}
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => handleSetFilter("")}
-        >
-          Alla Kategorier
-        </Button>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => handleSetFilter("svart")}
-        >
-          Svart te
-        </Button>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => handleSetFilter("grönt")}
-        >
-          Grönt te
-        </Button>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => handleSetFilter("vitt")}
-        >
-          Vitt te
-        </Button>
-        <Button variant="outlined" color="secondary">
-          Koffeinfritt te
-        </Button>
+
+        {categories.map((category) => (
+          <Button
+            key={category}
+            variant="outlined"
+            color="secondary"
+            onClick={() => handleSetFilter(category)}
+          >
+            {category === "" ?
+              "Alla Kategorier" : category + " te"
+            }
+          </Button>
+        ))}
+
       </Grid>
       <Container>
         <Grid
@@ -102,10 +91,10 @@ export default function Home(props: Props) {
               </Grid>
             ))
           ) : (
-            <Grid item>
-              <Typography>Loading products</Typography>
-            </Grid>
-          )}
+              <Grid item>
+                <Typography>Loading products</Typography>
+              </Grid>
+            )}
         </Grid>
       </Container>
     </>

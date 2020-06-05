@@ -4,13 +4,15 @@ import { Product } from "../interfaces/interfaces";
 
 const apiURL = "http://localhost:9000/api/";
 
-interface Props {}
+interface Props { }
 interface State {
   products: Product[];
 
   uploadFile:(file:any) => any
   fetchProducts: () => any;
-  textLogger: (text: String) => void;
+  fetchProduct: (id: string) => any;
+
+  getCategories: () => any;
 }
 
 export const ProductContext = createContext<State>({
@@ -23,7 +25,13 @@ export const ProductContext = createContext<State>({
   fetchProducts: () => {
     return [];
   },
-  textLogger: () => {},
+  fetchProduct: () => {
+    return {};
+  },
+
+  getCategories: () => {
+    return [];
+  }
 });
 
 export class ProductContextProvider extends Component<Props, State> {
@@ -34,16 +42,45 @@ export class ProductContextProvider extends Component<Props, State> {
 
       uploadFile: this.uploadFile,
       fetchProducts: this.fetchProducts,
-      textLogger: this.textLogger,
+      fetchProduct: this.fetchProduct,
+
+      getCategories: this.getCategories
     };
   }
 
+  getCategories = async () => {
+    const products = await this.fetchProducts("")
+    let categories: string[] = [""]
 
-  fetchProducts = async () => {
-    const products = await fetch("http://localhost:9000/api/products/", {
-      method: "GET",
-      credentials: "include",
-    })
+    products.forEach((product: any) => {
+      product.category.forEach((cate: string) => {
+        const found = categories.find(x => x === cate)
+
+        if (!found) categories.push(cate)
+        console.log(cate, found);
+      });
+    });
+    console.log(categories);
+
+    return categories
+  }
+
+  fetchProducts = async (filter?: String) => {
+    let filterURL: string;
+
+    if (filter === "") {
+      filterURL = "http://localhost:9000/api/products/"
+
+    } else {
+      filterURL = "http://localhost:9000/api/products/category/" + filter
+    }
+
+    const products = await fetch(filterURL,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -52,24 +89,18 @@ export class ProductContextProvider extends Component<Props, State> {
     return products;
   };
 
-  fetchProductsByCategory = async () => {
-    const products = await fetch("http://localhost");
-  };
+  fetchProduct = async (id: string) => {
+    const product = await fetch("http://localhost:9000/api/products/" + id, {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });}
 
-  fetchImage = () => {};
 
-
-
-  //   // TODO FLYTTA TILL ProductContext
-  //   handleimgURLChange = (event: any ) => {
-  //     const input: any = document.querySelector('.imageUploader')
-  //     if(input) {
-  //         this.uploadFile(input.files[0])
-  //     }
-  // }
-// TODO FLYTTA TILL ProductContext
-
-    // TODO FLYTTA TILL ProductContext
     uploadFile = (file:any) => {
 
       console.log(file.size)
@@ -99,7 +130,7 @@ export class ProductContextProvider extends Component<Props, State> {
       }
 
     }    
-    // TODO FLYTTA TILL ProductContext
+
 //   postImage = async () => {
 //     const dbimage = await fetch("http://localhost:9000/api/files/", {
 //       method: "POST",
