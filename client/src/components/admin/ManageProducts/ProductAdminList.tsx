@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 interface Props{
-    itemData: Product
+    itemData: any
     arrayIndex: number
     handleSubmit: any
     delete: any
@@ -42,7 +42,7 @@ export default class ProductAdminList extends React.Component<Props, State> {
                     <IconButton>
                         {this.state.toggleItem?  <ExpandLessIcon/> : <ExpandMoreIcon/>}
                     </IconButton>
-                    {'Prod# ' + this.props.itemData.id + " - " + this.props.itemData.name}
+                    {'Prod# ' + this.props.itemData._id + " - " + this.props.itemData.title}
                     {this.state.deleted? " - [Raderad]":""}
                 </Typography>
 

@@ -10,7 +10,6 @@ import { ProductContext } from '../../contexts/ProductContext';
 
 interface Props { 
     userContext: any
-    productContext: any
  }
 
 const AdminLayout = (props: Props) => {

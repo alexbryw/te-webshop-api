@@ -15,7 +15,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { ProductContext } from '../../../contexts/ProductContext';
 
 interface Props {
-    itemData: Product
+    itemData: any
     arrayIndex: number
     delete: any
     handleSubmit: any
@@ -42,10 +42,10 @@ export default class EditItem extends React.Component<Props, State> {
         super(props)
         this.state = {
             isSentMessage: "",
-            id: props.itemData.id,
-            name: props.itemData.name,
+            id: props.itemData._id,
+            name: props.itemData.title,
             price: props.itemData.price,
-            imgURL: props.itemData.imgURL,
+            imgURL: props.itemData.file,
             description: props.itemData.description,
             nrInStock: props.itemData.nrInStock,
             category: props.itemData.category
@@ -245,6 +245,9 @@ export default class EditItem extends React.Component<Props, State> {
                         color="primary"
                         fullWidth
                         onClick={() => {
+                            console.log("from click update product")
+                            console.log(this.state.nrInStock)
+                            console.log(this.state.category)
                             this.props.handleSubmit(this.props.arrayIndex, itemData);
                             this.isSent()
                         }}
