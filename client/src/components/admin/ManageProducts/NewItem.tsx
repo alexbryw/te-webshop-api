@@ -107,7 +107,7 @@ export default class NewItem extends React.Component<Props, State> {
                                 </Grid>
 
                                 <Grid item xs={12} sm={6}>
-                                    <TextField 
+                                    <TextField
                                         fullWidth 
                                         name="price"
                                         label="Pris" 
