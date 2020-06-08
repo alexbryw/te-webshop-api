@@ -39,9 +39,16 @@ export interface State {
 export class CartProvider extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
+
+        //Load cartList and totalPrice from LocalStorage.
+        const getCartList = localStorage.getItem('cartList')
+        const getCartTotalPrice = localStorage.getItem('cartTotalPrice')
+        const loadedCartList = getCartList ? JSON.parse(getCartList) : []
+        const loadedCartTotalPrice = getCartTotalPrice ? parseInt(getCartTotalPrice) : 0
+
         this.state = {
-            cartList: [],
-            cartTotalPrice: 0,
+            cartList: loadedCartList,
+            cartTotalPrice: loadedCartTotalPrice,
             
             savedCheckoutCartList: [],
             savedCartTotalPrice: 0,
@@ -92,7 +99,7 @@ export class CartProvider extends React.Component<Props, State>{
 
     // Add a product to cartList array, Id and Number of items to add.
     // Number of items can be negative -1 to remove a product or positive to add.
-    addProduct = async (inItemId: any, inNrItems: number) =>  {
+    addProduct = async (inItemId: string, inNrItems: number) =>  {
         console.log(inItemId,inNrItems,"  from addProduct cartContext")
         console.log(this.state.cartList)
         const cartListPosition = this.findItemInCart(inItemId)
@@ -108,10 +115,11 @@ export class CartProvider extends React.Component<Props, State>{
                     cartTotalPrice: this.calcTotalCartPrice(updatedCartList),
                     savedCheckoutCartList: [...updatedCartList],
                     savedCartTotalPrice: this.calcTotalCartPrice(updatedCartList),
-                })
+                }, () => this.saveCartToLocalStorage())
             }
         } else {    //If item is not in list then a new item is pushed to list.
             if (inNrItems > 0) {
+                //TODO Remove product?
                 const fetchedProducts = await fetchProducts()
                 const newProduct = fetchedProducts.find(({ _id }) => _id === inItemId) //cant find on await promise <any>?
                 if (newProduct) {
@@ -123,7 +131,7 @@ export class CartProvider extends React.Component<Props, State>{
                     cartTotalPrice: this.calcTotalCartPrice(updatedCartList),
                     savedCheckoutCartList: [...updatedCartList],
                     savedCartTotalPrice: this.calcTotalCartPrice(updatedCartList),
-                })
+                }, () => this.saveCartToLocalStorage())
             }
         }
     }
@@ -167,7 +175,7 @@ export class CartProvider extends React.Component<Props, State>{
                 cartTotalPrice: this.calcTotalCartPrice(updatedCartList),
                 savedCheckoutCartList: [...updatedCartList],
                 savedCartTotalPrice: this.calcTotalCartPrice(updatedCartList),
-            })
+            }, () => this.saveCartToLocalStorage())
         }
     }
 
@@ -176,7 +184,42 @@ export class CartProvider extends React.Component<Props, State>{
         this.setState({
             cartList: [],
             cartTotalPrice: 0,
+        }, () => {
+            // localStorage.clear()
+            localStorage.removeItem('cartList')
+            localStorage.removeItem('cartTotalPrice')
+            console.log("2. after clear local storage")
         })
+    }
+
+    saveCartToLocalStorage(){
+        localStorage.setItem('cartList', JSON.stringify(this.state.cartList))
+        // localStorage.setItem('savedCheckoutCartList', JSON.stringify(this.state.savedCheckoutCartList))
+        localStorage.setItem('cartTotalPrice', this.state.cartTotalPrice.toString())
+        // localStorage.setItem('savedCartTotalPrice', this.state.savedCartTotalPrice.toString())
+    }
+
+    loadCartFromLocalStorage(){
+        const getCartList = localStorage.getItem('cartList')
+        const getCartTotalPrice = localStorage.getItem('cartTotalPrice')
+
+        const loadedCartList = getCartList ? JSON.parse(getCartList) : []
+        const loadedCartTotalPrice = getCartTotalPrice ? parseInt(getCartTotalPrice) : 0
+
+        this.setState({
+            cartList: loadedCartList,
+            cartTotalPrice: loadedCartTotalPrice
+        })
+        
+    }
+    
+    startLoadCartFromLocalStorage(){
+        if(this.state.cartList.length < 1){
+            console.log("1. cart empty. Load cart from storage.")
+            this.loadCartFromLocalStorage()
+        } else {
+            console.log("cart has items, do not load.")
+        }
     }
 
     render() {
