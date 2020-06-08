@@ -1,6 +1,7 @@
 import React, { createContext, Component } from "react";
 
 import { Product } from "../interfaces/interfaces";
+import { appendFile } from "fs";
 
 const apiURL = "http://localhost:9000/api/";
 
@@ -9,6 +10,7 @@ interface State {
   products: Product[];
 
   uploadFile:(file:any) => any
+  postProduct:(product: any, file:any) => any
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
 
@@ -19,6 +21,10 @@ export const ProductContext = createContext<State>({
   products: [],
 
   uploadFile: () => {
+    return ""
+  },
+
+  postProduct: () => {
     return ""
   },
 
@@ -41,9 +47,9 @@ export class ProductContextProvider extends Component<Props, State> {
       products: [],
 
       uploadFile: this.uploadFile,
+      postProduct: this.postProduct,
       fetchProducts: this.fetchProducts,
       fetchProduct: this.fetchProduct,
-
       getCategories: this.getCategories
     };
   }
@@ -72,7 +78,7 @@ export class ProductContextProvider extends Component<Props, State> {
       filterURL = "http://localhost:9000/api/products/"
 
     } else {
-      filterURL = "http://localhost:9000/api/products/category/" + filter
+      filterURL = "http://localhost:9000/api/products/category/" + filter 
     }
 
     const products = await fetch(filterURL,
@@ -84,6 +90,7 @@ export class ProductContextProvider extends Component<Props, State> {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+       
         return data;
       });
     return products;
@@ -101,58 +108,94 @@ export class ProductContextProvider extends Component<Props, State> {
       });}
 
 
-    uploadFile = (file:any) => {
-
+    uploadFile = async (file:any) => {
       console.log(file.size)
-      // add file to FormData object
       const fd = new FormData();
-      //fd.append('name','bild')
       fd.append( 'image', file);
       console.log(fd)
       // send `POST` request
-      fetch('http://localhost:9000/api/files/', {
+      const uploadedFile = await fetch ('http://localhost:9000/api/files/', {
           method: 'POST',
           body: fd
       })
-      .then(res => res.json())
-      .then(json => console.log(json))
-      .catch(err => console.error(err));
+      if(!uploadedFile){
+        console.log('this file is NOT uploading 🍊')
+      }
+      const newFile = await uploadedFile.json()
+    
+
+      // .then(res => res.json())
+      //.then(save => save.json())
+      
+      // .then(json => console.log(json))
+      // .catch(err => console.error(err));
 
       if(!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
           console.log('Only images are allowed.');
           return;
       }
-
+      console.log(newFile)
+      console.log(newFile._id)
       // check file size (< 2MB)
       if(file.size > 2 * 1024 * 1024) {
           console.log('File must be less than 2MB.');
           return;
       }
-
+      return newFile
     }    
 
-//   postImage = async () => {
-//     const dbimage = await fetch("http://localhost:9000/api/files/", {
-//       method: "POST",
-//       credentials: "include",
-//     })
-//       .then((res) => res.json())
-//       .then((json) => {
-//         console.log('************************',json);
-//         return json;
-//       });
-//     return dbimage;
+  postProduct = async (product: any, file:any) => {
+    console.log('***********************')
+    console.log(product)
+    console.log(file)
+    console.log('***********************')
+    const getUploadedFile = await this.uploadFile(file)
+    console.log(getUploadedFile._id)
+    product.file = getUploadedFile._id
+    console.log(product)
+    // const fd = new FormData(file);
+    //       fd.append('product', product + 'uploadFile', file._id)
+          //fd.append('product', product)
+  
+
+    const completeProduct = await fetch("http://localhost:9000/api/products", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "file": product.file,
+        "title": product.title,
+        "description": product.description,
+        "price": product.price,
+        "category": product.category,
+        "nrInStock": product.nrInStock
+      })
+    }) 
+    const returnedProduct = await completeProduct.json()
+    console.log(returnedProduct)
+
+    //TODO ERROR Controll
+
+      // .then((res) => res.json())
+      // .then((json) => {
+      //   console.log('************************',json);
+      //  // console.log(this.uploadFile, '******************* THIS IS THE IMAGE****************')
+      //   return json;
+      // });
+      // return ;
     
-//   };
+  };
 
 //   async componentDidMount(){
-//     const data = await this.postImage()
+//     const data = await this.uploadFile
 //     console.log("from product Context ****HELLO****")
 //     console.log(data)
 // }
 
   textLogger = (text: String): void => {
-    console.log(text);
+    console.log(text, 'this is the text? form ProductContext');
   };
 
   render() {

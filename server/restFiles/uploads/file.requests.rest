@@ -26,9 +26,9 @@ Content-Type: application/json
     "file": "5ed8b26e4e7960d8ba6a7be6",
     "title": "Yunnan Månljuste",
     "description": "Doftar av peppar och rostat havre med viss rökighet. En mycket dynamisk smak börjar kryddigt med toner av majs, men går sakta över till en lenare textur med lätt smak av rörsocker  Bryggs med fördel med 2.5g per 250ml vatten. 90°-gradigt vatten i 2 minuter. Säljs 50g/pkt.",
-    "price": 239,
+    "price": "111",
     "category": ["Vitt"],
-    "nrInStock": 89
+    "nrInStock": "24"
 }
 
 ###

@@ -1,14 +1,7 @@
 import React, { CSSProperties } from 'react'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import FormControl from '@material-ui/core/FormControl'
-import Button from '@material-ui/core/Button'
-import { Grid } from '@material-ui/core';
-
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-
-
+import { Typography, TextField, Button, FormControl, Grid } from '@material-ui/core'
 
 interface Props{
     handleNew: any
@@ -50,10 +43,11 @@ export default class NewItem extends React.Component<Props, State> {
     handleDescriptionInput = (event: { target: { value: any } }) => this.setState({description:event.target.value})
     handleNumberInStockInput =(event: { target: { value: any} }) => this.setState({nrInStock:event.target.value})
     handleCategoryInput =(event: { target: { value: any} }) => this.setState({category:event.target.value})
-     handleimgURLChange = (event: any ) => {
+     handleUploadFile = (event: any ) => {
         const input: any = document.querySelector('.imageUploader')
         if(input) {
-            this.props.productContext.uploadFile(input.files[0])
+            // this.setState({:event.target.input
+            // this.props.productContext.uploadFile(input.files[0])
         }
     }
     //Let the user know if they added a item correctly or not
@@ -136,7 +130,7 @@ export default class NewItem extends React.Component<Props, State> {
                                         className={'imageUploader'}
                                         name="imgURL"
                                         type="file"
-                                        onChange={this.handleimgURLChange}
+                                        onChange={this.handleUploadFile}
                                     />       
                                     </span>
                                     {/* <TextField 
@@ -233,15 +227,28 @@ export default class NewItem extends React.Component<Props, State> {
                         variant='contained'
                         color="primary" 
                         fullWidth 
-                        onClick={() => {
-                            this.props.handleNew(newItem);
+                        onClick={(e: any) => {
+                            console.log(newItem)
+                            const input: any = document.querySelector('.imageUploader')
+                   
+                                
+                        
+                            const newProduct = {
+                                file: "",
+                                title: newItem.name,
+                                description: newItem.description,
+                                price: newItem.price ? newItem.price: 10,
+                                category: [newItem.category],
+                                nrInStock: newItem.nrInStock ? newItem.nrInStock: 10
+                            }
+
+                            this.props.productContext.postProduct(newProduct, input.files[0]);
+                            //this.props.handleNew(newItem);
                             this.added()
                             }}>
                         <AddCircleOutlineOutlinedIcon/> Lägg till
                     </Button>
                 </div>
-       
-            
         )
     }
 }
