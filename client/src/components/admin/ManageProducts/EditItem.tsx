@@ -9,8 +9,9 @@ import { TextField, Typography, FormControl, Container, Button, makeStyles, Them
 // ICONS
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import useStyles from '../../Footer/FooterStyle';
+//import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+
+// CONTEXT
 import { ProductContext } from '../../../contexts/ProductContext';
 
 interface Props {
@@ -57,18 +58,19 @@ export default class EditItem extends React.Component<Props, State> {
     handleIdInput = (event: { target: { value: any } }) => this.setState({ id: event.target.value })
     handleNameInput = (event: { target: { value: any } }) => this.setState({ name: event.target.value })
     handlePriceInput = (event: { target: { value: any } }) => this.setState({ price: event.target.value })
+    handleimgURLChange = (event: { target: { value: any } }) => this.setState({ imgURL: event.target.value })
     
 
 
 
-    // // TODO FLYTTA TILL ProductContext
+    // // TODO om sidan ska kunna redigera produkter
     // handleimgURLChange = (event: any ) => {
     //     const input: any = document.querySelector('.imageUploader')
     //     if(input) {
     //         this.uploadFile(input.files[0])
     //     }
     // }
-    // // TODO FLYTTA TILL ProductContext
+    // // TODO 
 
 
 
@@ -111,38 +113,6 @@ export default class EditItem extends React.Component<Props, State> {
         }
         return userMassage
     }
-
-//   // TODO FLYTTA TILL ProductContext
-//     uploadFile = (file:any) => {
-
-//         console.log(file.size)
-//         // add file to FormData object
-//         const fd = new FormData();
-//         //fd.append('name','bild')
-//         fd.append( 'image', file);
-//         console.log(fd)
-//         // send `POST` request
-//         fetch('http://localhost:9000/api/files/', {
-//             method: 'POST',
-//             body: fd
-//         })
-//         .then(res => res.json())
-//         .then(json => console.log(json))
-//         .catch(err => console.error(err));
-
-//         if(!['image/jpeg', 'image/gif', 'image/png'].includes(file.type)) {
-//             console.log('Only images are allowed.');
-//             return;
-//         }
-    
-//         // check file size (< 2MB)
-//         if(file.size > 2 * 1024 * 1024) {
-//             console.log('File must be less than 2MB.');
-//             return;
-//         }
-    
-//     }    
-//     // TODO FLYTTA TILL ProductContext
    
     render() {
         let itemData = {
@@ -179,6 +149,7 @@ export default class EditItem extends React.Component<Props, State> {
                     <FormControl fullWidth>
                         <form autoComplete="off">
                             <TextField
+                                disabled
                                 fullWidth
                                 name="name"
                                 label="Namn"
@@ -187,8 +158,10 @@ export default class EditItem extends React.Component<Props, State> {
                                 onChange={this.handleNameInput}
                                 error={this.state.name === ""}
                                 helperText={this.state.name === "" ? 'Tomt fält' : ' '}
+                                id="filled-disabled"
                             />
                             <TextField
+                                disabled
                                 fullWidth
                                 name="price"
                                 label="Pris"
@@ -198,19 +171,20 @@ export default class EditItem extends React.Component<Props, State> {
                                 error={isNaN(this.state.price)}
                                 helperText={isNaN(this.state.price) ? 'Inte en siffra' : ' '}
                             />
-                            {/* <TextField
+                            <TextField
+                                disabled
                                 fullWidth
                                 name="imgURL"
                                 label="ImgURL"
                                 variant="outlined"
-                                //value={this.state.imgURL}
-                                //onChange={this.handleimgURLChange}
+                                value={this.state.imgURL}
+                                onChange={this.handleimgURLChange}
                                 error={this.state.imgURL === ""}
                                 helperText={this.state.imgURL === "" ? 'Tomt fält' : ' '}
-                            /> */}
+                            />
                           
                             
-                            <span style={buttonForUpload}>
+                            {/* <span style={buttonForUpload}>
                                 <CloudUploadIcon />
                                     Välj bild
                                 <input 
@@ -220,9 +194,10 @@ export default class EditItem extends React.Component<Props, State> {
                                     type="file"
                                     //onChange={this.handleimgURLChange}
                                 />       
-                            </span>
+                            </span> */}
                            
                             <TextField
+                                disabled
                                 fullWidth
                                 name="description"
                                 label="Beskrivning"

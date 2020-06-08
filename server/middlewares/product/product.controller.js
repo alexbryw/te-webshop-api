@@ -32,8 +32,8 @@ function getProductsByCategory(req, res, next) {
 
 function addProduct(req, res, next) {
   // console.log(req)
-  // console.log("fiiiles", req.files)
-  // console.log(req.body, "booody")
+  //console.log("fiiiles FROM Poduct.controller", req.files)
+  console.log(req.body, "booody")
   const product = new Product(req.body);
   product.save((err, product) => {
     if (err) {
