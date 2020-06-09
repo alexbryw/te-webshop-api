@@ -41,7 +41,7 @@ const Layout = () => {
                                                         <Home productContext={productContext} userContext={userContext} />
                                                     </Route>
                                                     <Route exact path="/admin">
-                                                        <AdminLayout userContext={userContext} orderContext={orderContext} />
+                                                        <AdminLayout userContext={userContext} orderContext={orderContext} productContext={productContext} />
                                                     </Route>
                                                     <Route path="/checkout">
                                                         <CheckoutWrapper />

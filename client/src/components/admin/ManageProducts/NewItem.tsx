@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { Typography, TextField, Button, FormControl, Grid } from '@material-ui/core'
+import { Typography, TextField, Button, FormControl, Grid, InputLabel } from '@material-ui/core'
 
 interface Props {
     handleNew: any
@@ -185,6 +185,8 @@ export default class NewItem extends React.Component<Props, State> {
                             </Grid>
 
                             <Grid item xs={12}>
+                                <InputLabel>
+                                </InputLabel>
                                 <TextField
                                     fullWidth
                                     name="nrInStock"
@@ -196,21 +198,23 @@ export default class NewItem extends React.Component<Props, State> {
                                     variant="outlined"
                                     value={this.state.nrInStock}
                                     onChange={this.handleNumberInStockInput}
-                                    //onChange={(e) => this.handleNewItemInputs(e, 'nrInStock')}
                                     error={isNaN(this.state.nrInStock)}
                                     helperText={isNaN(this.state.nrInStock) ? 'Hur många finns i lager?' : ' '}
                                 />
                             </Grid>
 
                             <Grid item xs={12}>
+
+                                <InputLabel htmlFor="categories"></InputLabel>
                                 <TextField
                                     fullWidth
+                                    id="categories"
                                     name="category"
                                     label="Kategorier"
                                     variant="outlined"
                                     onChange={this.handleCategoryInput}
 
-                                    helperText={this.state.category.length >= 1 ? "Tillagda kategorier: " + this.state.category : "'Skriv in en  Ka👏te👏go👏ri👏'"}
+                                    helperText={this.state.category.length >= 1 ? "Tillagda kategorier: " + this.state.category.map(x => ` -${x} `) : "Skriv in en  Ka👏te👏go👏ri👏 och separera dem med ','"}
                                 // helperText={
                                 //     this.state.category === '' ? (
                                 //         'Skriv in en  Ka👏te👏go👏ri👏') : (' ')
