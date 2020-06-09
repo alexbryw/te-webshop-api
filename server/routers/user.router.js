@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getUsers, getUser, createUser, deleteUser, findUser } = require('../middlewares/user/user.controller')
+const { getUsers, getUser, createUser, deleteUser, findUser, updateUser } = require('../middlewares/user/user.controller')
 
 const { checkLoginSession } = require('../middlewares/session/session.controller')
 
@@ -15,6 +15,8 @@ router.get('/:name', findUser, getUser)
 
 // post a new user
 router.post('/', createUser)
+
+router.put("/:userID", updateUser)
 
 // delete a user
 router.delete('/:name', findUser, deleteUser)

@@ -15,7 +15,7 @@ import { Cart } from '../Cart'
 import LoginModal from "../LoginModal/LoginModal"
 
 // CONTEXTS
-import { CartContext } from "../../contexts/cartContext"
+import { CartContext } from "../../contexts/CartContext"
 import { UserContext } from '../../contexts/UserContext'
 
 

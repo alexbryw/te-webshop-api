@@ -18,12 +18,15 @@ const ManageUsers = (props: Props) => {
     const classes = useStyles()
 
     const [users, setUsers] = React.useState([])
-    const [acceptAdmin, setAcceptAdmin] = React.useState(false)
 
     const gatherUsers = async () => {
         setUsers(await props.userContext.getUsers())
     }
     useEffect(() => { gatherUsers() }, [])
+
+    const handleUpdateUserStatus = async (user: any) => {
+        setUsers(await props.userContext.updateUserStatus(user))
+    }
 
 
     return (
@@ -41,9 +44,7 @@ const ManageUsers = (props: Props) => {
                 </ListItem>
                 {users.length === 0 ? (
                     <ListItem className={classes.user}>
-                        <Typography variant="h6" className={classes.loading}>
-                            Users loading...
-                        </Typography>
+                        <ListItemText primary="Users loading..." />
                     </ListItem>
                 )
                     :
@@ -57,10 +58,12 @@ const ManageUsers = (props: Props) => {
                                 {user.requestsAdmin && !user.admin ?
                                     <ListItem>
                                         <ListItemText primary="Requests&nbsp;admin" />
-                                        <IconButton onClick={() => console.log("Accept user :", user.name)}>
+                                        <IconButton onClick={() => handleUpdateUserStatus(user)}>
                                             <CheckCircleIcon color="primary" />
                                         </IconButton>
-                                    </ListItem> : <ListItem></ListItem>
+                                    </ListItem>
+                                    :
+                                    <ListItemText></ListItemText>
                                 }
 
                             </ListItem>
