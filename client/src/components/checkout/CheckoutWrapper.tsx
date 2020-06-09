@@ -1,11 +1,11 @@
 import React from 'react'
-import { CartContext } from '../../contexts/CartContext'
+import { NewCartContext } from '../../contexts/NewCartContext'
 import CheckOut from './CheckOut'
 
 export default function CheckoutWrapper(){
     return(
-        <CartContext.Consumer>
+        <NewCartContext.Consumer>
             {(cartState) => <CheckOut cartState={cartState}/>}
-        </CartContext.Consumer>
+        </NewCartContext.Consumer>
     )
 }

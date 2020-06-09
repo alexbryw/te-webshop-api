@@ -1,5 +1,5 @@
 import React from 'react'
-import { CartContext } from '../contexts/CartContext'
+import { NewCartContext } from '../contexts/NewCartContext'
 import { List, ListItem, ListItemText, IconButton, ListItemAvatar, Avatar, Divider, Typography, Hidden } from '@material-ui/core'
 import DeleteRoundedIcon from '@material-ui/icons/DeleteForeverRounded'
 import AddIcon from '@material-ui/icons/Add'
@@ -8,7 +8,7 @@ import { Link as RouterLink} from 'react-router-dom'
 
 export default function ShoppingCart() {
     return (
-        <CartContext.Consumer>
+        <NewCartContext.Consumer>
             {(cartState) => (
                 <div>
                     <List>
@@ -57,7 +57,7 @@ export default function ShoppingCart() {
                     </List>
                 </div>
             )}
-        </CartContext.Consumer>
+        </NewCartContext.Consumer>
     )
 }
 
