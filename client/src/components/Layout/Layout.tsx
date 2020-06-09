@@ -15,7 +15,7 @@ import useStyles from "./LayoutStyles"
 //CONTEXTS
 import { UserContext } from "../../contexts/UserContext"
 import { ProductContext } from "../../contexts/ProductContext"
-import { CartContext } from '../../contexts/CartContext';
+import { NewCartContext } from '../../contexts/NewCartContext';
 import { OrderContext } from '../../contexts/OrderContext';
 
 const Layout = () => {
@@ -24,7 +24,7 @@ const Layout = () => {
     return (
         <OrderContext.Consumer>
             {(orderContext) => (
-                <CartContext.Consumer>
+                <NewCartContext.Consumer>
                     {(cartContext) => (
                         <ProductContext.Consumer>
                             {(productContext) => (
@@ -67,7 +67,7 @@ const Layout = () => {
                             )}
                         </ProductContext.Consumer>
                     )}
-                </CartContext.Consumer>
+                </NewCartContext.Consumer>
             )}
         </OrderContext.Consumer>
     );

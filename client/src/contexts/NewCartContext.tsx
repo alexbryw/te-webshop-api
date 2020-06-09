@@ -5,7 +5,7 @@ import React, { createContext } from 'react'
 import { CartItem , NewProduct } from '../interfaces/interfaces'
 import { items, fetchProducts } from '../ItemList'
 
-export const CartContext = createContext<State>({
+export const NewCartContext = createContext<State>({
     cartList: [],
     cartTotalPrice: 0,
     savedCheckoutCartList: [],
@@ -36,7 +36,7 @@ export interface State {
     emptyCart: () => void
 }
 
-export class CartProvider extends React.Component<Props, State>{
+export class NewCartProvider extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
 
@@ -224,9 +224,9 @@ export class CartProvider extends React.Component<Props, State>{
 
     render() {
         return (
-            <CartContext.Provider value={this.state}>
+            <NewCartContext.Provider value={this.state}>
                 {this.props.children}
-            </CartContext.Provider>
+            </NewCartContext.Provider>
         )
     }
 }
