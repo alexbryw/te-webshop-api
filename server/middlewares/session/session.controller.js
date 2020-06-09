@@ -1,18 +1,21 @@
-
+const User = require("../../models/user.model");
 
 async function login(req, res, next) {
     try {
-        if (!res.user) return res.status(401).json({ err: 'Wrong username or password' })
+        console
+        const user = await User.findOne({ name: req.body.name }).select("+password")
+        // console.log(user,req.body.username)
+        if (!user) return res.status(401).json({ err: 'Wrong username or password' })
 
-        res.user.comparePassword(req.body.password, async (error, isMatch) => {
+        user.comparePassword(req.body.password, async (error, isMatch) => {
             if (error) throw error
             if (!isMatch) return res.status(401).json({ err: 'Wrong password' })
             console.log("its a match");
 
             // create a session with the valid inputs
-            req.session.id = res.user._id
-            req.session.username = res.user.name
-            req.session.admin = res.user.admin
+            req.session.id = user._id
+            req.session.username = user.name
+            req.session.admin = user.admin
 
             console.log("created client session");
 
@@ -20,7 +23,7 @@ async function login(req, res, next) {
             // return successful login
             console.log("successful login");
 
-            res.json({ name: res.user.name, admin: res.user.admin })
+            res.json({ name: user.name, admin: user.admin })
             // res.json(req.session)
         })
     } catch (err) {

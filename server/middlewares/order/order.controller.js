@@ -1,16 +1,17 @@
 const orderModel = require('../../models/orderModel')
 const productModel = require('../../models/product.model')
 
-function getOrders(req, res, next) {
-    const orders = orderModel.find((err, allOrders) => {
-        if (err) {
-            next(err)
-        } else {
-            res.json(allOrders)
-        }
-    }).populate('user', '-password').populate('shipping').populate('productRow.product')
+// get all orders
+const getOrders = async (req, res) => {
+    let query = {}
+    if (!req.session.admin) {
+        query.user = req.session.id
+    }
+    const orders = await orderModel.find(query).populate('user').populate('shipping').populate('productRow.product')
+    res.json(orders)
 }
 
+// get one order
 const getOrder = async (req, res) => {
     try {
         let query = {}
@@ -33,7 +34,7 @@ const getOrder = async (req, res) => {
 }
 
 //:id //cookie id getMyOrders
-function getMyOrders(req, res, next) { //TODO test with other users_id.
+const getMyOrders = (req, res, next) => { //TODO test with other users_id.
     // console.log(req.params.id)
     const userOrders = orderModel.find({ user: req.params.id }, (err, allUserOrders) => {
         if (err) {
@@ -45,7 +46,7 @@ function getMyOrders(req, res, next) { //TODO test with other users_id.
 }
 
 // post placeOrder.
-async function placeOrder(req, res, next) {
+const placeOrder = async (req, res, next) => {
     const order = new orderModel(req.body)
     const orderSaved = await order.save()
     // console.log(orderSaved)
@@ -65,7 +66,7 @@ async function placeOrder(req, res, next) {
 }
 
 // updateOrderStatus
-function updateOrderStatus(req, res, next) {
+const updateOrderStatus = (req, res, next) => {
     // console.log(req.params.id)
     const order = orderModel.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, oneOrders) => {
         if (err) {
@@ -76,7 +77,7 @@ function updateOrderStatus(req, res, next) {
     }).populate('user', '-password')
 }
 
-async function checkProductInStock(req, res, next) {
+const checkProductInStock = async (req, res, next) => {
     let errorFound = false
     let errorMessage = ""
     if (!req.body.productRow || req.body.productRow.length < 1) {
@@ -128,5 +129,6 @@ async function checkProductInStock(req, res, next) {
         res.status(400).json({ err: errorMessage })
     }
 }
+
 
 module.exports = { getOrders, getMyOrders, getOrder, placeOrder, updateOrderStatus, checkProductInStock }

@@ -7,7 +7,7 @@ const { findUser } = require("../middlewares/user/user.controller")
 router.get('/', checkLoginSession, setSession)
 
 //logIn.
-router.post('/login', findUser, login)
+router.post('/login', login)
 
 //Logout.
 router.delete('/logout', logout)

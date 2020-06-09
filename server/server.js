@@ -50,9 +50,11 @@ app.use((req, res) => {
     res.status(404).json({ 404: "Resource could not be found." })
 })
 
+//Global error.
 app.use((err, req, res, next) => {
     const message = err.message || "Something went wrong."
     const statusCode = err.status || 500
+    console.error(err)
 
     res.status(statusCode).json({ message })
 })

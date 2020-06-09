@@ -210,7 +210,7 @@ export default class NewItem extends React.Component<Props, State> {
                                     variant="outlined"
                                     onChange={this.handleCategoryInput}
 
-                                    helperText={this.state.category.length >= 1 ? "Tillagda kategorier: " + this.state.category : null}
+                                    helperText={this.state.category.length >= 1 ? "Tillagda kategorier: " + this.state.category : "'Skriv in en  Ka👏te👏go👏ri👏'"}
                                 // helperText={
                                 //     this.state.category === '' ? (
                                 //         'Skriv in en  Ka👏te👏go👏ri👏') : (' ')

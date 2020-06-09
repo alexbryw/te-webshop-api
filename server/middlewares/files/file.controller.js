@@ -1,12 +1,13 @@
 const File = require("../../models/file.model");
 
 function addFile(req, res, next) {
+  console.log('******file.conttroller.js***** 1 req.file*****',req.files)
   const file = new File({
     name: req.files.image.name,
     data: req.files.image.data,
     contentType: req.files.image.mimetype,
   });
-  console.log(file);
+  console.log('******file.conttroller.js***** 2 ***** file ******',file);
   file.save((err, doc) => {
     if (err) {
       next(err);

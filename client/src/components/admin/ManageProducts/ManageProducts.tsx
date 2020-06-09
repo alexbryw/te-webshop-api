@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 // COMPONENTS
 import ProductAdminList from './ProductAdminList'
@@ -12,21 +12,19 @@ import { Product } from '../../../interfaces/interfaces'
 import { Container, Card } from '@material-ui/core/'
 
 // CONTEXTS
-import { OrderContext } from "../../../contexts/OrderContext"
-import { ProductContext } from "../../../contexts/ProductContext"
+// import { ProductContext } from '../../../contexts/ProductContext';
 
 interface Props {
-    items: Product[]
-    delete: any
-    handleSubmit: any
-    handleNew: any
+    productContext: any
 }
 
 interface State {
 }
 
-const ManageProducts = () => {
+const ManageProducts = (props: Props) => {
     const [itemList, setItemList] = React.useState(items)
+    const [products, setProducts] = React.useState<[]>([]);
+
 
     //Updates the edited item in Local Storage (is lifted from EditItem)
     const handleSubmit = (arrayIndex: number, itemData: Product) => {
@@ -87,21 +85,29 @@ const ManageProducts = () => {
         }
     }
 
+    const getProducts = async () => {
+        setProducts(await props.productContext.fetchProducts(""));
+    };
+
+    useEffect(() => {
+        getProducts()
+    }, []);
+
 
     return (
-        <ProductContext.Consumer>{(productContext) => (
-            <OrderContext.Consumer>{(Order) => (
-                <Container>
-                    {/* <OrderListTemp Order={Order} /> */}
-                    <Card variant="outlined">
-                        <NewItemToggle handleNew={handleNew} productContext={productContext} />
-                    </Card>
-                    {items.map((itemData: Product, index: number) =>
-                        <ProductAdminList itemData={itemData} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
-                    )}
-                </Container>
-            )}</OrderContext.Consumer>
-        )}</ProductContext.Consumer>
+        <Container>
+            {console.log("from manage product")}
+            {console.log(products)}
+
+            <Card variant="outlined">
+                <NewItemToggle handleNew={handleNew} productContext={props.productContext} />
+
+            </Card>
+            {/* {if(product.length > 0){} */}
+            {products.map((product: any, index: number) =>
+                <ProductAdminList itemData={product} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
+            )}
+        </Container>
     )
 
 }
