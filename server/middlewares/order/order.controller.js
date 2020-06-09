@@ -1,14 +1,13 @@
 const orderModel = require('../../models/orderModel')
 const productModel = require('../../models/product.model')
 
-function getOrders(req, res, next) {
-    const orders = orderModel.find((err, allOrders) =>{
-        if(err){
-            next(err)
-        } else{
-            res.json(allOrders)
-        }
-    }).populate('user','-password').populate('shipping').populate('productRow.product')
+async function getOrders(req, res) {
+    let query = {}
+    if(!req.session.admin){
+        query.user = req.session.id
+    }
+    const orders = await orderModel.find(query).populate('user').populate('shipping').populate('productRow.product')
+    res.json(orders)
 }
 
 //:id //cookie id getMyOrders
