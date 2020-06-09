@@ -16,6 +16,14 @@ interface State {
     adminView: AdminView,
     changeAdminView: (view: AdminView) => void,
 
+    updateUserStatus: (user: {
+        _id: string,
+        name: string,
+        password: string,
+        requestsAdmin: boolean,
+        admin: boolean
+    }) => void,
+
     getUsers: () => {},
 
     registerUser: (
@@ -39,6 +47,7 @@ export const UserContext = createContext<State>({
     changeAdminView: () => { },
 
     getUsers: () => { return {} },
+    updateUserStatus: () => { },
 
     registerUser: () => { },
     loginUser: () => { },
@@ -59,12 +68,44 @@ export class UserContextProvider extends Component<Props, State> {
 
             getUsers: this.getUsers,
 
+            updateUserStatus: this.updateUserStatus,
+
             registerUser: this.registerUser,
             loginUser: this.loginUser,
             logOut: this.logOut
         }
     }
 
+    updateUserStatus = async (user: {
+        _id: string,
+        name: string,
+        password: string,
+        requestsAdmin: boolean,
+        admin: boolean
+    }) => {
+        const users = await fetch("http://localhost:9000/api/users/" + user._id, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: user._id,
+                name: user.name,
+                password: user.password,
+                requestsAdmin: true,
+                admin: true,
+            })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const users = this.getUsers()
+                return users
+            })
+
+        return users
+
+    }
 
     getUsers = async () => {
         const users = await fetch("http://localhost:9000/api/users/", {

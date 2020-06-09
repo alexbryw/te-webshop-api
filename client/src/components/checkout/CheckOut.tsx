@@ -8,7 +8,7 @@ import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
 import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
-import { CartContext , State as CartState} from '../../contexts/cartContext'
+import { NewCartContext , State as CartState} from '../../contexts/NewCartContext'
 import ShoppigCartCheckout from './../ShoppingCartCheckout'
 import serverAPI from '../../serverAPI'
 import { Link } from 'react-router-dom'
@@ -142,7 +142,7 @@ export default class CheckOut extends React.Component<Props, State>{
             case 2:
                 if(this.state.customerInfo) {
                     return(
-                        <CartContext.Consumer>
+                        <NewCartContext.Consumer>
                         {(cartState) => (
                             <div>
                                 <HomeButton/>
@@ -183,7 +183,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                 </Grid>
                             </div>               
                         )}                   
-                        </CartContext.Consumer>
+                        </NewCartContext.Consumer>
                     )
                 }
             break
@@ -191,7 +191,7 @@ export default class CheckOut extends React.Component<Props, State>{
             case 3:
                 if(this.state.customerInfo && this.state.customerPaymentInfo) {
                     return(
-                        <CartContext.Consumer>
+                        <NewCartContext.Consumer>
                         {(cartState) => (  
                             <div>
                                 <HomeButton/>
@@ -212,7 +212,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                 </Grid>
                             </div>
                         )}                   
-                        </CartContext.Consumer>
+                        </NewCartContext.Consumer>
                     )
                 }
             break

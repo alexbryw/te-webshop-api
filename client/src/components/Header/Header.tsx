@@ -15,7 +15,7 @@ import { Cart } from '../Cart'
 import LoginModal from "../LoginModal/LoginModal"
 
 // CONTEXTS
-import { CartContext } from "../../contexts/cartContext"
+import { NewCartContext } from "../../contexts/NewCartContext"
 import { UserContext } from '../../contexts/UserContext'
 
 
@@ -26,7 +26,7 @@ export default function Header() {
     return (
         <UserContext.Consumer>
             {userContext => (
-                <CartContext.Consumer>
+                <NewCartContext.Consumer>
                     {(cartState) => (
                         <>
                             <Grid container
@@ -86,7 +86,7 @@ export default function Header() {
                             }
                         </>
                     )}
-                </CartContext.Consumer>
+                </NewCartContext.Consumer>
             )}
         </UserContext.Consumer>
     )

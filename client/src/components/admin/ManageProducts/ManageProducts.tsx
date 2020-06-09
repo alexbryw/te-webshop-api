@@ -16,10 +16,6 @@ import { Container, Card } from '@material-ui/core/'
 
 interface Props {
     productContext: any
-    // items: Product[]
-    // delete: any
-    // handleSubmit: any
-    // handleNew: any
 }
 
 interface State {
@@ -91,29 +87,27 @@ const ManageProducts = (props: Props) => {
 
     const getProducts = async () => {
         setProducts(await props.productContext.fetchProducts(""));
-      };
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         getProducts()
-      },[]);
+    }, []);
 
 
     return (
-        // <ProductContext.Consumer>{(productContext) => (
-            <Container>
-                {console.log("from manage product")}
-                {console.log(products)}
+        <Container>
+            {console.log("from manage product")}
+            {console.log(products)}
 
-                <Card variant="outlined">
-                    <NewItemToggle handleNew={handleNew} productContext={props.productContext}/>
-                    
-                </Card>
-                {/* {if(product.length > 0){} */}
-                {products.map((product: any, index: number) =>
-                    <ProductAdminList itemData={product} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
-                )}
-            </Container>
-        // )}</ProductContext.Consumer>
+            <Card variant="outlined">
+                <NewItemToggle handleNew={handleNew} productContext={props.productContext} />
+
+            </Card>
+            {/* {if(product.length > 0){} */}
+            {products.map((product: any, index: number) =>
+                <ProductAdminList itemData={product} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
+            )}
+        </Container>
     )
 
 }

@@ -3,22 +3,39 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     orderWrapper: {
-        border: "1px solid #ddd"
+        borderBottom: "1px solid #0001"
     },
+
     orderId: {
-        background: "#0002",
-        color: "#558b2f",
+        display: "flex",
 
         textAlign: "center",
+
+
+        '& > *': {
+            width: "100%",
+            padding: 0,
+            margin: 0
+        },
+        '& :first-child': {
+            color: "#558b2f",
+            background: "#0001",
+            fontSize: "1rem",
+        },
+        '& :last-child': {
+            color: "#552f8b",
+
+            fontSize: ".6rem",
+        }
     },
+
+
     productList: {
         '&.MuiList-root': {
-            border: "2px solid #a2d293",
-            borderRadius: ".6rem",
-
             padding: 0,
             margin: ".5rem 0"
         },
+
         '& > *': {
             textAlign: "right",
             width: "100%",
@@ -47,11 +64,35 @@ const useStyles = makeStyles((theme) => ({
             background: "#a2d293",
         }
     },
-    product: {
-        margin: theme.spacing(1),
 
-        border: ".1rem solid #0002",
-        borderRadius: ".2rem"
+
+    shippingBtn: {
+        margin: "0 5rem",
+        padding: "1rem",
+
+        border: ".1rem solid #0001",
+        borderRadius: ".5rem",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+
+
+
+    },
+
+    product: {
+        position: "relative",
+
+        background: "#0001",
+
+        marginBottom: theme.spacing(5),
+        paddingBottom: theme.spacing(5),
+
+        borderBottom: ".1rem solid #0001",
+        borderRadius: "1rem",
+
+        overflow: "hidden"
     },
 
     billingInfo: {
