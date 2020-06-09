@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 interface Props{
+    productContext: any
     itemData: any
     arrayIndex: number
     handleSubmit: any
@@ -48,6 +49,7 @@ export default class ProductAdminList extends React.Component<Props, State> {
 
                     {this.state.toggleItem?
                         <EditItem 
+                            productContext={this.props.productContext}
                             itemData={this.props.itemData} 
                             arrayIndex={this.props.arrayIndex} 
                             delete={this.props.delete}

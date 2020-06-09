@@ -15,6 +15,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { ProductContext } from '../../../contexts/ProductContext';
 
 interface Props {
+    productContext: any
     itemData: any
     arrayIndex: number
     delete: any
@@ -241,10 +242,12 @@ export default class EditItem extends React.Component<Props, State> {
                 }
                 {this.props.deleted ? null :
                     <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        onClick={() => {
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={() => {
+                            this.props.productContext.updateProduct("from edititem")
+                            console.log(this.props.itemData)
                             console.log("from click update product")
                             console.log(this.state.nrInStock)
                             console.log(this.state.category)

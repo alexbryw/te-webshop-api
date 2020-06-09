@@ -110,7 +110,7 @@ const ManageProducts = (props: Props) => {
                 </Card>
                 {/* {if(product.length > 0){} */}
                 {products.map((product: any, index: number) =>
-                    <ProductAdminList itemData={product} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
+                    <ProductAdminList productContext={props.productContext} itemData={product} key={index} arrayIndex={index} delete={handleDelete} handleSubmit={handleSubmit} />
                 )}
             </Container>
         // )}</ProductContext.Consumer>

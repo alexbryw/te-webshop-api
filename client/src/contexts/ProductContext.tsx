@@ -10,15 +10,19 @@ interface State {
   products: Product[];
 
   uploadFile:(file:any) => any
+  updateProduct:(product:any) => any
   postProduct:(product: any, file:any) => any
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
-
   getCategories: () => any;
 }
 
 export const ProductContext = createContext<State>({
   products: [],
+
+  updateProduct: () => {
+    return ""
+  },
 
   uploadFile: () => {
     return ""
@@ -46,6 +50,7 @@ export class ProductContextProvider extends Component<Props, State> {
     this.state = {
       products: [],
 
+      updateProduct: this.updateProduct,
       uploadFile: this.uploadFile,
       postProduct: this.postProduct,
       fetchProducts: this.fetchProducts,
@@ -187,6 +192,10 @@ export class ProductContextProvider extends Component<Props, State> {
       // return ;
     
   };
+
+  updateProduct = async (product: any) => {
+    console.log("from updateproduct", product)
+  }
 
 //   async componentDidMount(){
 //     const data = await this.uploadFile
