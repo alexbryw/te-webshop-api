@@ -6,13 +6,16 @@ import ManageOrders from './ManageOrders/ManageOrders'
 import ManageUsers from './ManageUsers/ManageUsers'
 import { Redirect } from 'react-router-dom'
 
-interface Props { userContext: any }
+interface Props {
+    userContext: any
+    orderContext: any
+}
 
 const AdminLayout = (props: Props) => {
     return (
         props.userContext.admin ? props.userContext.adminView === "products" ?
             <ManageProducts /> : props.userContext.adminView === "orders" ?
-                <ManageOrders /> : props.userContext.adminView === "users" ?
+                <ManageOrders orderContext={props.orderContext} /> : props.userContext.adminView === "users" ?
                     <ManageUsers userContext={props.userContext} /> : null
             : <Redirect to="/" />
     )

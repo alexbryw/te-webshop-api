@@ -42,20 +42,19 @@ export default class NewItem extends React.Component<Props, State> {
     //handleimgURLChange = (event: { target: { value: any } }) => this.setState({imgURL:event.target.value})
     handleDescriptionInput = (event: { target: { value: any } }) => this.setState({ description: event.target.value })
     handleNumberInStockInput = (event: { target: { value: any } }) => this.setState({ nrInStock: event.target.value })
+
     handleCategoryInput = (event: { target: { value: any } }) => {
+
+        const updatedCategories: any[] = []
 
         const categories = event.target.value.split(", ")
 
-        this.setState({ category: categories }, () => {
-            categories.forEach((x: string) => {
-                x.toLowerCase()
-                console.log(x);
-            });
+        categories.forEach((x: string) => {
+            const y = x.toLowerCase().trim()
+            if (y != "") updatedCategories.push(y)
+        })
 
-            console.log(this.state.category)
-        }
-
-        )
+        this.setState({ category: updatedCategories }, () => console.log(this.state.category))
     }
 
 
@@ -159,7 +158,6 @@ export default class NewItem extends React.Component<Props, State> {
 
                             <Grid item xs={12} sm={6}>
                                 <span>
-                                    {/* <span style={buttonForUpload}> */}
                                     <CloudUploadIcon />
                                         Välj bild
                                     <input
@@ -170,16 +168,6 @@ export default class NewItem extends React.Component<Props, State> {
                                         onChange={this.handleUploadFile}
                                     />
                                 </span>
-                                {/* <TextField 
-                                        fullWidth 
-                                        name="imgURL"
-                                        label="ImgURL" 
-                                        variant="outlined" 
-                                        value={this.state.imgURL} 
-                                        onChange={this.handleimgURLChange}
-                                        error={this.state.imgURL === " "}
-                                        helperText={this.state.imgURL === " " ? 'Tomt fält' : ' '}
-                                    /> */}
                             </Grid>
 
                             <Grid item xs={12} sm={6}>
@@ -201,6 +189,9 @@ export default class NewItem extends React.Component<Props, State> {
                                     fullWidth
                                     name="nrInStock"
                                     type="number"
+
+                                    inputProps={{ min: "0", step: "1" }}
+
                                     label="Produkter i lager"
                                     variant="outlined"
                                     value={this.state.nrInStock}
@@ -212,49 +203,20 @@ export default class NewItem extends React.Component<Props, State> {
                             </Grid>
 
                             <Grid item xs={12}>
-                                {/* <div>
-                                <ExpansionPanel>
-                                    <ExpansionPanelSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls="panel1a-content"
-                                        id="panel1a-header"
-                                    >
-                                        <Typography>Ny kategori✏️</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails> */}
                                 <TextField
                                     fullWidth
                                     name="category"
                                     label="Kategorier"
                                     variant="outlined"
-                                    //value={this.state.categories} 
                                     onChange={this.handleCategoryInput}
-                                    // error={this.state.category === ' '}
 
-                                    helperText={
-                                        this.state.category.length !== 0 ? (
-                                            'Skriv in katagorier separerade med ","') : (' ')
-                                    }
+                                    helperText={this.state.category.length >= 1 ? "Tillagda kategorier: " + this.state.category : null}
                                 // helperText={
                                 //     this.state.category === '' ? (
                                 //         'Skriv in en  Ka👏te👏go👏ri👏') : (' ')
                                 //     }
                                 />
-                                {/*<Button
-                                                    fullWidth
-                                                    size="small"
-                                                    variant="outlined"
-                                                    color="primary"
-                                                    //onClick={() => this.setState({categories: [...this.state.categories, this.state]})}
-                                                    // onClick={() => {
-                                                    //     this.props.handleNew(newItem);
-                                                    //     this.added()}}
-                                                >
-                                                    <AddCircleOutlineOutlinedIcon /> Ny Katergori
-                                                </Button>
-                                            </ExpansionPanelDetails>
-                                        </ExpansionPanel>
-                                    </div>*/}
+
                             </Grid>
                         </Grid>
                     </form>

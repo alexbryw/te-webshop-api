@@ -2,7 +2,7 @@ import React, { CSSProperties, useState } from 'react'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { CartContext } from '../../contexts/cartContext'
+import { CartContext } from '../../contexts/CartContext'
 import AddedToCart from './../../components/AddedToCart'
 import { Cart } from "../Cart"
 

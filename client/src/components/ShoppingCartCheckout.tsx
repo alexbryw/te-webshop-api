@@ -1,5 +1,5 @@
 import React from 'react'
-import { CartContext } from '../contexts/cartContext'
+import { CartContext } from '../contexts/CartContext'
 import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Divider, Typography, Hidden } from '@material-ui/core'
 
 export default function ShoppingCart(){

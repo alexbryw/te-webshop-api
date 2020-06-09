@@ -1,5 +1,5 @@
 import React from 'react'
-import { CartContext } from '../../contexts/cartContext'
+import { CartContext } from '../../contexts/CartContext'
 import CheckOut from './CheckOut'
 
 export default function CheckoutWrapper(){

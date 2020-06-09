@@ -1,5 +1,5 @@
 import React from 'react'
-import { CartContext } from '../contexts/cartContext'
+import { CartContext } from '../contexts/CartContext'
 import { List, ListItem, ListItemText, IconButton, ListItemAvatar, Avatar, Divider, Typography, Hidden } from '@material-ui/core'
 import DeleteRoundedIcon from '@material-ui/icons/DeleteForeverRounded'
 import AddIcon from '@material-ui/icons/Add'
