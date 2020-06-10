@@ -84,14 +84,14 @@ export default class EditItem extends React.Component<Props, State> {
 
   handleDescriptionInput = (event: { target: { value: any } }) =>
     this.setState({ description: event.target.value });
-  handleNumberInStockInput = (event: { target: { value: any } }) => 
-      this.setState({ nrInStock: event.target.value });
-//       if (event.target.value === "") {
-//           this.setState({ nrInStock: this.state.prevNrInStock }, () =>
-//             console.log(this.state.nrInStock)
-//           );
-//         }
-//   }
+  handleNumberInStockInput = (event: { target: { value: any } }) => {
+    //   this.setState({ nrInStock: event.target.value });
+      if (event.target.value === "") {
+          this.setState({ nrInStock: this.state.prevNrInStock }, () =>
+            console.log(this.state.nrInStock)
+          );
+        }
+  }
   // handleCategoryInput = (event: { target: { value: any } }) => this.setState({ category: event.target.value })
 
   handleCategoryInput = (event: { target: { value: any } }) => {
@@ -272,7 +272,7 @@ export default class EditItem extends React.Component<Props, State> {
                     placeholder="Ett nummer från 0 och uppåt"
                     variant="outlined"
                     inputProps={{ min: "0", step: "1" }}
-                    value={this.state.nrInStock}
+                    // value={this.state.nrInStock}
                     onChange={this.handleNumberInStockInput}
                     //onChange={(e) => this.handleNewItemInputs(e, 'nrInStock')}
                     // error={this.state.nrInStock ? true : false}
