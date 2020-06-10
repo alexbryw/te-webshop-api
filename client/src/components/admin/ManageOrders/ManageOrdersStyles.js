@@ -69,9 +69,8 @@ const useStyles = makeStyles((theme) => ({
     shippingBtn: {
         margin: "0 5rem",
         padding: "1rem",
+        textAlign: "center",
 
-        border: ".1rem solid #0001",
-        borderRadius: ".5rem",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

@@ -18,6 +18,7 @@ export const CartContext = createContext<State>({
     addProduct: () => { },
     removeItemFromCart: () => { },
     emptyCart: () => { },
+    getShippingOptions: () => { },
 })
 
 interface Props { }
@@ -34,9 +35,10 @@ export interface State {
     addProduct: (inItemId: any, inNrItems: number) => void
     removeItemFromCart: (inItemId: string) => void
     emptyCart: () => void
+    getShippingOptions: () => void
 }
 
-class CartProvider extends React.Component<Props, State>{
+export class CartProvider extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
 
@@ -60,6 +62,7 @@ class CartProvider extends React.Component<Props, State>{
             addProduct: this.addProduct,
             removeItemFromCart: this.removeItemFromCart,
             emptyCart: this.emptyCart,
+            getShippingOptions: this.getShippingOptions
 
         }
     }
@@ -203,6 +206,20 @@ class CartProvider extends React.Component<Props, State>{
             cartTotalPrice: loadedCartTotalPrice
         })
 
+    }
+
+    getShippingOptions = async () => {
+        const shippingOptions = await fetch("http://localhost:9000/api/shipping/", {
+            method: "GET",
+            credentials: 'include',
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                return data
+            })
+
+        return shippingOptions
     }
 
     startLoadCartFromLocalStorage() {

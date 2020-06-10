@@ -14,7 +14,7 @@ import { Cart } from '../Cart/Cart'
 import LoginModal from "../LoginModal/LoginModal"
 
 // CONTEXTS
-import { CartContext } from "../../contexts/cartContext"
+import { CartContext } from "../../contexts/NewCartContext"
 import { UserContext } from '../../contexts/UserContext'
 import { ProductContext } from '../../contexts/ProductContext'
 
@@ -90,8 +90,9 @@ export default function Header() {
                             )}
                         </CartContext.Consumer>
                     )}
-                </UserContext.Consumer>
-            )}
-        </ProductContext.Consumer>
+                </UserContext.Consumer >
+            )
+            }
+        </ProductContext.Consumer >
     )
 }

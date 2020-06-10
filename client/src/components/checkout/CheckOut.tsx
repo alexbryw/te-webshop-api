@@ -8,7 +8,7 @@ import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
 import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
-import { CartContext } from '../../contexts/cartContext'
+import { CartContext } from '../../contexts/NewCartContext'
 import ShoppigCartCheckout from './../ShoppingCartCheckout'
 import serverAPI from '../../serverAPI'
 import { Link, Redirect } from 'react-router-dom'
@@ -126,6 +126,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <div>
                                                 <ShoppingCart cartContext={this.props.cartContext} productContext={this.props.productContext} />
                                                 <AddressForm
+                                                    cartContext={this.props.cartContext}
                                                     customerInfo={this.state.customerInfo}
                                                     onSubmit={this.onAddressFormSubmit}
                                                 />

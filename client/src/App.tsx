@@ -4,7 +4,7 @@ import Theme from './MuiTheme'
 
 import UserContextProvider from "./contexts/UserContext"
 import { ThemeProvider } from '@material-ui/core/styles';
-import CartProvider from './contexts/cartContext';
+import CartProvider from './contexts/NewCartContext';
 import OrderContextProvider from './contexts/OrderContext';
 import ProductContextProvider from "./contexts/ProductContext";
 

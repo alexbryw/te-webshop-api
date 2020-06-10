@@ -15,7 +15,7 @@ import useStyles from "./LayoutStyles"
 //CONTEXTS
 import { UserContext } from "../../contexts/UserContext"
 import { ProductContext } from "../../contexts/ProductContext"
-import { CartContext } from '../../contexts/cartContext';
+import { CartContext } from '../../contexts/NewCartContext';
 import { OrderContext } from '../../contexts/OrderContext';
 
 const Layout = () => {

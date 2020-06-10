@@ -4,7 +4,7 @@ async function getShippings(req, res, next) {
     try {
         const shipping = await Shipping.find();
         res.json(shipping);
-        next()
+        // next() //Don't go to next if res is sent.
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

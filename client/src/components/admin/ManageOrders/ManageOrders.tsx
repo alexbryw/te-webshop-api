@@ -37,9 +37,6 @@ const ManageOrders = (props: Props) => {
 
     const getDate = (preDate: string) => {
         const formatedDate = preDate.slice(0, 10)
-        console.log(formatedDate);
-
-
         return formatedDate
     }
 
@@ -113,10 +110,10 @@ const ManageOrders = (props: Props) => {
 
                         {order.isOrderShipped ?
                             null :
-                            <Grid item xs={3} direction="column" className={classes.shippingBtn}>
+                            <Grid item xs={12} direction="column" className={classes.shippingBtn}>
                                 <Typography variant="overline">
                                     Confirm order is shipped
-                        </Typography>
+                                </Typography>
 
                                 <IconButton onClick={() => handleConfirmShipping(order)}>
                                     <CheckCircleIcon />

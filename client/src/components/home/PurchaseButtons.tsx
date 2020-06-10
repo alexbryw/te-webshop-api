@@ -2,7 +2,7 @@ import React, { CSSProperties, useState } from 'react'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { CartContext } from '../../contexts/cartContext'
+import { CartContext } from '../../contexts/NewCartContext'
 import AddedToCart from './../../components/AddedToCart'
 import { Cart } from "../Cart/Cart"
 
@@ -30,12 +30,13 @@ export default function PurchaseButtons(props: Props) {
 
   return (
     <CartContext.Consumer>
-      {(cartState) => (
+      {(cartContext) => (
         <div className={classes.root} style={{ padding: '0 1em 1em' }}>
           <Button onClick={() => {
-                cartState.setCartVisibility(true, false);
-                // cartState.toggleCartVisibility();
-                cartState.addProduct(props.itemId, 1) }}
+            cartContext.setCartVisibility(true, false);
+            // cartState.toggleCartVisibility();
+            cartContext.addProduct(props.itemId, 1)
+          }}
             variant="contained"
             color="primary"
             fullWidth={true}
