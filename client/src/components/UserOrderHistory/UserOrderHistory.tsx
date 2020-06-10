@@ -81,19 +81,19 @@ export default function ScrollDialog(props: Props) {
                   orders.map((order: any) => {
 
                     let dateObject: Date = new Date(order.orderDate)
-                    // const dateString: string = dateObject.getFullYear() + "/" + dateObject.getMonth() + "/" + dateObject.getDate() 
                     const dateString: string = `${dateObject.getFullYear()}/${dateObject.getMonth()}/${dateObject.getDate()}`  
 
                     return (
-                      <List key={order._id} dense>
+                      <List style={{ border: '0.1rem solid #666773', padding: '2rem'}} key={order._id} dense>
+                       
                         <ListItem >
                             <ListItemText primary={`${order.to_firstname} ${order.to_lastname}`} />
                         </ListItem>
                         <ListItem >
-                            <ListItemText primary={`Ordernummer: ${order._id}`} />
+                            <ListItemText style={{color: order.isOrderShipped ? '#558B2F' : '#EB5027'}} primary={`Orederstatus: ${order.isOrderShipped ? 'skickat ✅' : 'packas 📦'}`} />
                         </ListItem>
                         <ListItem >
-                            <ListItemText style={{color: order.isOrderShipped ? '#558B2F' : '#EB5027'}} primary={`Status: ${order.isOrderShipped ? 'skickat' : 'ej skickat'}`} />
+                            <ListItemText primary={`Ordernummer: ${order._id}`} />
                         </ListItem>
                         <ListItem >
                             <ListItemText primary={`Orderdatum: ${dateString}`} />

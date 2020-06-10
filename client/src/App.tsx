@@ -11,17 +11,17 @@ import ProductContextProvider from "./contexts/ProductContext";
 
 function App() {
   return (
-    <OrderContextProvider>
-      <ProductContextProvider>
-      <UserContextProvider>
-        <NewCartProvider>
-          <ThemeProvider theme={Theme}>
-            <Layout />
-          </ThemeProvider>
-        </NewCartProvider>
-      </UserContextProvider>
-      </ProductContextProvider>
-    </OrderContextProvider>
+    <ProductContextProvider>
+      <OrderContextProvider>
+        <UserContextProvider>
+          <NewCartProvider>
+            <ThemeProvider theme={Theme}>
+              <Layout />
+            </ThemeProvider>
+          </NewCartProvider>
+        </UserContextProvider>
+      </OrderContextProvider>
+    </ProductContextProvider>
   );
 }
 
