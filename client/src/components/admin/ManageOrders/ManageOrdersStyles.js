@@ -101,6 +101,9 @@ const useStyles = makeStyles((theme) => ({
 
             borderBottom: "1px solid #222",
             marginBottom: ".5rem"
+        },
+        '& .MuiListItem-root': {
+            textAlign: "right"
         }
     },
     shippingInfo: {

@@ -45,46 +45,50 @@ const ProductPage = (props: Props) => {
     }, [])
 
     return (
-
-        <Grid
+        < Grid
             container
             spacing={5}
             direction="row"
             justify="center"
             alignItems="center"
         >
-            {/* {console.log("12", product.file._id)} */}
-            < Grid item xs={12} sm={6} md={4}>
-                <CardMedia
-                    className={classes.media}
-                    image={product || product.file._id ? "http://localhost:9000/api/files/" + product.file._id : ""}
-                />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-                <CardContent>
-                    <Typography gutterBottom variant="h3" component="h2">
-                        {product.title}
+            {console.log(product)}
+            {
+                product ?
+                    <>
+                        < Grid item xs={12} sm={6} md={4} >
+                            <CardMedia
+                                className={classes.media}
+                                image={product.file._id ? "http://localhost:9000/api/files/" + product.file._id : ""}
+                            />
+                        </Grid >
+                        <Grid item xs={12} sm={6} md={4}>
+                            <CardContent>
+                                <Typography gutterBottom variant="h3" component="h2">
+                                    {product.title}
+                                </Typography>
+                                <Typography gutterBottom variant="h5" color="textSecondary" component="h2">
+                                    {product.price}:-
                     </Typography>
-                    <Typography gutterBottom variant="h5" color="textSecondary" component="h2">
-                        {product.price}:-
-                    </Typography>
-                    <Typography gutterBottom variant="body2" color="textPrimary" component="p">
-                        {product.description}
-                    </Typography>
+                                <Typography gutterBottom variant="body2" color="textPrimary" component="p">
+                                    {product.description}
+                                </Typography>
 
-                    <Button variant="contained" color="primary" className={classes.buyBtn}
-                        onClick={() => {
-                            props.cartContext.setCartVisibility(true, false);
-                            // cartState.toggleCartVisibility();
-                            // cartState.addProduct(props.itemData?.id, 1)
-                        }} >
-                        <Typography variant="overline">
-                            köp
+                                <Button variant="contained" color="primary" className={classes.buyBtn}
+                                    onClick={() => {
+                                        props.cartContext.setCartVisibility(true, false);
+                                        // cartState.toggleCartVisibility();
+                                        // cartState.addProduct(props.itemData?.id, 1)
+                                    }} >
+                                    <Typography variant="overline">
+                                        köp
                         </Typography>
-                        <ShoppingCartIcon />
-                    </Button>
-                </CardContent>
-            </Grid>
+                                    <ShoppingCartIcon />
+                                </Button>
+                            </CardContent>
+                        </Grid>
+                    </> : null
+            }
         </Grid >
     )
 }
