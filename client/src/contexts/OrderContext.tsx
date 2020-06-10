@@ -37,6 +37,7 @@ export class OrderContextProvider extends Component<Props, State> {
 
 
     getOrders = async () => {
+        console.log('hello')
         const orders = await fetch("http://localhost:9000/api/orders/", {
 
             method: "GET",
