@@ -168,28 +168,39 @@ export default class AddressForm extends React.Component<Props, CustomerInfo> {
 
   // ------- SHIPPING ------
   private handleShipmentInput = (event: { target: { value: any } }) => { 
-    this.setState({shippingMethod: event.target.value})
-    this.setShipmentDetails(event.target.value)
+    console.log(event.target)
+    let shippingOption
+    if(event.target.value){ //just find shipping object from event.target.value _id.
+      shippingOption = this.state.shippingOptions.find( (shippingOption: any) => shippingOption._id === event.target.value)
+    }
+    console.log(shippingOption)
+    this.setState({
+      shippingMethod: shippingOption.companyName ? shippingOption.companyName : "",
+      deliveryDate: shippingOption.deliveryTime ? this.calculateDeliveryDate(shippingOption.deliveryTime) : this.calculateDeliveryDate(5),
+      shippingCost: shippingOption.price ? shippingOption.price : 0,
+      shippingId: shippingOption._id ? shippingOption._id : ""
+    })
+    // this.setShipmentDetails(event.target.value)
   }
 
-  private setShipmentDetails = (shipping:string) =>{
+  // private setShipmentDetails = (shipping:string) =>{
     
-    if(shipping === 'PostNord Hemleverans'){
-      this.calculateDeliveryDate(1)
-      this.setState({deliveryDate:this.calculateDeliveryDate(1)})
-      this.setState({shippingCost: 99})
+  //   if(shipping === 'PostNord Hemleverans'){
+  //     this.calculateDeliveryDate(1)
+  //     this.setState({deliveryDate:this.calculateDeliveryDate(1)})
+  //     this.setState({shippingCost: 99})
         
-    }
-    else if(shipping === 'PostNord Ombud'){
-      this.setState({deliveryDate:this.calculateDeliveryDate(3)})
-      this.setState({shippingCost: 39})
+  //   }
+  //   else if(shipping === 'PostNord Ombud'){
+  //     this.setState({deliveryDate:this.calculateDeliveryDate(3)})
+  //     this.setState({shippingCost: 39})
         
-    }
-    else{
-      this.setState({deliveryDate:this.calculateDeliveryDate(5)})
-      this.setState({shippingCost: 0})
-    }
-  }
+  //   }
+  //   else{
+  //     this.setState({deliveryDate:this.calculateDeliveryDate(5)})
+  //     this.setState({shippingCost: 0})
+  //   }
+  // }
 
   private calculateDeliveryDate(daysToDeliver:any){
     let today = new Date()
@@ -334,14 +345,23 @@ export default class AddressForm extends React.Component<Props, CustomerInfo> {
               </FormLabel>
 
               <RadioGroup  
-                value = {this.state.shippingMethod} 
+                value = {this.state.shippingId} 
                 onChange = {this.handleShipmentInput}
                 style={flex}>
                   {this.state.shippingOptions.length > 0 ? this.state.shippingOptions.map((shippingOption: any) => {return(
-                    <h3 key={shippingOption._id}>{shippingOption._id}</h3>
+                    // <h3 key={shippingOption._id}>{shippingOption._id}</h3>
+                    <div style  = {deliverensBox} key={shippingOption._id}>
+                    <h3>{shippingOption.companyName}</h3>
+                    <p>Leverans: {shippingOption.deliveryTime} arbetsdag. Pris: {shippingOption.price} </p>
+                    <FormControlLabel
+                      value={shippingOption._id}
+                      control={<Radio />} 
+                      label={shippingOption.companyName}
+                      />
+                  </div>
                     )})
                     : <h3>Loading Shipping options</h3>}
-                  <div style  = {deliverensBox}>
+                  {/* <div style  = {deliverensBox}>
                     <h3>PostNord Hemleverans</h3>
                     <p>Leverans: 1 arbetsdag. Pris: 99kr </p>
                     <FormControlLabel
@@ -367,7 +387,7 @@ export default class AddressForm extends React.Component<Props, CustomerInfo> {
                       control={<Radio />} 
                       label="DB Schenker" 
                       />
-                  </div>
+                  </div> */}
               </RadioGroup>
               <FormHelperText>{this.state.shippingErrorText}</FormHelperText>
             </FormControl>
