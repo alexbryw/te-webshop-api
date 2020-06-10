@@ -246,13 +246,23 @@ export default class EditItem extends React.Component<Props, State> {
                     color="primary"
                     fullWidth
                     onClick={() => {
-                            this.props.productContext.updateProduct("from edititem")
-                            console.log(this.props.itemData)
-                            console.log("from click update product")
-                            console.log(this.state.nrInStock)
-                            console.log(this.state.category)
-                            this.props.handleSubmit(this.props.arrayIndex, itemData);
-                            this.isSent()
+                        let updatedProduct = {
+                            title: this.state.name,
+                            description: this.state.description,
+                            price: this.state.price,
+                            category: this.state.category,
+                            nrInStock: this.state.nrInStock
+                        }
+                        // let updatedProduct = [...this.props.itemData]
+                        // updatedProduct.nrInStock = this.state.nrInStock  
+                        this.props.productContext.updateProduct(updatedProduct, this.props.itemData._id)
+                        console.log(this.props.itemData)
+                        console.log("from click update product")
+                        console.log(this.state.nrInStock)
+                        console.log(this.state.category)
+                        console.log(updatedProduct, "uppdaterade produkten")
+                        // this.props.handleSubmit(this.props.arrayIndex, itemData);
+                        this.isSent()
                         }}
                     >
                         <EditIcon /> Ändra #{this.props.itemData.id}

@@ -8,7 +8,7 @@ interface State {
   products: Product[];
 
   uploadFile:(file:any) => any
-  updateProduct:(product:any) => any
+  updateProduct:(product:any, productId: any) => any
   postProduct:(product: any, file:any) => any
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
@@ -191,9 +191,33 @@ export class ProductContextProvider extends Component<Props, State> {
     
   };
 
-  updateProduct = async (product: any) => {
-    console.log("from updateproduct", product)
+  updateProduct = async (product: any, productId: any) => {
+    console.log("from updateproduct", product, productId)
+
+      const updatedProduct = await fetch("http://localhost:9000/api/products/" + productId, {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            category: product.category,
+            nrInStock: product.nrInStock
+          })
+      })
+          .then((response) => response.json())
+          .then((data) => {
+              console.log(data);
+              return data
+          })
+
+      return updatedProduct
   }
+
+
 
 //   async componentDidMount(){
 //     const data = await this.uploadFile

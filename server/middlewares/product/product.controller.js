@@ -42,6 +42,7 @@ function addProduct(req, res, next) {
 }
 
 function updateProduct(req, res, next) {
+  console.log(req.body)
   Product.findByIdAndUpdate(
     { _id: req.params.id },
     req.body,
