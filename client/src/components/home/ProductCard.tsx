@@ -36,7 +36,7 @@ export default function ProductCard(props: Props) {
         <div>
           <CardMedia
             className={classes.media}
-            image={"http://localhost:9000/api/files/" + props.product.file._id}
+            image={"http://localhost:9000/api/files/" + props.product.file}
             title={props.product.title}
           />
 
