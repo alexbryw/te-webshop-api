@@ -78,11 +78,13 @@ const updateOrderStatus = (req, res, next) => {
     }).populate('user', '-password')
 }
 
+//check if order products are in stock before placing order.
 const checkProductInStock = async (req, res, next) => {
+    // console.log(req.body)
     let errorFound = false
     let errorMessage = ""
     if (!req.body.productRow || req.body.productRow.length < 1) {
-        return res.status(400).json({ msg: "Could not find any products in the order." })
+        return res.status(400).json({ err: "Could not find any products in the order." })
     }
 
     //---- Loop over all products in order req and see if they are in stock.
@@ -127,6 +129,7 @@ const checkProductInStock = async (req, res, next) => {
     if (!errorFound) {
         next()
     } else {
+        console.log(errorMessage)
         res.status(400).json({ err: errorMessage })
     }
 }

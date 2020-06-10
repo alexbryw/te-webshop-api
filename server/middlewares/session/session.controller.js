@@ -23,7 +23,7 @@ async function login(req, res, next) {
             // return successful login
             console.log("successful login");
 
-            res.json({ name: user.name, admin: user.admin })
+            res.json({ name: user.name, admin: user.admin, _id: user._id })
             // res.json(req.session)
         })
     } catch (err) {
@@ -61,7 +61,8 @@ async function checkLoginSession(req, res, next) {
         if (req.session.id) {
             user = {
                 name: req.session.username,
-                admin: req.session.admin
+                admin: req.session.admin,
+                _id: req.session.id
             }
             res.session = user
             next()
