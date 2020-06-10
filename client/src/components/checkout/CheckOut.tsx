@@ -123,6 +123,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <AddressForm 
                                                 customerInfo={this.state.customerInfo} 
                                                 onSubmit={this.onAddressFormSubmit}
+                                                cartState={this.props.cartState}
                                             />
                                         </div>
                                         :

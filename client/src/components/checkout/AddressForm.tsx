@@ -10,10 +10,12 @@ import FormLabel from '@material-ui/core/FormLabel'
 import { CustomerInfo} from '../../interfaces/interfaces'
 import { Typography } from '@material-ui/core/'
 import { Grid } from '@material-ui/core/'
+import { State as CartState} from '../../contexts/NewCartContext'
 
 interface Props {
   onSubmit: (customerInfo: CustomerInfo) => void
   customerInfo:CustomerInfo
+  cartState: CartState
 }
 
 export default class AddressForm extends React.Component<Props, CustomerInfo> {
@@ -53,12 +55,19 @@ export default class AddressForm extends React.Component<Props, CustomerInfo> {
       isShippingError: false,
       shippingErrorText: '',
       deliveryDate:'',
-      shippingCost: ''
+      shippingCost: '',
+      shippingId: '',
+      shippingOptions: []
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     window.scrollTo(0, 0)
+    const shippingOptions = await this.props.cartState.getShippingOptions()
+    console.log(shippingOptions)
+    this.setState({
+      shippingOptions: shippingOptions
+    })
   }
 
   //---ALL INPUT VALIDATION
@@ -328,6 +337,10 @@ export default class AddressForm extends React.Component<Props, CustomerInfo> {
                 value = {this.state.shippingMethod} 
                 onChange = {this.handleShipmentInput}
                 style={flex}>
+                  {this.state.shippingOptions.length > 0 ? this.state.shippingOptions.map((shippingOption: any) => {return(
+                    <h3 key={shippingOption._id}>{shippingOption._id}</h3>
+                    )})
+                    : <h3>Loading Shipping options</h3>}
                   <div style  = {deliverensBox}>
                     <h3>PostNord Hemleverans</h3>
                     <p>Leverans: 1 arbetsdag. Pris: 99kr </p>
