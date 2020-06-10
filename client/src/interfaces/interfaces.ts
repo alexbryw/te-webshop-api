@@ -68,6 +68,8 @@ export interface CustomerInfo {
     mobileErrorText: string
     isShippingError: boolean
     shippingErrorText: string
+    shippingId: string
+    shippingOptions: any
 }
 
 export interface CustomerPaymentInfo {

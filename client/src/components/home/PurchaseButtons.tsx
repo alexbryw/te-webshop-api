@@ -2,7 +2,7 @@ import React, { CSSProperties, useState } from 'react'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { CartContext } from '../../contexts/cartContext'
+import { NewCartContext } from '../../contexts/NewCartContext'
 import AddedToCart from './../../components/AddedToCart'
 import { Cart } from "../Cart"
 
@@ -29,7 +29,7 @@ export default function PurchaseButtons(props: Props) {
   const handleOnClick = () => setToggled(!isCartShown)
 
   return (
-    <CartContext.Consumer>
+    <NewCartContext.Consumer>
       {(cartState) => (
         <div className={classes.root} style={{ padding: '0 1em 1em' }}>
           <Button onClick={() => {
@@ -46,7 +46,7 @@ export default function PurchaseButtons(props: Props) {
           </Button>
         </div>
       )}
-    </CartContext.Consumer>
+    </NewCartContext.Consumer>
   )
 }
 

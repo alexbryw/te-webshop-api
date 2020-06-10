@@ -1,66 +1,83 @@
 import React, { CSSProperties } from 'react'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { Typography, TextField, Button, FormControl, Grid } from '@material-ui/core'
+import { Typography, TextField, Button, FormControl, Grid, InputLabel } from '@material-ui/core'
 
-interface Props{
+interface Props {
     handleNew: any
-    productContext:any
+    productContext: any
 }
 
-interface State{
+interface State {
     addedMessage: boolean,
     userMassage: string,
     id: number,
-    name: string, 
+    name: string,
     price: number,
     imgURL: string,
     description: string,
-    nrInStock: number
-    category: string
+    nrInStock: number,
+    category: string[]
 }
 
 export default class NewItem extends React.Component<Props, State> {
-    constructor(props:Props){
+    constructor(props: Props) {
         super(props)
         this.state = {
             addedMessage: false,
             userMassage: "",
-            id: 0 ,
-            name: "" , 
-            price: 0 ,
-            imgURL: "" ,
+            id: 0,
+            name: "",
+            price: 0,
+            imgURL: "",
             description: "",
             nrInStock: 0,
-            category: ''
-        }   
+            category: []
+        }
     }
 
     //Updates states so it matches the textboxes content
-    handleNameInput = (event: { target: { value: any } }) => this.setState({name:event.target.value})
-    handlePriceInput = (event: { target: { value: any } }) => this.setState({price:event.target.value})
+    handleNameInput = (event: { target: { value: any } }) => this.setState({ name: event.target.value })
+    handlePriceInput = (event: { target: { value: any } }) => this.setState({ price: event.target.value })
     //handleimgURLChange = (event: { target: { value: any } }) => this.setState({imgURL:event.target.value})
-    handleDescriptionInput = (event: { target: { value: any } }) => this.setState({description:event.target.value})
-    handleNumberInStockInput =(event: { target: { value: any} }) => this.setState({nrInStock:event.target.value})
-    handleCategoryInput =(event: { target: { value: any} }) => this.setState({category:event.target.value})
-     handleUploadFile = (event: any ) => {
+    handleDescriptionInput = (event: { target: { value: any } }) => this.setState({ description: event.target.value })
+    handleNumberInStockInput = (event: { target: { value: any } }) => this.setState({ nrInStock: event.target.value })
+
+    handleCategoryInput = (event: { target: { value: any } }) => {
+
+        const updatedCategories: any[] = []
+
+        const categories = event.target.value.split(", ")
+
+        categories.forEach((x: string) => {
+            const y = x.toLowerCase().trim()
+            if (y != "") updatedCategories.push(y)
+        })
+
+        this.setState({ category: updatedCategories }, () => console.log(this.state.category))
+    }
+
+
+
+
+    handleUploadFile = (event: any) => {
         const input: any = document.querySelector('.imageUploader')
-        if(input) {
+        if (input) {
             // this.setState({:event.target.input
             // this.props.productContext.uploadFile(input.files[0])
         }
     }
     //Let the user know if they added a item correctly or not
-    checkInput(){
+    checkInput() {
         let userMassage
-        if(
+        if (
             this.state.name === " " ||
             isNaN(this.state.price) ||
             this.state.imgURL === " " ||
             this.state.description === " " ||
             isNaN(this.state.nrInStock) ||
             this.state.category
-        ){
+        ) {
             userMassage = "Något blev fel"
         } else {
             userMassage = ""
@@ -69,191 +86,184 @@ export default class NewItem extends React.Component<Props, State> {
     }
 
     //Let the admin know if admin have added it 😁
-    added(){
-        this.setState({addedMessage: true})
+    added() {
+        this.setState({ addedMessage: true })
     }
 
-    render(){
+
+    disableButton = () => {
+        if (
+            this.state.name.length > 5 &&
+            this.state.price > 0 &&
+            this.state.description.length > 5 &&
+            this.state.nrInStock > 0 &&
+            this.state.category.length > 0
+        ) {
+
+            return false
+        }
+
+
+        return true
+    }
+
+    render() {
         const newItem = {
             id: this.state.id,
-            name: this.state.name , 
-            price: this.state.price ,
-            imgURL: this.state.imgURL ,
+            name: this.state.name,
+            price: this.state.price,
+            imgURL: this.state.imgURL,
             description: this.state.description,
             nrInStock: this.state.nrInStock,
             category: this.state.category
         }
-        let userMassage = this.checkInput()
 
+        return (
 
-        return(
-           
-                <div>
-                    <div style={divSpace}/>
-                    <FormControl fullWidth>
-                        <form autoComplete="off">
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField 
-                                        fullWidth 
-                                        name="name"
-                                        label="Namn" 
-                                        variant="outlined" 
-                                        value={this.state.name} 
-                                        onChange={this.handleNameInput}
-                                        error={this.state.name === " "}
-                                        helperText={this.state.name === " " ? 'Tomt fält' : ' '}
-                                    />
-                                </Grid>
+            <div>
+                <div style={divSpace} />
+                <FormControl fullWidth>
+                    <form autoComplete="off">
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    name="name"
+                                    label="Namn"
+                                    variant="outlined"
+                                    value={this.state.name}
+                                    onChange={this.handleNameInput}
+                                    error={this.state.name === " "}
+                                    helperText={this.state.name === " " ? 'Tomt fält' : ' '}
+                                />
+                            </Grid>
 
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        fullWidth 
-                                        name="price"
-                                        label="Pris" 
-                                        type="number"
-                                        variant="outlined" 
-                                        value={this.state.price} 
-                                        onChange={this.handlePriceInput}
-                                        error={isNaN(this.state.price)}
-                                        helperText={isNaN(this.state.price)? 'Inte en siffra' : ' '}
-                                    />
-                                </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
 
-                                <Grid item xs={12} sm={6}>
-                                    <span>
-                                    {/* <span style={buttonForUpload}> */}
+                                    name="price"
+                                    label="Pris"
+                                    type="number"
+
+                                    inputProps={{ min: "0", step: "1" }}
+
+                                    variant="outlined"
+                                    value={this.state.price}
+                                    onChange={this.handlePriceInput}
+                                    error={isNaN(this.state.price)}
+                                    helperText={isNaN(this.state.price) ? 'Inte en siffra' : ' '}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <span>
                                     <CloudUploadIcon />
                                         Välj bild
-                                    <input 
+                                    <input
                                         // style={inputForUpload}
                                         className={'imageUploader'}
                                         name="imgURL"
                                         type="file"
                                         onChange={this.handleUploadFile}
-                                    />       
-                                    </span>
-                                    {/* <TextField 
-                                        fullWidth 
-                                        name="imgURL"
-                                        label="ImgURL" 
-                                        variant="outlined" 
-                                        value={this.state.imgURL} 
-                                        onChange={this.handleimgURLChange}
-                                        error={this.state.imgURL === " "}
-                                        helperText={this.state.imgURL === " " ? 'Tomt fält' : ' '}
-                                    /> */}
-                                </Grid>
-
-                                <Grid item xs={12} sm={6}>
-                                    <TextField 
-                                        fullWidth 
-                                        name="description"
-                                        label="Beskrivning" 
-                                        variant="outlined" 
-                                        value={this.state.description} 
-                                        onChange={this.handleDescriptionInput} 
-                                        multiline rowsMax="4"
-                                        error={this.state.description === " "}
-                                        helperText={this.state.description === " " ? 'Tomt fält' : ' '}
-                                    />    
-                                </Grid>
-
-                                <Grid item xs={12}>    
-                                    <TextField
-                                        fullWidth
-                                        name="nrInStock"
-                                        type="number"
-                                        label="Produkter i lager"
-                                        variant="outlined"
-                                        value={this.state.nrInStock}
-                                        onChange={this.handleNumberInStockInput}
-                                        //onChange={(e) => this.handleNewItemInputs(e, 'nrInStock')}
-                                        error={isNaN(this.state.nrInStock)}
-                                        helperText={isNaN(this.state.nrInStock) ? 'Hur många finns i lager?' : ' '}
                                     />
-                                </Grid>   
-
-                                <Grid item xs={12}>
-                                {/* <div>
-                                <ExpansionPanel>
-                                    <ExpansionPanelSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls="panel1a-content"
-                                        id="panel1a-header"
-                                    >
-                                        <Typography>Ny kategori✏️</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails> */}
-                                        <TextField
-                                            fullWidth
-                                            name="category"
-                                            label="Kategorier"
-                                            variant="outlined"
-                                            //value={this.state.categories} 
-                                            onChange={this.handleCategoryInput}
-                                            error={this.state.category === ' '}
-                                            
-                                            helperText={
-                                                this.state.category === ' ' ? (
-                                                    'Skriv in en  Ka👏te👏go👏ri👏') : (' ') }
-                                            />
-                                                {/*<Button
-                                                    fullWidth
-                                                    size="small"
-                                                    variant="outlined"
-                                                    color="primary"
-                                                    //onClick={() => this.setState({categories: [...this.state.categories, this.state]})}
-                                                    // onClick={() => {
-                                                    //     this.props.handleNew(newItem);
-                                                    //     this.added()}}
-                                                >
-                                                    <AddCircleOutlineOutlinedIcon /> Ny Katergori
-                                                </Button>
-                                            </ExpansionPanelDetails>
-                                        </ExpansionPanel>
-                                    </div>*/}
-                                </Grid>
+                                </span>
                             </Grid>
-                        </form>
-                    </FormControl>
-            
-                
-                    <Typography color="primary">
-                        {userMassage}
-                    </Typography>
-                    {this.state.addedMessage?<Typography color="primary" >Tillagd</Typography>:null}
-                    <Button 
-                        variant='contained'
-                        color="primary" 
-                        fullWidth 
-                        onClick={(e: any) => {
-                            console.log(newItem)
-                            const input: any = document.querySelector('.imageUploader')
-                   
-                                
-                        
-                            const newProduct = {
-                                file: "",
-                                title: newItem.name,
-                                description: newItem.description,
-                                price: newItem.price ? newItem.price: 10,
-                                category: [newItem.category],
-                                nrInStock: newItem.nrInStock ? newItem.nrInStock: 10
-                            }
 
-                            this.props.productContext.postProduct(newProduct, input.files[0]);
-                            //this.props.handleNew(newItem);
-                            this.added()
-                            }}>
-                        <AddCircleOutlineOutlinedIcon/> Lägg till
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    name="description"
+                                    label="Beskrivning"
+                                    variant="outlined"
+                                    value={this.state.description}
+                                    onChange={this.handleDescriptionInput}
+                                    multiline rowsMax="4"
+                                    error={this.state.description === " "}
+                                    helperText={this.state.description === " " ? 'Tomt fält' : ' '}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <InputLabel>
+                                </InputLabel>
+                                <TextField
+                                    fullWidth
+                                    name="nrInStock"
+                                    type="number"
+
+                                    inputProps={{ min: "0", step: "1" }}
+
+                                    label="Produkter i lager"
+                                    variant="outlined"
+                                    value={this.state.nrInStock}
+                                    onChange={this.handleNumberInStockInput}
+                                    error={isNaN(this.state.nrInStock)}
+                                    helperText={isNaN(this.state.nrInStock) ? 'Hur många finns i lager?' : ' '}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+
+                                <InputLabel htmlFor="categories"></InputLabel>
+                                <TextField
+                                    fullWidth
+                                    id="categories"
+                                    name="category"
+                                    label="Kategorier"
+                                    variant="outlined"
+                                    onChange={this.handleCategoryInput}
+
+                                    helperText={this.state.category.length >= 1 ? "Tillagda kategorier: " + this.state.category.map(x => ` -${x} `) : "Skriv in en  Ka👏te👏go👏ri👏 och separera dem med ','"}
+                                // helperText={
+                                //     this.state.category === '' ? (
+                                //         'Skriv in en  Ka👏te👏go👏ri👏') : (' ')
+                                //     }
+                                />
+
+                            </Grid>
+                        </Grid>
+                    </form>
+                </FormControl>
+
+
+                <Typography color="primary">
+                    {this.state.userMassage}
+                </Typography>
+                {this.state.addedMessage ? <Typography color="primary" >Tillagd</Typography> : null}
+                <Button
+                    variant='contained'
+                    color="primary"
+                    fullWidth
+
+
+                    disabled={this.disableButton()}
+
+                    onClick={(e: any) => {
+                        console.log(newItem)
+                        const input: any = document.querySelector('.imageUploader')
+
+                        const newProduct = {
+                            file: "",
+                            title: newItem.name,
+                            description: newItem.description,
+                            price: newItem.price ? newItem.price : 10,
+                            category: [newItem.category],
+                            nrInStock: newItem.nrInStock ? newItem.nrInStock : 10
+                        }
+
+                        this.props.productContext.postProduct(newProduct, input.files[0]);
+                        //this.props.handleNew(newItem);
+                        this.added()
+                    }}>
+                    <AddCircleOutlineOutlinedIcon /> Lägg till
                     </Button>
-                </div>
+            </div>
         )
     }
 }
 
-const divSpace:CSSProperties = {
-    margin:"0 0 1em 0"
+const divSpace: CSSProperties = {
+    margin: "0 0 1em 0"
 }
 

@@ -1,72 +1,95 @@
 const orderModel = require('../../models/orderModel')
 const productModel = require('../../models/product.model')
 
-async function getOrders(req, res) {
+// get all orders
+const getOrders = async (req, res) => {
     let query = {}
-    if(!req.session.admin){
+    if (!req.session.admin) {
         query.user = req.session.id
     }
     const orders = await orderModel.find(query).populate('user').populate('shipping').populate('productRow.product')
     res.json(orders)
 }
 
+// get one order
+const getOrder = async (req, res) => {
+    try {
+        let query = {}
+        if (req.body.id) query._id = req.body._id
+        if (req.params.id) query._id = req.params.id
+
+        console.log(req.params);
+
+
+        order = orderModel.findOne(query, (err, order) => {
+            if (err) {
+                next(err)
+            } else {
+                res.json(order)
+            }
+        })
+    } catch (err) {
+        res.status(500).json({ err: err.message });
+    }
+}
+
 //:id //cookie id getMyOrders
-function getMyOrders(req, res, next){ //TODO test with other users_id.
+const getMyOrders = (req, res, next) => { //TODO test with other users_id.
     // console.log(req.params.id)
-    const userOrders = orderModel.find({user: req.params.id},(err, allUserOrders) =>{
-        if(err){
+    const userOrders = orderModel.find({ user: req.params.id }, (err, allUserOrders) => {
+        if (err) {
             next(err)
-        } else{
+        } else {
             res.json(allUserOrders)
         }
-    }).populate('user','-password').populate('shipping').populate('productRow.product')
+    }).populate('user', '-password').populate('shipping').populate('productRow.product')
 }
 
 // post placeOrder.
-async function placeOrder(req, res, next){
+const placeOrder = async (req, res, next) => {
     const order = new orderModel(req.body)
     const orderSaved = await order.save()
     // console.log(orderSaved)
-    if(orderSaved){
+    if (orderSaved) {
         for (const product of req.body.productRow) {
             // console.log(product.product, product.qty)
-            const updatedProductStock = await productModel.findByIdAndUpdate({_id: product.product},{$inc: {nrInStock:-product.qty}},{new: true})
+            const updatedProductStock = await productModel.findByIdAndUpdate({ _id: product.product }, { $inc: { nrInStock: -product.qty } }, { new: true })
             // console.log(updatedProductStock)
         }
     }
 
-    if(orderSaved){
+    if (orderSaved) {
         res.json(orderSaved)
     } else {
-        res.status(400).json({err: "Could not place order."})
+        res.status(400).json({ err: "Could not place order." })
     }
 }
 
 // updateOrderStatus
-function updateOrderStatus(req, res, next){
+const updateOrderStatus = (req, res, next) => {
     // console.log(req.params.id)
-    const order = orderModel.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, oneOrders) =>{
-        if(err){
+    const order = orderModel.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, oneOrders) => {
+        if (err) {
             next(err)
-        } else{
+        } else {
             res.json(oneOrders)
         }
-    }).populate('user','-password')
+    }).populate('user', '-password')
 }
 
-async function checkProductInStock(req, res, next) {
+const checkProductInStock = async (req, res, next) => {
     let errorFound = false
     let errorMessage = ""
-    if(!req.body.productRow || req.body.productRow.length < 1){
-        return res.status(400).json({msg: "Could not find any products in the order."})
+    if (!req.body.productRow || req.body.productRow.length < 1) {
+        return res.status(400).json({ msg: "Could not find any products in the order." })
     }
 
     //---- Loop over all products in order req and see if they are in stock.
     for (const product of req.body.productRow) {
-        if(product.product && product.qty && Number.isInteger(product.qty) && product.qty >= 1){
+        if (product.product && product.qty && Number.isInteger(product.qty) && product.qty >= 1) {
             // duplicateProduct = req.body.pro
-            const foundProduct = await productModel.findById({_id: product.product})
-            if(foundProduct && foundProduct.nrInStock && (foundProduct.nrInStock >= product.qty)){
+            const foundProduct = await productModel.findById({ _id: product.product })
+            if (foundProduct && foundProduct.nrInStock && (foundProduct.nrInStock >= product.qty)) {
                 // console.log("Yes order can be filled.")
                 // console.log(foundProduct.nrInStock + " in stock")
                 // console.log(product.qty + " qty in order.")
@@ -83,15 +106,15 @@ async function checkProductInStock(req, res, next) {
     }
 
     //Check for duplicate product id's in order request.
-    if(!errorFound){
+    if (!errorFound) {
         //Create array of product_id string only.
-        let productList = req.body.productRow.map(function(product) {
+        let productList = req.body.productRow.map(function (product) {
             return product.product
         })
 
         //Set will not allow duplicates. Will be true if there are duplicates.
         let isDuplicate = (new Set(productList)).size !== productList.length
-        if(isDuplicate) { 
+        if (isDuplicate) {
             errorFound = true
             errorMessage += "Duplicate product id found. "
         }
@@ -100,11 +123,12 @@ async function checkProductInStock(req, res, next) {
     }
 
     //---- If all products are in stock place order and update stock in next middleware.
-    if(!errorFound){
+    if (!errorFound) {
         next()
     } else {
-        res.status(400).json({err: errorMessage})
+        res.status(400).json({ err: errorMessage })
     }
 }
 
-module.exports = {getOrders, getMyOrders, placeOrder, updateOrderStatus, checkProductInStock}
+
+module.exports = { getOrders, getMyOrders, getOrder, placeOrder, updateOrderStatus, checkProductInStock }

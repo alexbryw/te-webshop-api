@@ -15,7 +15,7 @@ import ShoppingCart from './ShoppingCart'
 import LoginModal from "./LoginModal/LoginModal"
 
 
-import { CartContext } from '../contexts/cartContext'
+import { NewCartContext } from '../contexts/NewCartContext'
 
 import { UserContext } from "../contexts/UserContext"
 

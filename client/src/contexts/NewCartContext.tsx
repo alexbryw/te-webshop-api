@@ -5,7 +5,7 @@ import React, { createContext } from 'react'
 import { CartItem , NewProduct } from '../interfaces/interfaces'
 import { items, fetchProducts } from '../ItemList'
 
-export const CartContext = createContext<State>({
+export const NewCartContext = createContext<State>({
     cartList: [],
     cartTotalPrice: 0,
     savedCheckoutCartList: [],
@@ -18,6 +18,7 @@ export const CartContext = createContext<State>({
     addProduct: () => { },
     removeItemFromCart: () => { },
     emptyCart: () => { },
+    getShippingOptions: () => { },
 })
 
 interface Props { }
@@ -34,9 +35,10 @@ export interface State {
     addProduct: (inItemId: any, inNrItems: number) => void
     removeItemFromCart: (inItemId: string) => void
     emptyCart: () => void
+    getShippingOptions: () => void
 }
 
-export class CartProvider extends React.Component<Props, State>{
+export class NewCartProvider extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
 
@@ -60,6 +62,7 @@ export class CartProvider extends React.Component<Props, State>{
             addProduct: this.addProduct,
             removeItemFromCart: this.removeItemFromCart,
             emptyCart: this.emptyCart,
+            getShippingOptions: this.getShippingOptions
 
         }
     }
@@ -212,6 +215,20 @@ export class CartProvider extends React.Component<Props, State>{
         })
         
     }
+
+    getShippingOptions = async () => {
+        const shippingOptions = await fetch("http://localhost:9000/api/shipping/", {
+            method: "GET",
+            credentials: 'include',
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                return data
+            })
+
+        return shippingOptions
+    }
     
     startLoadCartFromLocalStorage(){
         if(this.state.cartList.length < 1){
@@ -224,9 +241,9 @@ export class CartProvider extends React.Component<Props, State>{
 
     render() {
         return (
-            <CartContext.Provider value={this.state}>
+            <NewCartContext.Provider value={this.state}>
                 {this.props.children}
-            </CartContext.Provider>
+            </NewCartContext.Provider>
         )
     }
 }

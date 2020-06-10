@@ -67,4 +67,27 @@ async function deleteUser(req, res, next) {
     }
 }
 
-module.exports = { getUsers, getUser, createUser, deleteUser, findUser }
+async function updateUser(req, res, next) {
+    try {
+        console.log("body", req.body);
+
+        User.findByIdAndUpdate(
+            { _id: req.body.id },
+            req.body,
+            { new: true },
+            (err, result) => {
+                if (err) {
+                    next(err);
+                } else {
+                    res.json(result);
+                }
+            }
+        );
+
+
+    } catch (err) {
+        res.status(500).json({ err: err.mesage })
+    }
+}
+
+module.exports = { getUsers, getUser, createUser, deleteUser, findUser, updateUser }

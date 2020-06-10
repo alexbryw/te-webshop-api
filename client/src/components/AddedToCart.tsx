@@ -3,7 +3,7 @@ import ShoppingCart from './ShoppingCart'
 import { Link as RouterLink} from 'react-router-dom'
 import { Button, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { CartContext } from '../contexts/cartContext'
+import { NewCartContext } from '../contexts/NewCartContext'
 
 interface Props{
     handleClosing: () => void
@@ -35,7 +35,7 @@ export default function AddedToCart(props:Props){
                         </>
 
     return(
-        <CartContext.Consumer>
+        <NewCartContext.Consumer>
         {(cartState) => 
             <div style = {clickAwayDiv} onClick = {props.handleClosing}>
                 <div style = {{...shoppingCartContainer, ...divSize, ...positionTop, ...positionRight}}>
@@ -43,7 +43,7 @@ export default function AddedToCart(props:Props){
                 </div>
             </div>
         }
-        </CartContext.Consumer>
+        </NewCartContext.Consumer>
     )
 }
 

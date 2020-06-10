@@ -3,8 +3,6 @@ import React, { createContext, Component } from "react";
 import { Product } from "../interfaces/interfaces";
 import { appendFile } from "fs";
 
-const apiURL = "http://localhost:9000/api/";
-
 interface Props { }
 interface State {
   products: Product[];

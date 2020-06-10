@@ -1,10 +1,10 @@
 import React from 'react'
-import { CartContext } from '../contexts/cartContext'
+import { NewCartContext } from '../contexts/NewCartContext'
 import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Divider, Typography, Hidden } from '@material-ui/core'
 
 export default function ShoppingCart(){
     return (
-        <CartContext.Consumer>
+        <NewCartContext.Consumer>
             {(cartState) => (
                 <div >
                     <List>
@@ -41,7 +41,7 @@ export default function ShoppingCart(){
                     </List>
                 </div>
             )}
-        </CartContext.Consumer>
+        </NewCartContext.Consumer>
     )
 }
 

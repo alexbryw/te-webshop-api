@@ -16,10 +16,6 @@ import { Container, Card } from '@material-ui/core/'
 
 interface Props {
     productContext: any
-    // items: Product[]
-    // delete: any
-    // handleSubmit: any
-    // handleNew: any
 }
 
 interface State {
@@ -91,11 +87,11 @@ const ManageProducts = (props: Props) => {
 
     const getProducts = async () => {
         setProducts(await props.productContext.fetchProducts(""));
-      };
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         getProducts()
-      },[]);
+    }, []);
 
 
     return (
