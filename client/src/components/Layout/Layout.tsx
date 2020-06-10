@@ -38,13 +38,13 @@ const Layout = () => {
 
                                                 <Switch>
                                                     <Route exact path="/">
-                                                        <Home productContext={productContext} userContext={userContext} cartContext={cartContext}/>
+                                                        <Home productContext={productContext} userContext={userContext} cartContext={cartContext} />
                                                     </Route>
                                                     <Route exact path="/admin">
                                                         <AdminLayout userContext={userContext} orderContext={orderContext} productContext={productContext} />
                                                     </Route>
                                                     <Route path="/checkout">
-                                                        <CheckOut cartContext={cartContext} userContext={userContext} />
+                                                        <CheckOut cartContext={cartContext} userContext={userContext} productContext={productContext} />
                                                     </Route>
                                                     <Route exact path="/product">
                                                         <div><h2>Select a product</h2></div>

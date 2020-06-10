@@ -78,15 +78,7 @@ class CartProvider extends React.Component<Props, State>{
 
         this.setState({
             showCart: visibility
-        },
-            // () => {
-            //     if (clear) {
-            //         this.cancelTimeout(timeOut)
-            //     } else {
-            //         this.setupTimeout(timeOut)
-            //     }
-            // }
-        )
+        })
     }
     cancelTimeout = (timer: any) => {
         console.log('cancelled');

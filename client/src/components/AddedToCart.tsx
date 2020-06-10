@@ -41,7 +41,6 @@ export default function AddedToCart(props: Props) {
             {(cartState) =>
                 <div style={clickAwayDiv} onClick={props.handleClosing}>
                     <div style={{ ...shoppingCartContainer, ...divSize, ...positionTop, ...positionRight }}>
-                        BAJS
                         {cartState.cartList.length === 0 ? emptyCart : filledCart}
                     </div>
                 </div>

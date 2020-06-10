@@ -1,20 +1,29 @@
 import React from 'react'
 import { CartContext } from '../contexts/cartContext'
-import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Divider, Typography, Hidden } from '@material-ui/core'
+import {
+    List,
+    ListItem,
+    ListItemText,
+    ListItemAvatar,
+    Avatar,
+    Divider,
+    Typography,
+    Hidden
+} from '@material-ui/core'
 
-export default function ShoppingCart(){
+export default function ShoppingCart() {
     return (
         <CartContext.Consumer>
             {(cartState) => (
                 <div >
                     <List>
-                        {cartState.savedCheckoutCartList?.length > 0 ? 
+                        {cartState.savedCheckoutCartList?.length > 0 ?
                             cartState.savedCheckoutCartList.map(cartItem =>
                                 <div key={cartItem.id}>
                                     <ListItem >
                                         <Hidden only="xs">
                                             <ListItemAvatar>
-                                                <Avatar src={cartItem.product.imgURL}/>
+                                                <Avatar src={cartItem.product.imgURL} />
                                             </ListItemAvatar>
                                         </Hidden>
                                         <ListItemText primary={<Typography noWrap>{cartItem.product.name}</Typography>} />
@@ -22,11 +31,11 @@ export default function ShoppingCart(){
                                             <ListItemText primary={
                                                 <Typography noWrap align="center">
                                                     {cartItem.nrItems + " st  " + cartItem.product.price + " kr"}
-                                                </Typography> 
+                                                </Typography>
                                             } />
                                         </div>
                                     </ListItem>
-                                <Divider/>
+                                    <Divider />
                                 </div>
                             )
                             : undefined //show nothing if cart is empty.
@@ -35,8 +44,8 @@ export default function ShoppingCart(){
                             <ListItemText primary={
                                 <Typography noWrap align="right" variant="h6" color="primary">
                                     {"Total: " + cartState.savedCartTotalPrice + "kr"}
-                                </Typography> 
-                                } />
+                                </Typography>
+                            } />
                         </ListItem>
                     </List>
                 </div>

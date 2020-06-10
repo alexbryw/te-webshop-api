@@ -22,8 +22,9 @@ import useStyles from "./CartStyles"
 
 
 interface Props {
-    cartState: any
+    cartContext: any
     userContext: any
+    productContext: any
 }
 
 
@@ -31,11 +32,6 @@ interface Props {
 export function Cart(props: Props) {
 
     const classes = useStyles()
-
-    const [loggedIn, setLoggedIn] = useState(false)
-
-    // const [isCartShown, setToggled] = useState(false)
-    // const handleOnClick = () => setToggled(!isCartShown)
 
     function TotalProductCount(cartList: Array<CartItem>) {
         let totalCount = 0
@@ -53,20 +49,20 @@ export function Cart(props: Props) {
 
     const cart = <div className={classes.cart}>
 
-        {props.cartState.cartList.length === 0 ?
+        {props.cartContext.cartList.length === 0 ?
             <Typography variant="h6" color="primary" style={{ margin: '1rem' }}>Kundvagnen&nbsp;är&nbsp;tom</Typography> : <>
-                <ShoppingCart cartContext={props.userContext} />
+                <ShoppingCart cartContext={props.cartContext} productContext={props.productContext} />
 
                 {props.userContext.loggedIn ?
                     <Button
-                        onClick={() => props.cartState.toggleCartVisibility()}
+                        onClick={() => props.cartContext.toggleCartVisibility()}
                         component={RouterLink} to={props.userContext.loggedIn ? '/checkout' : ""}
                         variant="contained"
                         color="primary" >
                         gå till kassan
                         </Button>
                     :
-                    <LoginModal userContext={props.userContext} buttonHandle="logga in för att gå till kassan" />
+                    <LoginModal userContext={props.userContext} buttonHandle="logga&nbsp;in&nbsp;för att&nbsp;gå&nbsp;till&nbsp;kassan" />
                 }
             </>}
     </div>
@@ -76,14 +72,14 @@ export function Cart(props: Props) {
             <IconButton
                 className={classes.cartIcon}
                 // color="secondary"
-                onClick={() => props.cartState.toggleCartVisibility()}>
+                onClick={() => props.cartContext.toggleCartVisibility()}>
 
-                {props.cartState.cartList.length === 0 ?
+                {props.cartContext.cartList.length === 0 ?
                     <LocalCafeIcon fontSize="small" color="secondary" /> :
                     <EmojiFoodBeverageIcon fontSize="small" color="secondary" />
                 }
             </IconButton>
-            {props.cartState.showCart ? cart : null}
+            {props.cartContext.showCart ? cart : null}
         </div >
     )
 }

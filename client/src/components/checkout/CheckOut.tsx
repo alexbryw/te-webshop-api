@@ -16,6 +16,7 @@ import { Link, Redirect } from 'react-router-dom'
 interface Props {
     cartContext: any
     userContext: any
+    productContext: any
 }
 
 interface State {
@@ -123,7 +124,7 @@ export default class CheckOut extends React.Component<Props, State>{
 
                                         {this.props.cartContext.cartList.length > 0 ?
                                             <div>
-                                                <ShoppingCart cartContext={this.props.cartContext} />
+                                                <ShoppingCart cartContext={this.props.cartContext} productContext={this.props.productContext} />
                                                 <AddressForm
                                                     customerInfo={this.state.customerInfo}
                                                     onSubmit={this.onAddressFormSubmit}
