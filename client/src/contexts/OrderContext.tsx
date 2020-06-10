@@ -17,7 +17,7 @@ export const OrderContext = createContext<State>({
 
 });
 
-export class OrderContextProvider extends Component<Props, State> {
+class OrderContextProvider extends Component<Props, State> {
     constructor(props: Props) {
         super(props)
 

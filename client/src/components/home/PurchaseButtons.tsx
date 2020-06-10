@@ -2,9 +2,9 @@ import React, { CSSProperties, useState } from 'react'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { CartContext } from '../../contexts/CartContext'
+import { CartContext } from '../../contexts/cartContext'
 import AddedToCart from './../../components/AddedToCart'
-import { Cart } from "../Cart"
+import { Cart } from "../Cart/Cart"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

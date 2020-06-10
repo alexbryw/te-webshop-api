@@ -17,6 +17,7 @@ import { Redirect } from "react-router-dom";
 interface Props {
   productContext: any;
   userContext: any;
+  cartContext: any;
 }
 
 export default function Home(props: Props) {
@@ -87,6 +88,7 @@ export default function Home(props: Props) {
                 <ProductCard
                   product={product}
                   productContext={props.productContext}
+                  cartContext={props.cartContext}
                 />
               </Grid>
             ))

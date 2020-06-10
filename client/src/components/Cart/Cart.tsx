@@ -11,18 +11,14 @@ import EmojiFoodBeverageIcon from '@material-ui/icons/EmojiFoodBeverage';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
 // COMPONENTS
-import ShoppingCart from './ShoppingCart'
-import LoginModal from "./LoginModal/LoginModal"
+import ShoppingCart from '../ShoppingCart'
+import LoginModal from "../LoginModal/LoginModal"
 
 
-import { CartContext } from '../contexts/CartContext'
 
-import { UserContext } from "../contexts/UserContext"
-
-
-import { CartItem } from '../interfaces/interfaces'
-
+import { CartItem } from '../../interfaces/interfaces'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useStyles from "./CartStyles"
 
 
 interface Props {
@@ -31,39 +27,6 @@ interface Props {
 }
 
 
-const useStyles = makeStyles((theme: Theme) => ({
-    cart: {
-        position: "absolute",
-        right: "100%",
-        top: "100%",
-
-        padding: ".5rem",
-
-        background: "#eaeaea",
-        borderRadius: ".2rem",
-        [theme.breakpoints.down(510)]: {
-        }
-    },
-    cartIcon: {
-        background: "#9cba98",
-        transition: ".22s ease-in-out",
-        '& path': {
-            color: "#fff"
-        },
-        '&:hover': {
-            background: "#558b2f"
-        }
-    },
-    relativeContainer: {
-        width: "100%",
-
-        position: 'relative',
-
-        [theme.breakpoints.down(510)]: {
-        }
-
-    }
-}))
 
 export function Cart(props: Props) {
 
@@ -92,14 +55,14 @@ export function Cart(props: Props) {
 
         {props.cartState.cartList.length === 0 ?
             <Typography variant="h6" color="primary" style={{ margin: '1rem' }}>Kundvagnen&nbsp;är&nbsp;tom</Typography> : <>
-                <ShoppingCart />
+                <ShoppingCart cartContext={props.userContext} />
+
                 {props.userContext.loggedIn ?
                     <Button
                         onClick={() => props.cartState.toggleCartVisibility()}
                         component={RouterLink} to={props.userContext.loggedIn ? '/checkout' : ""}
                         variant="contained"
-                        color="primary"
-                    >
+                        color="primary" >
                         gå till kassan
                         </Button>
                     :
@@ -123,39 +86,4 @@ export function Cart(props: Props) {
             {props.cartState.showCart ? cart : null}
         </div >
     )
-}
-
-const numberOfOrders: CSSProperties = {
-    border: '0.1em solid #9cba98',
-    height: '1.5em',
-    width: '1.5em',
-    borderRadius: '2em',
-    textAlign: 'center',
-    color: '#9cba98',
-    position: 'relative',
-    backgroundColor: '#346933',
-    top: '-1.5em',
-}
-
-
-const shoppingCartContainer: CSSProperties = {
-    position: 'absolute',
-    right: 0,
-    top: "4rem",
-    zIndex: 1000,
-
-    backgroundColor: 'white',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-}
-
-const clickAwayDiv: CSSProperties = {
-    position: 'absolute',
-    zIndex: 100,
-    top: 0,
-    right: 0,
-
-    width: '100vw',
-    height: '100vh',
 }

@@ -78,7 +78,7 @@ const ProductPage = (props: Props) => {
                                     onClick={() => {
                                         props.cartContext.setCartVisibility(true, false);
                                         // cartState.toggleCartVisibility();
-                                        // cartState.addProduct(props.itemData?.id, 1)
+                                        props.cartContext.addProduct(product._id, 1)
                                     }} >
                                     <Typography variant="overline">
                                         köp

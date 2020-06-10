@@ -5,17 +5,16 @@ import { Link } from 'react-router-dom'
 import { Typography, Grid, Container, IconButton, Button } from '@material-ui/core'
 
 
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 // STYLES
 import useStyles from "./headerStyles"
-import { Cart } from '../Cart'
+import { Cart } from '../Cart/Cart'
 
 // COMPONENTS
 import LoginModal from "../LoginModal/LoginModal"
 
 // CONTEXTS
-import { CartContext } from "../../contexts/CartContext"
+import { CartContext } from "../../contexts/cartContext"
 import { UserContext } from '../../contexts/UserContext'
 
 
