@@ -1,13 +1,13 @@
 const File = require("../../models/file.model");
 
 function addFile(req, res, next) {
-  console.log('******file.conttroller.js***** 1 req.file*****',req.files)
+  // console.log('******file.conttroller.js***** 1 req.file*****',req.files)
   const file = new File({
     name: req.files.image.name,
     data: req.files.image.data,
     contentType: req.files.image.mimetype,
   });
-  console.log('******file.conttroller.js***** 2 ***** file ******',file);
+  // console.log('******file.conttroller.js***** 2 ***** file ******',file);
   file.save((err, doc) => {
     if (err) {
       next(err);
@@ -15,7 +15,7 @@ function addFile(req, res, next) {
       return;
     }
     doc.data = undefined;
-    console.log(doc);
+    // console.log(doc);
     res.send(doc);
   });
 }
@@ -25,9 +25,9 @@ function getFile(req, res, next) {
     if (err) {
       next(err);
     } else {
-      console.log(result);
+      // console.log(result);
 
-      res.set("Content-Type", "image/png");
+      res.set("Content-Type", result.contentType);
       res.send(result.data);
       // res.json(result);
     }

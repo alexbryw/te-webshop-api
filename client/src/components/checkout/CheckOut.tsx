@@ -8,7 +8,6 @@ import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
 import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
-import { CartContext } from '../../contexts/NewCartContext'
 import ShoppigCartCheckout from './../ShoppingCartCheckout'
 import serverAPI from '../../serverAPI'
 import { Link, Redirect } from 'react-router-dom'
@@ -157,7 +156,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                     justify="center"
                                     style={gridStyle}
                                 >
-
                                     <Grid item xs={12} sm={6}>
 
                                         <Card style={cardStyle}>

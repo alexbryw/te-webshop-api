@@ -134,7 +134,7 @@ export default function ProductCard(props: Props) {
       />
       <CardMedia
         className={classes.media}
-        image={"http://localhost:9000/api/files/" + props.product.file._id}
+        image={"http://localhost:9000/api/files/" + props.product.file}
         title="Paella dish"
       />
       <CardContent>
