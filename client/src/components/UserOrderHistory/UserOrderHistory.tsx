@@ -71,7 +71,7 @@ export default function ScrollDialog(props: Props) {
                       <ListItemText primary={`${order.to_firstname} ${order.to_lastname}`} />
                   </ListItem>
                   <ListItem >
-                      <ListItemText style={{color: order.isOrderShipped ? '#558B2F' : '#BF9900'}} primary={`Orederstatus: ${order.isOrderShipped ? 'Skickad ✅' : 'Packas 📦'}`} />
+                      <ListItemText style={{color: order.isOrderShipped ? '#558B2F' : '#BF9900'}} primary={`Orderstatus: ${order.isOrderShipped ? 'Skickad ✅' : 'Packas 📦'}`} />
                   </ListItem>
                   <ListItem >
                       <ListItemText primary={`Orderdatum: ${getOrderDate(order.orderDate)}`} />

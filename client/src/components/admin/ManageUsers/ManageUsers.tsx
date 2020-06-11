@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 
 // MATERIAL UI
-import { Typography, Grid, Container, IconButton, Button, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
+import { Typography, Container, IconButton, List, ListItem, ListItemText } from '@material-ui/core'
 
 // ICONS
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
