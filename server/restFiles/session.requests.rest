@@ -11,8 +11,8 @@ POST http://localhost:9000/session/login HTTP/1.1
 content-type: application/json
 
 {
-    "name": "admin",
-    "password": "admin"
+    "name": "user",
+    "password": "123"
 }
 
 ###
