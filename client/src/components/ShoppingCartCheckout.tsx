@@ -23,7 +23,7 @@ export default function ShoppingCart() {
                                     <ListItem >
                                         <Hidden only="xs">
                                             <ListItemAvatar>
-                                                <Avatar src={cartItem.product.imgURL} />
+                                                {/* <Avatar src={cartItem.product.imgURL} /> */}
                                             </ListItemAvatar>
                                         </Hidden>
                                         <ListItemText primary={<Typography noWrap>{cartItem.product.name}</Typography>} />

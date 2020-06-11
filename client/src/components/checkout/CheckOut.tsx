@@ -6,7 +6,7 @@ import { CustomerInfo, CustomerPaymentInfo, CartItem } from '../../interfaces/in
 import { Grid } from '@material-ui/core'
 import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
-import HomeButton from './HomeButton'
+
 import ShoppingCart from '../ShoppingCart'
 import ShoppigCartCheckout from './../ShoppingCartCheckout'
 import serverAPI from '../../serverAPI'
@@ -151,7 +151,7 @@ export default class CheckOut extends React.Component<Props, State>{
                 return (
                     this.props.userContext.loggedIn ?
                         <>
-                            <HomeButton />
+                        
                             <Grid
                                 container
                                 justify="center"
@@ -191,7 +191,7 @@ export default class CheckOut extends React.Component<Props, State>{
 
                         this.props.userContext.loggedIn ?
                             <>
-                                <HomeButton />
+                            
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}
@@ -237,22 +237,24 @@ export default class CheckOut extends React.Component<Props, State>{
                     return (
                         this.props.userContext.loggedIn ?
                             <div>
-                                <HomeButton />
+                               
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}>
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item xs={12} sm={12}>
                                         <Card style={cardStyle}>
-                                            <h1>Bravo!</h1>
+                                            <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
                                             {this.state.orderResponse.err ? <h3>{this.state.orderResponse.err}</h3> :
                                             <div>
-                                                <h3>Namn: {this.state.orderResponse.to_firstname}</h3>
-                                                <h3>Efternamn: {this.state.orderResponse.to_lastname}</h3>
-                                                <h3>Stad: {this.state.orderResponse.to_city}</h3>
-                                                <h3>Adress: {this.state.orderResponse.to_street}</h3>
-                                                <h3>Postnummer: {this.state.orderResponse.to_zip}</h3>
+                                                {/* <h3>{this.state.orderResponse.to_firstname}  {this.state.orderResponse.to_lastname}</h3> */}
+                                                <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
+                                                <br />
+                                                <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
+                                                <Typography>Orderdatum: {this.state.orderResponse.orderDate}</Typography>
+                                                <Typography>Stad: {this.state.orderResponse.to_city}</Typography>
+                                                <Typography>Adress: {this.state.orderResponse.to_street}</Typography>
+                                                <Typography>Postnummer: {this.state.orderResponse.to_zip}</Typography>
                                                 {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
-                                                <h3>Orderdatum: {this.state.orderResponse.orderDate}</h3>
                                                 {/**isOrderShipped: false
                                                     orderDate: "2020-06-10T16:03:09.596Z"
                                                     productRow: (2) [{…}, {…}]
@@ -265,12 +267,11 @@ export default class CheckOut extends React.Component<Props, State>{
                                                     user: "5edf8924bb36e02f2c910771" */}
                                             </div>
                                             }
-                                            {/* <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
                                             <br />
                                             <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
+                                            <Typography>Tack för ditt köp och välkommen åter ❤️</Typography>
                                             <br />
-                                            <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
-                                            <ShoppigCartCheckout /> */}
+                                            <ShoppigCartCheckout />
                                         </Card>
                                     </Grid>
                                 </Grid>
@@ -287,7 +288,7 @@ const checkoutStyle: CSSProperties = {
 }
 
 const cardStyle: CSSProperties = {
-    padding: '2rem'
+    padding: '6rem'
 }
 
 const gridStyle: CSSProperties = {
