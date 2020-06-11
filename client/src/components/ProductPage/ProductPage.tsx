@@ -45,7 +45,7 @@ const ProductPage = (props: Props) => {
     }, [])
 
     return (
-        < Grid
+        <Grid
             container
             spacing={5}
             direction="row"
@@ -87,7 +87,7 @@ const ProductPage = (props: Props) => {
                                 </Button>
                             </CardContent>
                         </Grid>
-                    </> : null
+                    </> : <h3>nothing here</h3>
             }
         </Grid >
     )

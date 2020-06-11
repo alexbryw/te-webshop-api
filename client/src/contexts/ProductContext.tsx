@@ -106,6 +106,7 @@ export class ProductContextProvider extends Component<Props, State> {
         console.log(data);
         return data;
       });
+    return product
   };
 
   uploadFile = async (file: any) => {

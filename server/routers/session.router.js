@@ -15,7 +15,6 @@ router.post('/login',
 //Logout.
 router.delete('/logout',
     checkLoginSession,
-    checkAuthorization,
     logout)
 
 module.exports = router

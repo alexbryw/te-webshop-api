@@ -214,14 +214,10 @@ export class UserContextProvider extends Component<Props, State> {
                 console.log(data);
                 return data
             })
-
-        console.log(user);
         this.setUserInState(user)
     }
 
     async setUserInState(user: any) {
-        console.log(user);
-
         if (user.err) console.log(user.err);
 
         if (user && !user.err) {

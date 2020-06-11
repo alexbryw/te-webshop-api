@@ -7,7 +7,7 @@ const {
     checkAuthorization
 } = require('../middlewares/session/session.controller')
 
-//Get all user.
+//Get all users.
 router.get('/',
     checkLoginSession,
     checkAuthorization,

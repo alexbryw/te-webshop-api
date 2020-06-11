@@ -16,7 +16,6 @@ const {
 //Get all orders for admin only.
 router.get("/",
     checkLoginSession,
-    checkAuthorization,
     getOrders)
 
 //Get orders from logged in user only.
@@ -30,7 +29,6 @@ router.get("/:id",
 //All logged in users can place an order.
 router.post("/",
     checkLoginSession,
-    checkAuthorization,
     checkProductInStock,
     placeOrder)
 
