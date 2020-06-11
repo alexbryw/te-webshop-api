@@ -116,22 +116,22 @@ export default class EditItem extends React.Component<Props, State> {
   };
 
   //Disables the button if there is no content or the number value is NaN
-  checkInput() {
-    let userMassage;
-    if (
-      this.state.name === "" ||
-      isNaN(this.state.price) ||
-      this.state.imgURL === "" ||
-      this.state.description === "" ||
-      // isNaN( this.state.nrInStock ) ||
-      this.state.category
-    ) {
-      userMassage = "Kan inte skicka";
-    } else {
-      userMassage = "";
-    }
-    return userMassage;
-  }
+  // checkInput() {
+  //   let userMassage;
+  //   if (
+  //     this.state.name === "" ||
+  //     isNaN(this.state.price) ||
+  //     this.state.imgURL === "" ||
+  //     this.state.description === "" ||
+  //     isNaN( this.state.nrInStock ) ||
+  //     this.state.category
+  //   ) {
+  //     userMassage = "Kan inte skicka";
+  //   } else {
+  //     userMassage = "";
+  //   }
+  //   return userMassage;
+  // }
 
   //Let the user know if they updated correctly or not
   isSent() {
@@ -169,7 +169,7 @@ export default class EditItem extends React.Component<Props, State> {
       nrInStock: this.state.nrInStock,
       category: this.state.category,
     };
-    let userMassage = this.checkInput();
+    // let userMassage = this.checkInput();
     return (
       <ProductContext.Consumer>
         {(productContext) => (
@@ -302,7 +302,7 @@ export default class EditItem extends React.Component<Props, State> {
             )}
             {this.props.deleted ? null : (
               <Typography color="primary">
-                {userMassage + this.state.isSentMessage}
+                {/* {userMassage + this.state.isSentMessage} */}
               </Typography>
             )}
             {this.props.deleted ? null : (

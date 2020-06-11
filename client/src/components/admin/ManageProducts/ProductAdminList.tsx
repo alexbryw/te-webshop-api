@@ -48,7 +48,8 @@ export default class ProductAdminList extends React.Component<Props, State> {
           <IconButton>
             {this.state.toggleItem ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </IconButton>
-          {"Prod# " +
+          {
+          "Produkt - " +
             this.props.itemData._id +
             " - " +
             this.props.itemData.title}
