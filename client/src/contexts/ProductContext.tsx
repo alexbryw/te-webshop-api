@@ -3,7 +3,7 @@ import React, { createContext, Component } from "react";
 import { Product } from "../interfaces/interfaces";
 import { appendFile } from "fs";
 
-interface Props {}
+interface Props { }
 interface State {
   products: Product[];
 
@@ -13,6 +13,7 @@ interface State {
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
   getCategories: () => any;
+  deleteProduct: (productId: any) => any
 }
 
 export const ProductContext = createContext<State>({
@@ -40,6 +41,10 @@ export const ProductContext = createContext<State>({
   getCategories: () => {
     return [];
   },
+
+  deleteProduct: () => {
+    return [];
+  },
 });
 
 export class ProductContextProvider extends Component<Props, State> {
@@ -54,6 +59,7 @@ export class ProductContextProvider extends Component<Props, State> {
       fetchProducts: this.fetchProducts,
       fetchProduct: this.fetchProduct,
       getCategories: this.getCategories,
+      deleteProduct: this.deleteProduct,
     };
   }
 
@@ -69,7 +75,7 @@ export class ProductContextProvider extends Component<Props, State> {
         console.log(cate, found);
       });
     });
-    console.log(categories);
+    // console.log(categories);
 
     return categories;
   };
@@ -106,6 +112,7 @@ export class ProductContextProvider extends Component<Props, State> {
         console.log(data);
         return data;
       });
+    return product
   };
 
   uploadFile = async (file: any) => {
@@ -214,6 +221,28 @@ export class ProductContextProvider extends Component<Props, State> {
     return updatedProduct;
   };
 
+  deleteProduct = async (productId: any) => {
+    console.log("from deleteproduct", productId)
+    const deletedProduct = await fetch(
+      "http://localhost:9000/api/products/" + productId,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("deleted product", data);
+        return data;
+      });
+
+    return deletedProduct;
+  };
+
+    
+    
+
+
   //   async componentDidMount(){
   //     const data = await this.uploadFile
   //     console.log("from product Context ****HELLO****")
@@ -235,6 +264,3 @@ export class ProductContextProvider extends Component<Props, State> {
 
 export default ProductContextProvider;
 
-// const[products, setProducts] = React.useState([])
-// const fetchProducts = async () => {
-// };

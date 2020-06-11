@@ -15,7 +15,7 @@ import { State as CartState} from '../../contexts/NewCartContext'
 interface Props {
   onSubmit: (customerInfo: CustomerInfo) => void
   customerInfo:CustomerInfo
-  cartState: CartState
+  cartContext: CartState
 }
 
 export default class AddressForm extends React.Component<Props, CustomerInfo> {
@@ -63,7 +63,7 @@ export default class AddressForm extends React.Component<Props, CustomerInfo> {
 
   async componentDidMount() {
     window.scrollTo(0, 0)
-    const shippingOptions = await this.props.cartState.getShippingOptions()
+    const shippingOptions = await this.props.cartContext.getShippingOptions()
     console.log(shippingOptions)
     this.setState({
       shippingOptions: shippingOptions

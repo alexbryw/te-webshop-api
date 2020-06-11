@@ -2,24 +2,37 @@ const express = require('express')
 const router = express.Router()
 const { getUsers, getUser, createUser, deleteUser, findUser, updateUser } = require('../middlewares/user/user.controller')
 
-const { checkLoginSession } = require('../middlewares/session/session.controller')
+const {
+    checkLoginSession,
+    checkAuthorization
+} = require('../middlewares/session/session.controller')
 
-//Secure route check before moving on to the next routes below.
-// router.use(checkLoginSession)
-
-//Get all user.
-router.get('/', getUsers)
+//Get all users.
+router.get('/',
+    checkLoginSession,
+    checkAuthorization,
+    getUsers)
 
 //Get one user by id.
-router.get('/:name', findUser, getUser)
+router.get('/:name',
+    findUser,
+    getUser)
 
 // post a new user
-router.post('/', createUser)
+router.post('/',
+    createUser)
 
-router.put("/:userID", updateUser)
+// used only when an admin confirms a new admin
+router.put("/:userID",
+    checkLoginSession,
+    checkAuthorization,
+    updateUser)
 
 // delete a user
-router.delete('/:name', findUser, deleteUser)
-
+router.delete('/:name',
+    checkLoginSession,
+    checkAuthorization,
+    findUser,
+    deleteUser)
 
 module.exports = router
