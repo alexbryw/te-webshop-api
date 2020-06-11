@@ -59,7 +59,7 @@ const ProductPage = (props: Props) => {
                         < Grid item xs={12} sm={6} md={4} >
                             <CardMedia
                                 className={classes.media}
-                                image={product.file._id ? "http://localhost:9000/api/files/" + product.file._id : ""}
+                                image={product.file ? "http://localhost:9000/api/files/" + product.file : ""}
                             />
                         </Grid >
                         <Grid item xs={12} sm={6} md={4}>

@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import useStyles from "./homeStyles";
 
 // COMPONENTS
-import ProductCard from "./ProductCard";
+import ProductCard from "./ProductCard/ProductCard";
 import TextMobileStepper from "./TextMobileStepper";
 
 // INTERFACES

@@ -8,7 +8,6 @@ import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
 import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
-import ShoppigCartCheckout from './../ShoppingCartCheckout'
 import serverAPI from '../../serverAPI'
 import { Link, Redirect } from 'react-router-dom'
 
@@ -159,7 +158,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                     <Grid item xs={12} sm={6}>
 
                                         <Card style={cardStyle}>
-                                            <ShoppigCartCheckout />
                                             <Typography variant="h6">Skickas till:</Typography>
                                             <Typography>{this.state.customerInfo?.firstName} {this.state.customerInfo?.lastName}</Typography>
                                             <Typography>{this.state.customerInfo?.address}</Typography>
@@ -210,7 +208,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
                                             <br />
                                             <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
-                                            <ShoppigCartCheckout />
                                         </Card>
                                     </Grid>
                                 </Grid>
