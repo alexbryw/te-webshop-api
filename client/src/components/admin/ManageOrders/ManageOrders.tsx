@@ -42,12 +42,12 @@ const ManageOrders = (props: Props) => {
     return (
         <Grid container>
             <Typography variant="h5">
-                Manage orders
+                Hantera beställningar
                 </Typography>
 
             {orders.length === 0 ?
                 <Grid container>
-                    <Typography variant="h4"> loading orders </Typography>
+                    <Typography variant="h4"> Laddar beställningar </Typography>
                 </Grid> : orders.map((order: any) => (
 
                     <Grid container key={order._id} className={classes.product} justify="center">
@@ -56,7 +56,7 @@ const ManageOrders = (props: Props) => {
                         <Grid item xs={12} className={classes.orderId} direction="column">
                             <Typography variant="overline" align="center">{order._id}</Typography>
                             <Typography variant="overline" align="center">
-                                shipping status: {order.isOrderShipped ? "SHIPPED" : "not shipped"}
+                                Leverans status: {order.isOrderShipped ? "SKICKAD" : "ej skickad"}
                             </Typography>
                         </Grid>
 
@@ -65,7 +65,7 @@ const ManageOrders = (props: Props) => {
                             <Grid item xs={4}>
                                 <List dense className={classes.billingInfo}>
                                     <ListItem >
-                                        <ListItemText primary="bill & ship to" color="red" />
+                                        <ListItemText primary="faktura & leverans adress" color="red" />
                                     </ListItem>
                                     <ListItem>
                                         <ListItemText primary={order.to_firstname + " " + order.to_lastname} />
@@ -81,16 +81,16 @@ const ManageOrders = (props: Props) => {
                             <Grid item xs={4}>
                                 <List dense className={classes.shippingInfo}>
                                     <ListItem >
-                                        <ListItemText primary="shipping info" color="red" />
+                                        <ListItemText primary="leverans adress" color="red" />
                                     </ListItem>
                                     <ListItem>
-                                        <ListItemText primary={order.shipping != null ? order.shipping.companyName : "company name"} />
+                                        <ListItemText primary={order.shipping != null ? order.shipping.companyName : "företag"} />
                                     </ListItem>
                                     <ListItem>
-                                        <ListItemText primary={order.shipping != null ? order.shipping.deliveryTime : "delivery time"} />
+                                        <ListItemText primary={order.shipping != null ? order.shipping.deliveryTime : "leverans tid"} />
                                     </ListItem>
                                     <ListItem>
-                                        <ListItemText primary={order.shipping != null ? order.shipping.price : "price"} />
+                                        <ListItemText primary={order.shipping != null ? order.shipping.price : "pris"} />
                                     </ListItem>
                                 </List>
                             </Grid>
@@ -101,8 +101,8 @@ const ManageOrders = (props: Props) => {
                             null :
                             <Grid item xs={3} direction="column" className={classes.shippingBtn}>
                                 <Typography variant="overline">
-                                    Confirm order is shipped
-                        </Typography>
+                                Bekräfta leverans
+                                </Typography>
 
                                 <IconButton onClick={() => handleConfirmShipping(order)}>
                                     <CheckCircleIcon />
@@ -115,10 +115,10 @@ const ManageOrders = (props: Props) => {
                         < Grid item xs={12} md={8} >
                             <List className={classes.productList} dense>
                                 <ListItem>
-                                    <ListItemText primary="qty" />
-                                    <ListItemText primary="title" secondary="description" />
-                                    <ListItemText primary="price" secondary="per uni" />
-                                    <ListItemText primary="price" secondary="total" />
+                                    <ListItemText primary="antal" />
+                                    <ListItemText primary="produkt"/>
+                                    <ListItemText primary="styck pris"/>
+                                    <ListItemText primary="total"/>
                                 </ListItem>
                                 {order.productRow.map((row: any, index: number) => (
                                     row.product != null ?
@@ -129,12 +129,12 @@ const ManageOrders = (props: Props) => {
                                             <ListItemText primary={row.qty * row.product.price + ":-"} />
                                         </ListItem> :
                                         <ListItem>
-                                            <ListItemText primary="invalid product" />
+                                            <ListItemText primary="produkten finns ej" />
                                         </ListItem>
                                 ))}
                                 <ListItem className={classes.totalPrice}>
                                     <ListItemText primary={
-                                        order.productRow[0].product != null ? "total : " + getTotal(order) + ":-" : "no total"} />
+                                        order.productRow[0].product != null ? "Att betala : " + getTotal(order) + ":-" : "ingen beställning"} />
                                 </ListItem>
                             </List>
                         </Grid>
