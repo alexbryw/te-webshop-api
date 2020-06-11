@@ -3,6 +3,7 @@ const productModel = require('../../models/product.model')
 
 // get all orders
 const getOrders = async (req, res) => {
+    console.log('HELOOO2')
     let query = {}
     if (!req.session.admin) {
         query.user = req.session.id
