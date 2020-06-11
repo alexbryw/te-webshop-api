@@ -236,13 +236,13 @@ export default class CheckOut extends React.Component<Props, State>{
                                             
                                             {this.state.orderResponse.err ? <h3>{this.state.orderResponse.err}</h3> :
                                             <div>
-                                                <h3>first name: {this.state.orderResponse.to_firstname}</h3>
-                                                <h3>last name: {this.state.orderResponse.to_lastname}</h3>
-                                                <h3>City: {this.state.orderResponse.to_city}</h3>
-                                                <h3>Street: {this.state.orderResponse.to_street}</h3>
-                                                <h3>Area code: {this.state.orderResponse.to_zip}</h3>
+                                                <h3>Namn: {this.state.orderResponse.to_firstname}</h3>
+                                                <h3>Efternamn: {this.state.orderResponse.to_lastname}</h3>
+                                                <h3>Stad: {this.state.orderResponse.to_city}</h3>
+                                                <h3>Adress: {this.state.orderResponse.to_street}</h3>
+                                                <h3>Postnummer: {this.state.orderResponse.to_zip}</h3>
                                                 {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
-                                                <h3>orderDate: {this.state.orderResponse.orderDate}</h3>
+                                                <h3>Orderdatum: {this.state.orderResponse.orderDate}</h3>
                                                 {/**isOrderShipped: false
                                                     orderDate: "2020-06-10T16:03:09.596Z"
                                                     productRow: (2) [{…}, {…}]
