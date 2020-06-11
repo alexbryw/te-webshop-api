@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { DialogActions, DialogContent, DialogContentText, DialogTitle, Dialog, DialogProps, Button, Typography, ListItem, ListItemText, Grid, List, IconButton } from '@material-ui/core';
+import { DialogActions, DialogContent, DialogTitle, Dialog, DialogProps, Button, ListItem, ListItemText, List, IconButton } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 
 interface Props {
@@ -11,7 +11,6 @@ export default function ScrollDialog(props: Props) {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
   const [orders, setOrders] = React.useState([]);
-  const [login, setlogin] = React.useState(true);
 
   const getOrders = async () => {
     setOrders(await props.orderContext.getOrders())
@@ -52,7 +51,6 @@ export default function ScrollDialog(props: Props) {
         color="primary"
         size="medium"
         onClick={handleClickOpen('paper')}
-        // style={{ backgroundColor:'transparent'}}
         > 
         <PersonIcon/>
       </IconButton>
