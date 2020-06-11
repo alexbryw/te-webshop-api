@@ -3,7 +3,7 @@ import React, { createContext, Component } from "react";
 import { Product } from "../interfaces/interfaces";
 import { appendFile } from "fs";
 
-interface Props {}
+interface Props { }
 interface State {
   products: Product[];
 
@@ -69,7 +69,7 @@ export class ProductContextProvider extends Component<Props, State> {
         console.log(cate, found);
       });
     });
-    console.log(categories);
+    // console.log(categories);
 
     return categories;
   };
@@ -106,6 +106,7 @@ export class ProductContextProvider extends Component<Props, State> {
         console.log(data);
         return data;
       });
+    return product
   };
 
   uploadFile = async (file: any) => {
@@ -235,6 +236,3 @@ export class ProductContextProvider extends Component<Props, State> {
 
 export default ProductContextProvider;
 
-// const[products, setProducts] = React.useState([])
-// const fetchProducts = async () => {
-// };
