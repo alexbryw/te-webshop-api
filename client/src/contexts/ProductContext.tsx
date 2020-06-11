@@ -221,27 +221,35 @@ export class ProductContextProvider extends Component<Props, State> {
   };
 
   deleteProduct = async (product: any, productId: any) => {
+    console.log("from deleteproduct", product, productId)
+  //   const updatedProduct = await fetch(
+  //     "http://localhost:9000/api/products/" + productId,
+  //     {
+  //       method: "PUT",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         title: product.title,
+  //         description: product.description,
+  //         price: product.price,
+  //         category: product.category,
+  //         nrInStock: product.nrInStock,
+  //       }),
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       return data;
+  //     });
 
-    const productToDelete = await fetch( 
-      "http://localhost:9000/api/products/" + productId,
-      {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        }, 
-        body: productToDelete
-      }
-        .then((response) => response.json())
-        .then((data => {
-        console.log(data)
-        return data
+  //   return updatedProduct;
+  // };
 
-        })
+  }
 
-      
-        
-      }
     
     
 
