@@ -86,6 +86,7 @@ export default class CheckOut extends React.Component<Props, State>{
         // console.log("from order api call")
         // console.log(this.state.customerInfo)
         // console.log(this.props.cartState.cartList)
+        console.log(customerInfoFromForm.paymentMethod)
         if(this.props.cartState.cartList && this.props.cartState.cartList.length > 0 && this.state.customerInfo){
             console.log("ok")
         }
@@ -99,7 +100,8 @@ export default class CheckOut extends React.Component<Props, State>{
             to_lastname: this.state.customerInfo.lastName,
             to_street: this.state.customerInfo.address,
             to_city: this.state.customerInfo.city,
-            to_zip: this.state.customerInfo.zipCode
+            to_zip: this.state.customerInfo.zipCode,
+            paymentMethod: customerInfoFromForm.paymentMethod
         }
         console.log(newOrder)
         const response = await this.props.orderContext.sendOrder(newOrder)
@@ -239,7 +241,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                                 <h3>City: {this.state.orderResponse.to_city}</h3>
                                                 <h3>Street: {this.state.orderResponse.to_street}</h3>
                                                 <h3>Area code: {this.state.orderResponse.to_zip}</h3>
-                                                <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3>
+                                                {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
                                                 <h3>orderDate: {this.state.orderResponse.orderDate}</h3>
                                                 {/**isOrderShipped: false
                                                     orderDate: "2020-06-10T16:03:09.596Z"
