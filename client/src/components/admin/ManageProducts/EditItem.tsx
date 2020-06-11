@@ -176,7 +176,7 @@ export default class EditItem extends React.Component<Props, State> {
           <Container>
             {this.props.deleted ? null : (
               <Button
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 fullWidth
                 onClick={() => {
