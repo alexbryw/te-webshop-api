@@ -143,7 +143,7 @@ export default class CheckOut extends React.Component<Props, State>{
                             <Grid item xs={12} sm={6}>
                                 <Card style={checkoutStyle}>
                                     <Typography color="primary" variant="h4" style={{...{marginLeft:"1rem"}, ...{marginTop:"1.5em"}}}>
-                                        Checkout
+                                        Kassa
                                     </Typography>
 
                                     {this.props.cartState.cartList.length > 0 ? 
@@ -190,14 +190,14 @@ export default class CheckOut extends React.Component<Props, State>{
                                                 <Typography>{this.state.customerInfo?.address}</Typography>
                                                 <Typography>{this.state.customerInfo?.zipCode} {this.state.customerInfo?.city}</Typography>
                                                 <br/>
-                                                <Typography>E-Mail: {this.state.customerInfo?.email}</Typography>
+                                                <Typography>Mail: {this.state.customerInfo?.email}</Typography>
                                                 <Typography>Mobilnummer: {this.state.customerInfo?.mobile}</Typography>          
                                                 <br/>           
                                                 <Typography>Valt Fraktsätt: {this.state.customerInfo?.shippingMethod} ({this.state.customerInfo?.shippingCost} kr)</Typography>
                                                 <Typography style = {{fontWeight:'bold'}}>Förväntad leveransdag: {this.state.customerInfo?.deliveryDate} </Typography>
                                                 <br/>
                                                 <Typography variant="h5" color="primary">
-                                                    Totalkostnad: {cartState.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
+                                                    Att betala: {cartState.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
                                                     <br/>
                                                     <span style = {{...{fontSize: '0.6rem'}, ...{marginLeft:'6.5rem'}}}>(varav {cartState.cartTotalPrice * 0.25} kr moms).</span>
                                                 </Typography>                      
