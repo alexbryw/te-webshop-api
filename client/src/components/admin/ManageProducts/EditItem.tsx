@@ -85,7 +85,7 @@ export default class EditItem extends React.Component<Props, State> {
   handleDescriptionInput = (event: { target: { value: any } }) =>
     this.setState({ description: event.target.value });
   handleNumberInStockInput = (event: { target: { value: any } }) => {
-    //   this.setState({ nrInStock: event.target.value });
+      this.setState({ nrInStock: event.target.value });
       if (event.target.value === "") {
           this.setState({ nrInStock: this.state.prevNrInStock }, () =>
             console.log(this.state.nrInStock)
