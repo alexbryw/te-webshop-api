@@ -57,8 +57,9 @@ export default function Header(props: Props) {
                                 </Link>
                                     
                                  
-                                      
-                                    <UserOrderHistory orderContext={props.orderContext} userContext={props.userContext}/>
+                                    {!props.userContext.admin && props.userContext.loggedIn ?
+                                        <UserOrderHistory orderContext={props.orderContext} userContext={props.userContext}/> : null
+                                    }  
                                        
                                    
 

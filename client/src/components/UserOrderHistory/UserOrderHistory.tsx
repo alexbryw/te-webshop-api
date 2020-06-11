@@ -40,25 +40,20 @@ export default function ScrollDialog(props: Props) {
     }
   }, [open]);
 
-  //TODO ta in userContexten hit för att ta bort knappen i admin vy 
-  //Om du är utloggad eller admin visa inte 👤
-
-  // const userButton: JSX.Element | undefined = login ? (
-  //   <Button 
-  //     onClick={handleClickOpen('paper')}
-  //     style={{ backgroundColor:'transparent'}}><h1>👤</h1>
-  //   </Button>
-  // ) : undefined
+  const getOrderDate = (orderDate: string) => {
+    let dateObject: Date = new Date(orderDate)
+    const dateString: string = `${dateObject.getFullYear()}/${dateObject.getMonth()}/${dateObject.getDate()}`  
+    return dateString
+  }
 
   return (
-    <div>
-
-      {/* {userButton} */}
-   
+    <>
       <IconButton 
         color="primary"
         onClick={handleClickOpen('paper')}
-        style={{ backgroundColor:'transparent'}}> <PersonIcon/>
+        // style={{ backgroundColor:'transparent'}}
+        > 
+        <PersonIcon/>
       </IconButton>
 
       <Dialog
@@ -75,60 +70,65 @@ export default function ScrollDialog(props: Props) {
                 ref={descriptionElementRef}
                 tabIndex={-1}
                 >
+
+{/* <List component="nav">
+  <ListItem button>
+    <ListItemText primary="Trash" />
+  </ListItem>
+  <ListItem button>
+    <ListItemText primary="Spam" />
+  </ListItem>
+</List> */}
                 
                 {
-
-                  orders.map((order: any) => {
-
-                    let dateObject: Date = new Date(order.orderDate)
-                    const dateString: string = `${dateObject.getFullYear()}/${dateObject.getMonth()}/${dateObject.getDate()}`  
-
-                    return (
+                  orders.map((order: any) => (
                       <List style={{ border: '0.1rem solid #666773', padding: '2rem'}} key={order._id} dense>
-                       
                         <ListItem >
                             <ListItemText primary={`${order.to_firstname} ${order.to_lastname}`} />
                         </ListItem>
                         <ListItem >
-                            <ListItemText style={{color: order.isOrderShipped ? '#558B2F' : '#EB5027'}} primary={`Orederstatus: ${order.isOrderShipped ? 'skickat ✅' : 'packas 📦'}`} />
+                            <ListItemText style={{color: order.isOrderShipped ? '#558B2F' : '#EB5027'}} primary={`Orederstatus: ${order.isOrderShipped ? 'skickad ✅' : 'packas 📦'}`} />
                         </ListItem>
                         <ListItem >
                             <ListItemText primary={`Ordernummer: ${order._id}`} />
                         </ListItem>
                         <ListItem >
-                            <ListItemText primary={`Orderdatum: ${dateString}`} />
+                            <ListItemText primary={`Orderdatum: ${getOrderDate(order.orderDate)}`} />
                         </ListItem>
-                      {
+                    
+                    {
                         order.productRow.map((row: any, index: number) => (
                           row.product != null ?
-                            <ListItem key={index}>
-                                <ListItem >
-                                  <ListItemText primary={`Antal: ${row.qty}`} />
-                                </ListItem>
 
-                                <ListItem >
-                                  <ListItemText primary={`${row.product.title}`} />
-                                </ListItem>
+                          <List key={index}>
+                            <ListItem>
+                              <ListItemText primary={`Antal: ${row.qty}`} />
+                            </ListItem>
 
-                                <ListItem >
-                                  <ListItemText primary={`${row.product.price} :-`} />
-                                </ListItem>
-                                
-                                <ListItem >
-                                  <ListItemText primary={`Total: ${row.qty * row.product.price}:-`} />
-                              
-                                </ListItem>
-                            </ListItem> :
+                            <ListItem>
+                              <ListItemText primary={`${row.product.title}`} />
+                            </ListItem>
+
+                            <ListItem>
+                              <ListItemText primary={`${row.product.price} :-`} />
+                            </ListItem>
+
+                            <ListItem>
+                              <ListItemText primary={`Total: ${row.qty * row.product.price}:-`} />
+                            </ListItem>
+                           
+                            </List> :
                             <ListItem>
                                 <ListItemText primary="invalid product" />
                             </ListItem>
                           )
                         )
-                      }
+                      } 
+                     
                       </List>
                     )
-                  })
-                }
+                  ) 
+                } } 
               
           </DialogContentText>
         </DialogContent>
@@ -138,6 +138,6 @@ export default function ScrollDialog(props: Props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
