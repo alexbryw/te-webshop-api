@@ -13,7 +13,7 @@ interface State {
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
   getCategories: () => any;
-  deleteProduct: (product: any, productId: any) => any
+  deleteProduct: (productId: any) => any
 }
 
 export const ProductContext = createContext<State>({
@@ -220,35 +220,23 @@ export class ProductContextProvider extends Component<Props, State> {
     return updatedProduct;
   };
 
-  deleteProduct = async (product: any, productId: any) => {
-    console.log("from deleteproduct", product, productId)
-  //   const updatedProduct = await fetch(
-  //     "http://localhost:9000/api/products/" + productId,
-  //     {
-  //       method: "PUT",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         title: product.title,
-  //         description: product.description,
-  //         price: product.price,
-  //         category: product.category,
-  //         nrInStock: product.nrInStock,
-  //       }),
-  //     }
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       return data;
-  //     });
+  deleteProduct = async (productId: any) => {
+    console.log("from deleteproduct", productId)
+    const deletedProduct = await fetch(
+      "http://localhost:9000/api/products/" + productId,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("deleted product", data);
+        return data;
+      });
 
-  //   return updatedProduct;
-  // };
-
-  }
+    return deletedProduct;
+  };
 
     
     
