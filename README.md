@@ -7,9 +7,10 @@ Vi har byggt en webbshops-applikation inkluderande en klient och en server. Serv
 ## Hur projektet byggs och körs
 
 
-1) Installera projektet genom att köra "npm i" på både server- och clientmappen.
-2) Starta servern genom att köra "npm start" på servermappen i terminalfönstret.
-3) Starta klienten genom att öppna ett nytt terminalfönster och köra "npm start" på clientmappen.
+1) Installera servern genom att köra "npm i" på /server
+2) Installera klienten genom att köra "npm i" på /client
+3) Starta servern genom att köra "npm start" på /server
+4) Starta klienten genom att öppna ett nytt terminalfönster och köra "npm start" på /client
 
 Applikationen kommer nu att startas på http://localhost:3000 i din webbläsare.
 
