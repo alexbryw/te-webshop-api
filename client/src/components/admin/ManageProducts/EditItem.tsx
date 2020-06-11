@@ -180,12 +180,13 @@ export default class EditItem extends React.Component<Props, State> {
                 color="primary"
                 fullWidth
                 onClick={() => {
-                  this.props.delete(this.props.arrayIndex);
-                  this.props.isDeleted();
+                  // this.props.delete(this.props.arrayIndex);
+                  // this.props.isDeleted();
+                  this.props.productContext.deleteProduct(this.props.itemData._id)
                 }}
               >
                 <RemoveCircleOutlineIcon />
-                Ta bort #{this.props.itemData.id}
+                Ta bort
               </Button>
             )}
             {this.props.deleted ? null : (

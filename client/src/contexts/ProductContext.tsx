@@ -13,6 +13,7 @@ interface State {
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
   getCategories: () => any;
+  deleteProduct: (product: any, productId: any) => any
 }
 
 export const ProductContext = createContext<State>({
@@ -40,6 +41,10 @@ export const ProductContext = createContext<State>({
   getCategories: () => {
     return [];
   },
+
+  deleteProduct: () => {
+    return [];
+  },
 });
 
 export class ProductContextProvider extends Component<Props, State> {
@@ -54,6 +59,7 @@ export class ProductContextProvider extends Component<Props, State> {
       fetchProducts: this.fetchProducts,
       fetchProduct: this.fetchProduct,
       getCategories: this.getCategories,
+      deleteProduct: this.deleteProduct,
     };
   }
 
@@ -213,6 +219,32 @@ export class ProductContextProvider extends Component<Props, State> {
 
     return updatedProduct;
   };
+
+  deleteProduct = async (product: any, productId: any) => {
+
+    const productToDelete = await fetch( 
+      "http://localhost:9000/api/products/" + productId,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        }, 
+        body: productToDelete
+      }
+        .then((response) => response.json())
+        .then((data => {
+        console.log(data)
+        return data
+
+        })
+
+      
+        
+      }
+    
+    
+
 
   //   async componentDidMount(){
   //     const data = await this.uploadFile
