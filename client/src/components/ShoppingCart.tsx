@@ -30,42 +30,51 @@ export default function ShoppingCart(props: Props) {
     return (
         props.cartContext.cartList?.length > 0 ?
             <List>
-                {console.log(props.cartContext)}
-                {props.cartContext.cartList.map((cartItem: any) =>
-                    <div key={cartItem.id}>
-                        <ListItem >
-                            <ListItemText primary={
-                                <Typography style={{ textDecoration: 'none', color: 'black', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
-                                    {cartItem.product.name}
-                                </Typography>} />
-                            <ListItemText primary={
-                                <Typography style={{ textDecoration: 'none', color: 'black', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
-                                    {cartItem.product.name}
-                                </Typography>} />
-                            <div style={nextFlex}>
-                                <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, -1, null) }}>
-                                    <RemoveIcon fontSize="small" />
-                                </IconButton>
-                                <ListItemText primary={<Typography noWrap >{cartItem.nrItems}</Typography>} />
-                                <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, 1, props.productContext.fetchProduct) }}>
-                                    <AddIcon fontSize="small" />
-                                </IconButton>
-                            </div>
-                            <div style={flexStyle}>
+                {props.cartContext.cartList?.length > 0 ?
+                    props.cartContext.cartList.map((cartItem: any) =>
+                        <div key={cartItem.id}>
+                            <ListItem >
+                                <Hidden only="xs">
+                                    <ListItemAvatar>
+                                        <Avatar src={"http://localhost:9000/api/files/" + cartItem.product.file} />
+                                    </ListItemAvatar>
+                                </Hidden>
                                 <ListItemText primary={
-                                    <Typography noWrap align="center">
-                                        {cartItem.product.price + " kr"}
-                                    </Typography>
-                                } />
-                                <IconButton size="small" edge="end" aria-label="delete" onClick={(e) => { e.stopPropagation(); props.cartContext.removeItemFromCart(cartItem.id) }}>
-                                    <DeleteRoundedIcon fontSize="small" />
-                                </IconButton>
-                            </div>
-                        </ListItem>
-                        <Divider />
-                    </div>
-                )
+                                    <Typography style={{ textDecoration: 'none', color: 'black', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
+                                        {cartItem.product.title}
+                                    </Typography>} />
+                                <div style={nextFlex}>
+                                    <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, -1) }}>
+                                        <RemoveIcon fontSize="small" />
+                                    </IconButton>
+                                    <ListItemText primary={<Typography noWrap >{cartItem.nrItems}</Typography>} />
+                                    <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, 1) }}>
+                                        <AddIcon fontSize="small" />
+                                    </IconButton>
+                                </div>
+                                <div style={flexStyle}>
+                                    <ListItemText primary={
+                                        <Typography noWrap align="center">
+                                            {cartItem.product.price + " kr"}
+                                        </Typography>
+                                    } />
+                                    <IconButton size="small" edge="end" aria-label="delete" onClick={(e) => { e.stopPropagation(); props.cartContext.removeItemFromCart(cartItem.id) }}>
+                                        <DeleteRoundedIcon fontSize="small" />
+                                    </IconButton>
+                                </div>
+                            </ListItem>
+                            <Divider />
+                        </div>
+                    )
+                    : undefined //show nothing if cart is empty.
                 }
+                <ListItem>
+                    <ListItemText primary={
+                        <Typography noWrap align="right" variant="h6" color="primary">
+                            {"Total: " + props.cartContext.cartTotalPrice + ' kr'}
+                        </Typography>
+                    } />
+                </ListItem>
             </List>
             :
             <List>
