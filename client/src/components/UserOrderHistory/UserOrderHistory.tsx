@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
+//Material UI
 import { DialogActions, DialogContent, DialogTitle, Dialog, DialogProps, Button, ListItem, ListItemText, List, IconButton } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
+
+// STYLES
+import useStyles from "./userOrderHistoryStyle"
 
 interface Props {
   orderContext: any;
   userContext: any
 }
 export default function ScrollDialog(props: Props) {
-
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
   const [orders, setOrders] = React.useState([]);
@@ -82,13 +86,13 @@ export default function ScrollDialog(props: Props) {
 
                 {
                   order.productRow.map((row: any, index: number) => (row.product != null ?
-                    <List style={{ border: '0.1rem dashed #558B2F', marginBottom: '0.6rem' }} key={index} dense>
+                    <List className={classes.recipteList} key={index} dense>
                       <ListItem >
                         <ListItemText primary={`${row.product.title}`} />
                       </ListItem>
 
 
-                      <div style={{ display: 'flex' }}>
+                      <div className={classes.flex}>
                         <ListItem>
                           <ListItemText primary={`Antal: ${row.qty}`} />
                         </ListItem>
