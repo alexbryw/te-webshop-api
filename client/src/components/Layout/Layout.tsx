@@ -6,7 +6,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import ProductPage from '../ProductPage/ProductPage';
 import AdminLayout from '../admin/AdminLayout';
-import CheckoutWrapper from '../checkout/CheckoutWrapper';
+import CheckOut from "../checkout/CheckOut"
 
 import { Container } from '@material-ui/core';
 import useStyles from "./LayoutStyles"
@@ -15,7 +15,7 @@ import useStyles from "./LayoutStyles"
 //CONTEXTS
 import { UserContext } from "../../contexts/UserContext"
 import { ProductContext } from "../../contexts/ProductContext"
-import { NewCartContext } from '../../contexts/NewCartContext';
+import { CartContext } from '../../contexts/NewCartContext';
 import { OrderContext } from '../../contexts/OrderContext';
 
 const Layout = () => {
@@ -24,7 +24,7 @@ const Layout = () => {
     return (
         <OrderContext.Consumer>
             {(orderContext) => (
-                <NewCartContext.Consumer>
+                <CartContext.Consumer>
                     {(cartContext) => (
                         <ProductContext.Consumer>
                             {(productContext) => (
@@ -38,13 +38,13 @@ const Layout = () => {
 
                                                 <Switch>
                                                     <Route exact path="/">
-                                                        <Home productContext={productContext} userContext={userContext} />
+                                                        <Home productContext={productContext} userContext={userContext} cartContext={cartContext} />
                                                     </Route>
                                                     <Route exact path="/admin">
                                                         <AdminLayout userContext={userContext} orderContext={orderContext} productContext={productContext} />
                                                     </Route>
                                                     <Route path="/checkout">
-                                                        <CheckoutWrapper />
+                                                        <CheckOut cartContext={cartContext} userContext={userContext} productContext={productContext} orderContext={orderContext} />
                                                     </Route>
                                                     <Route exact path="/product">
                                                         <div><h2>Select a product</h2></div>
@@ -67,7 +67,7 @@ const Layout = () => {
                             )}
                         </ProductContext.Consumer>
                     )}
-                </NewCartContext.Consumer>
+                </CartContext.Consumer>
             )}
         </OrderContext.Consumer>
     );

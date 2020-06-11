@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react'
+import React, { CSSProperties } from 'react'
 import AddressForm from './AddressForm'
 import Payment from './Payment'
 import Button from '@material-ui/core/Button'
@@ -8,28 +8,28 @@ import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
 import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
-import { NewCartContext , State as CartState} from '../../contexts/NewCartContext'
 import ShoppigCartCheckout from './../ShoppingCartCheckout'
 import serverAPI from '../../serverAPI'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
-interface Props{
-    cartState: CartState
+interface Props {
+    cartContext: any
     userContext: any
+    productContext: any
     orderContext: any
 }
 
-interface State{
-    step:number,
-    customerInfo?:any
-    customerPaymentInfo?:any
-    orderNumber:number
+interface State {
+    step: number,
+    customerInfo?: any
+    customerPaymentInfo?: any
+    orderNumber: number
     disableOrderButton: boolean
     orderResponse: any
 }
 
 export default class CheckOut extends React.Component<Props, State>{
-    constructor(props:Props){
+    constructor(props: Props) {
         super(props)
         this.state = {
             step: 1,
@@ -37,24 +37,24 @@ export default class CheckOut extends React.Component<Props, State>{
             customerPaymentInfo: undefined,
             orderNumber: 0,
             disableOrderButton: false,
-            orderResponse: {}
-        }   
+            orderResponse: {},
+        }
     }
 
     componentDidMount() {
         window.scrollTo(0, 0)
     }
 
-    componentDidUpdate(prevProps: Props, prevState: State){
-        if(this.state.step === 3 && prevState.step !== 3){
-            this.props.cartState.emptyCart()
+    componentDidUpdate(prevProps: Props, prevState: State) {
+        if (this.state.step === 3 && prevState.step !== 3) {
+            this.props.cartContext.emptyCart()
         }
     }
 
     nextStep = () => {
         const { step } = this.state
         this.setState({
-          step: step + 1
+            step: step + 1
         })
     }
 
@@ -75,11 +75,23 @@ export default class CheckOut extends React.Component<Props, State>{
     private onPaymentFormSubmit = (customerInfoFromForm: CustomerPaymentInfo) => {
         const ts = Math.round((new Date()).getTime() / 1000)
 
-        if(this.state.disableOrderButton === false){
+        if (this.state.disableOrderButton === false) {
             this.apiCall(customerInfoFromForm, ts)
         }
-        this.setState({disableOrderButton: true})
+        this.setState({ disableOrderButton: true })
     }
+
+    // async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number) {
+    //     const response = await serverAPI(customerInfoFromForm)
+    //     if (response) {
+    //         this.setState({
+    //             customerPaymentInfo: customerInfoFromForm,
+    //             step: this.state.step + 1,
+    //             orderNumber: ts,
+    //             disableOrderButton: false
+    //         })
+    //     }
+    // }
 
     async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number){
         // console.log(this.props.userContext._id, " user id")
@@ -87,10 +99,10 @@ export default class CheckOut extends React.Component<Props, State>{
         // console.log(this.state.customerInfo)
         // console.log(this.props.cartState.cartList)
         console.log(customerInfoFromForm.paymentMethod)
-        if(this.props.cartState.cartList && this.props.cartState.cartList.length > 0 && this.state.customerInfo){
+        if(this.props.cartContext.cartList && this.props.cartContext.cartList.length > 0 && this.state.customerInfo){
             console.log("ok")
         }
-        const newProductRow = this.props.cartState.cartList.map( (cartItem: CartItem) => {return {product: cartItem.id, qty: cartItem.nrItems}})
+        const newProductRow = this.props.cartContext.cartList.map( (cartItem: CartItem) => {return {product: cartItem.id, qty: cartItem.nrItems}})
         // console.log(newProductRow)
         const newOrder = {
             user: this.props.userContext._id,
@@ -120,64 +132,66 @@ export default class CheckOut extends React.Component<Props, State>{
         }
     }
 
-    render(){
+    render() {
         const { step } = this.state
-        let continueButton:any
-        if(!this.state.disableOrderButton){
-            continueButton = <Button 
-                                variant="contained" 
-                                color="primary"
-                                style={{margin:'0 0 1em 1em'}}
-                                onClick = {this.previousStep}> 
-                                Stämmer inte?                                   
+        let continueButton: any
+        if (!this.state.disableOrderButton) {
+            continueButton = <Button
+                variant="contained"
+                color="primary"
+                style={{ margin: '0 0 1em 1em' }}
+                onClick={this.previousStep}>
+                Stämmer inte?
                             </Button>
         }
 
-        switch(step){
+
+        switch (step) {
             case 1:
-                return(
-                    <div>
-                        <HomeButton/>
-                        <Grid 
-                            container
-                            justify="center"
-                            style={gridStyle}>
-                            <Grid item xs={12} sm={6}>
-                                <Card style={checkoutStyle}>
-                                    <Typography color="primary" variant="h4" style={{...{marginLeft:"1rem"}, ...{marginTop:"1.5em"}}}>
-                                        Checkout
+                return (
+                    this.props.userContext.loggedIn ?
+                        <>
+                            <HomeButton />
+                            <Grid
+                                container
+                                justify="center"
+                                style={gridStyle}>
+                                <Grid item xs={12} sm={6}>
+                                    <Card style={checkoutStyle}>
+                                        <Typography color="primary" variant="h4" style={{ ...{ marginLeft: "1rem" }, ...{ marginTop: "1.5em" } }}>
+                                            Checkout
                                     </Typography>
 
-                                    {this.props.cartState.cartList.length > 0 ? 
-                                        <div>
-                                            <ShoppingCart/>
-                                            <AddressForm 
-                                                customerInfo={this.state.customerInfo} 
-                                                onSubmit={this.onAddressFormSubmit}
-                                                cartState={this.props.cartState}
-                                            />
-                                        </div>
-                                        :
-                                        <div style = {flexIt}>
-                                            <Typography variant="h5" color="primary">Kundvagnen är tom.</Typography>
-                                            <br/>
-                                            <Typography variant="h5" color="primary">Gå till <Link to="/" style={{textDecoration: 'none', color: 'black'}}>Startsidan</Link></Typography>
-                                        </div>
-                                    }
-                                </Card>
+                                        {this.props.cartContext.cartList.length > 0 ?
+                                            <div>
+                                                <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
+                                                <AddressForm
+                                                    customerInfo={this.state.customerInfo}
+                                                    onSubmit={this.onAddressFormSubmit}
+                                                    cartContext={this.props.cartContext}
+                                                />
+                                            </div>
+                                            :
+                                            <div style={flexIt}>
+                                                <Typography variant="h5" color="primary">Kundvagnen är tom.</Typography>
+                                                <br />
+                                                <Typography variant="h5" color="primary">Gå till <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>Startsidan</Link></Typography>
+                                            </div>
+                                        }
+                                    </Card>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </div>
+                        </>
+                        : <Redirect to="/" />
                 )
-            break
 
             case 2:
-                if(this.state.customerInfo) {
-                    return(
-                        <NewCartContext.Consumer>
-                        {(cartState) => (
-                            <div>
-                                <HomeButton/>
+                if (this.state.customerInfo) {
+                    return (
+
+                        this.props.userContext.loggedIn ?
+                            <>
+                                <HomeButton />
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}
@@ -186,54 +200,50 @@ export default class CheckOut extends React.Component<Props, State>{
                                     <Grid item xs={12} sm={6}>
 
                                         <Card style={cardStyle}>
-                                                <ShoppigCartCheckout/>
-                                                <Typography variant = "h6">Skickas till:</Typography>
-                                                <Typography>{this.state.customerInfo?.firstName} {this.state.customerInfo?.lastName}</Typography>
-                                                <Typography>{this.state.customerInfo?.address}</Typography>
-                                                <Typography>{this.state.customerInfo?.zipCode} {this.state.customerInfo?.city}</Typography>
-                                                <br/>
-                                                <Typography>E-Mail: {this.state.customerInfo?.email}</Typography>
-                                                <Typography>Mobilnummer: {this.state.customerInfo?.mobile}</Typography>          
-                                                <br/>           
-                                                <Typography>Valt Fraktsätt: {this.state.customerInfo?.shippingMethod} ({this.state.customerInfo?.shippingCost} kr)</Typography>
-                                                <Typography style = {{fontWeight:'bold'}}>Förväntad leveransdag: {this.state.customerInfo?.deliveryDate} </Typography>
-                                                <br/>
-                                                <Typography variant="h5" color="primary">
-                                                    Totalkostnad: {cartState.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
-                                                    <br/>
-                                                    <span style = {{...{fontSize: '0.6rem'}, ...{marginLeft:'6.5rem'}}}>(varav {cartState.cartTotalPrice * 0.25} kr moms).</span>
-                                                </Typography>                      
-                                                <b/>
-                                                <Payment
+                                            <ShoppigCartCheckout />
+                                            <Typography variant="h6">Skickas till:</Typography>
+                                            <Typography>{this.state.customerInfo?.firstName} {this.state.customerInfo?.lastName}</Typography>
+                                            <Typography>{this.state.customerInfo?.address}</Typography>
+                                            <Typography>{this.state.customerInfo?.zipCode} {this.state.customerInfo?.city}</Typography>
+                                            <br />
+                                            <Typography>E-Mail: {this.state.customerInfo?.email}</Typography>
+                                            <Typography>Mobilnummer: {this.state.customerInfo?.mobile}</Typography>
+                                            <br />
+                                            <Typography>Valt Fraktsätt: {this.state.customerInfo?.shippingMethod} ({this.state.customerInfo?.shippingCost} kr)</Typography>
+                                            <Typography style={{ fontWeight: 'bold' }}>Förväntad leveransdag: {this.state.customerInfo?.deliveryDate} </Typography>
+                                            <br />
+                                            <Typography variant="h5" color="primary">
+                                                Totalkostnad: {this.props.cartContext.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
+                                                    <br />
+                                                <span style={{ ...{ fontSize: '0.6rem' }, ...{ marginLeft: '6.5rem' } }}>(varav {this.props.cartContext.cartTotalPrice * 0.25} kr moms).</span>
+                                            </Typography>
+                                            <b />
+                                            <Payment
                                                 onSubmit={this.onPaymentFormSubmit}
                                                 customerInfo={this.state.customerInfo}
-                                                isDisabled = {this.state.disableOrderButton}
-                                                />
-                                                {continueButton}
+                                                isDisabled={this.state.disableOrderButton}
+                                            />
+                                            {continueButton}
                                         </Card>
                                     </Grid>
                                 </Grid>
-                            </div>               
-                        )}                   
-                        </NewCartContext.Consumer>
+                            </>
+                            : <Redirect to="/" />
                     )
                 }
-            break
 
             case 3:
-                if(this.state.customerInfo && this.state.customerPaymentInfo) {
-                    return(
-                        <NewCartContext.Consumer>
-                        {(cartState) => (  
+                if (this.state.customerInfo && this.state.customerPaymentInfo) {
+                    return (
+                        this.props.userContext.loggedIn ?
                             <div>
-                                <HomeButton/>
+                                <HomeButton />
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}>
                                     <Grid item xs={12} sm={6}>
                                         <Card style={cardStyle}>
                                             <h1>Bravo!</h1>
-                                            
                                             {this.state.orderResponse.err ? <h3>{this.state.orderResponse.err}</h3> :
                                             <div>
                                                 <h3>first name: {this.state.orderResponse.to_firstname}</h3>
@@ -255,38 +265,36 @@ export default class CheckOut extends React.Component<Props, State>{
                                                     user: "5edf8924bb36e02f2c910771" */}
                                             </div>
                                             }
-                                            <Typography>Du har beställt supergott te för den totala kostnaden av {cartState.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br/> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
-                                            <br/>
+                                            {/* <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
+                                            <br />
                                             <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
-                                            <br/>
+                                            <br />
                                             <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
-                                            <ShoppigCartCheckout/>
+                                            <ShoppigCartCheckout /> */}
                                         </Card>
                                     </Grid>
                                 </Grid>
                             </div>
-                        )}                   
-                        </NewCartContext.Consumer>
+                            : <Redirect to="/" />
                     )
                 }
-            break
         }
     }
 }
 
-const checkoutStyle:CSSProperties = {
+const checkoutStyle: CSSProperties = {
     padding: '1rem'
 }
 
-const cardStyle:CSSProperties = {
+const cardStyle: CSSProperties = {
     padding: '2rem'
 }
 
-const gridStyle:CSSProperties = {
-    maxWidth:'100vw',
+const gridStyle: CSSProperties = {
+    maxWidth: '100vw',
 }
 
-const flexIt:CSSProperties = {
+const flexIt: CSSProperties = {
     marginTop: '3rem',
     marginBottom: '2rem',
     display: 'flex',

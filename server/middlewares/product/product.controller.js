@@ -43,12 +43,9 @@ function addProduct(req, res, next) {
 
 function updateProduct(req, res, next) {
   console.log(req.body)
-  Product.findByIdAndUpdate(
-    { _id: req.params.id },
-    req.body,
-    { new: true },
-    (err, result) => {
-      if (err) {
+  console.log(req.params.id)
+  Product.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, result) => {
+      if(err) {
         next(err);
       } else {
         res.json(result);

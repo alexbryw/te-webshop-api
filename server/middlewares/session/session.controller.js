@@ -83,7 +83,7 @@ function checkAuthorization(req, res, next) {
 
     // blocks any non administrator
 
-    if (res.session.admin) {
+    if (req.session.admin) {
         console.log('you have admin rights');
         next()
 
@@ -95,7 +95,7 @@ function checkAuthorization(req, res, next) {
         })
     }
 
-    next()
+    // next()
 }
 
 async function setSession(req, res, next) {

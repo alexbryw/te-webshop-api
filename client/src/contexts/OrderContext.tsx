@@ -19,7 +19,7 @@ export const OrderContext = createContext<State>({
 
 });
 
-export class OrderContextProvider extends Component<Props, State> {
+class OrderContextProvider extends Component<Props, State> {
     constructor(props: Props) {
         super(props)
 
@@ -54,6 +54,7 @@ export class OrderContextProvider extends Component<Props, State> {
 
         return orders
     }
+    
 
     updateOrders = async (order: any) => {
         const updatedOrders = await fetch("http://localhost:9000/api/orders/" + order._id, {

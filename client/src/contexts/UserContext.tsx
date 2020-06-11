@@ -114,7 +114,12 @@ export class UserContextProvider extends Component<Props, State> {
         const users = await fetch("http://localhost:9000/api/users/", {
             method: "GET",
             credentials: 'include',
-        }).then((response) => response.json()).then((data) => data)
+        }).then((response) => response.json()).then((data) => {
+            console.log(data)
+            return data
+        })
+        // console.log("from get users")
+        // console.log(users)
         return users
     }
 
@@ -214,14 +219,10 @@ export class UserContextProvider extends Component<Props, State> {
                 console.log(data);
                 return data
             })
-
-        console.log(user);
         this.setUserInState(user)
     }
 
     async setUserInState(user: any) {
-        console.log(user);
-
         if (user.err) console.log(user.err);
 
         if (user && !user.err) {

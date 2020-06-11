@@ -2,10 +2,10 @@
 //The state content is provided to the rest of the app to consume with <CartContext.Consumer>.
 
 import React, { createContext } from 'react'
-import { CartItem , NewProduct } from '../interfaces/interfaces'
+import { CartItem, NewProduct } from '../interfaces/interfaces'
 import { items, fetchProducts } from '../ItemList'
 
-export const NewCartContext = createContext<State>({
+export const CartContext = createContext<State>({
     cartList: [],
     cartTotalPrice: 0,
     savedCheckoutCartList: [],
@@ -38,7 +38,7 @@ export interface State {
     getShippingOptions: () => void
 }
 
-export class NewCartProvider extends React.Component<Props, State>{
+export class CartProvider extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
 
@@ -51,7 +51,7 @@ export class NewCartProvider extends React.Component<Props, State>{
         this.state = {
             cartList: loadedCartList,
             cartTotalPrice: loadedCartTotalPrice,
-            
+
             savedCheckoutCartList: [],
             savedCartTotalPrice: 0,
 
@@ -81,15 +81,7 @@ export class NewCartProvider extends React.Component<Props, State>{
 
         this.setState({
             showCart: visibility
-        },
-            // () => {
-            //     if (clear) {
-            //         this.cancelTimeout(timeOut)
-            //     } else {
-            //         this.setupTimeout(timeOut)
-            //     }
-            // }
-        )
+        })
     }
     cancelTimeout = (timer: any) => {
         console.log('cancelled');
@@ -102,8 +94,8 @@ export class NewCartProvider extends React.Component<Props, State>{
 
     // Add a product to cartList array, Id and Number of items to add.
     // Number of items can be negative -1 to remove a product or positive to add.
-    addProduct = async (inItemId: string, inNrItems: number) =>  {
-        console.log(inItemId,inNrItems,"  from addProduct cartContext")
+    addProduct = async (inItemId: string, inNrItems: number) => {
+        console.log(inItemId, inNrItems, "  from addProduct cartContext")
         console.log(this.state.cartList)
         const cartListPosition = this.findItemInCart(inItemId)
         const updatedCartList = [...this.state.cartList]
@@ -195,14 +187,14 @@ export class NewCartProvider extends React.Component<Props, State>{
         })
     }
 
-    saveCartToLocalStorage(){
+    saveCartToLocalStorage() {
         localStorage.setItem('cartList', JSON.stringify(this.state.cartList))
         // localStorage.setItem('savedCheckoutCartList', JSON.stringify(this.state.savedCheckoutCartList))
         localStorage.setItem('cartTotalPrice', this.state.cartTotalPrice.toString())
         // localStorage.setItem('savedCartTotalPrice', this.state.savedCartTotalPrice.toString())
     }
 
-    loadCartFromLocalStorage(){
+    loadCartFromLocalStorage() {
         const getCartList = localStorage.getItem('cartList')
         const getCartTotalPrice = localStorage.getItem('cartTotalPrice')
 
@@ -213,7 +205,7 @@ export class NewCartProvider extends React.Component<Props, State>{
             cartList: loadedCartList,
             cartTotalPrice: loadedCartTotalPrice
         })
-        
+
     }
 
     getShippingOptions = async () => {
@@ -229,9 +221,9 @@ export class NewCartProvider extends React.Component<Props, State>{
 
         return shippingOptions
     }
-    
-    startLoadCartFromLocalStorage(){
-        if(this.state.cartList.length < 1){
+
+    startLoadCartFromLocalStorage() {
+        if (this.state.cartList.length < 1) {
             console.log("1. cart empty. Load cart from storage.")
             this.loadCartFromLocalStorage()
         } else {
@@ -241,9 +233,11 @@ export class NewCartProvider extends React.Component<Props, State>{
 
     render() {
         return (
-            <NewCartContext.Provider value={this.state}>
+            <CartContext.Provider value={this.state}>
                 {this.props.children}
-            </NewCartContext.Provider>
+            </CartContext.Provider>
         )
     }
 }
+
+export default CartProvider

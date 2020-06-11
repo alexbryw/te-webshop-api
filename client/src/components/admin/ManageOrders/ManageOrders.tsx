@@ -35,6 +35,11 @@ const ManageOrders = (props: Props) => {
         return totalPrice
     }
 
+    const getDate = (preDate: string) => {
+        const formatedDate = preDate.slice(0, 10)
+        return formatedDate
+    }
+
 
 
     useEffect(() => { getOrders() }, [])
@@ -48,7 +53,8 @@ const ManageOrders = (props: Props) => {
             {orders.length === 0 ?
                 <Grid container>
                     <Typography variant="h4"> loading orders </Typography>
-                </Grid> : orders.map((order: any) => (
+                </Grid> :
+                orders.map((order: any) => (
 
                     <Grid container key={order._id} className={classes.product} justify="center">
 
@@ -79,30 +85,35 @@ const ManageOrders = (props: Props) => {
                                 </List>
                             </Grid>
                             <Grid item xs={4}>
-                                <List dense className={classes.shippingInfo}>
-                                    <ListItem >
-                                        <ListItemText primary="shipping info" color="red" />
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemText primary={order.shipping != null ? order.shipping.companyName : "company name"} />
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemText primary={order.shipping != null ? order.shipping.deliveryTime : "delivery time"} />
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemText primary={order.shipping != null ? order.shipping.price : "price"} />
-                                    </ListItem>
-                                </List>
+                                {order.shipping != null ?
+                                    <List dense className={classes.shippingInfo}>
+                                        <ListItem >
+                                            <ListItemText primary="shipping info" color="red" />
+                                        </ListItem>
+                                        <ListItem>
+                                            <ListItemText primary={order.shipping.companyName} />
+                                        </ListItem>
+                                        <ListItem>
+                                            <ListItemText primary={"Shipping cost : " + order.shipping.price + ":-"} />
+                                        </ListItem>
+                                        <ListItem>
+                                            <ListItemText primary={"Delivery placed : " + getDate(order.orderDate)} />
+                                        </ListItem>
+                                        <ListItem>
+                                            <ListItemText primary={"Delivery time : " + order.shipping.deliveryTime + "day(s)"} />
+                                        </ListItem>
+                                    </List>
+                                    : null}
                             </Grid>
 
                         </Grid>
 
                         {order.isOrderShipped ?
                             null :
-                            <Grid item xs={3} direction="column" className={classes.shippingBtn}>
+                            <Grid item xs={12} direction="column" className={classes.shippingBtn}>
                                 <Typography variant="overline">
                                     Confirm order is shipped
-                        </Typography>
+                                </Typography>
 
                                 <IconButton onClick={() => handleConfirmShipping(order)}>
                                     <CheckCircleIcon />
