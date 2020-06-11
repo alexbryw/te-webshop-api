@@ -31,8 +31,18 @@ export class OrderContextProvider extends Component<Props, State> {
     }
 
 
+//hämta en besökares alla ordrar
+//******************   |    */
+//******************   |     */
+//******************   V     */
+// getAllOrders = async () => {
+//     const order = await fetch(orderURL, {}
+
+
     getOrders = async () => {
+        console.log('hello')
         const orders = await fetch("http://localhost:9000/api/orders/", {
+
             method: "GET",
             credentials: 'include',
         })
