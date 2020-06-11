@@ -24,7 +24,7 @@ interface Props {
 
 export default function ShoppingCart(props: Props) {
 
-    console.log(props.cartContext);
+    // console.log(props.cartContext);
 
 
     return (
@@ -39,10 +39,16 @@ export default function ShoppingCart(props: Props) {
                                         <Avatar src={"http://localhost:9000/api/files/" + cartItem.product.file} />
                                     </ListItemAvatar>
                                 </Hidden>
+                                {cartItem.nrItems > cartItem.product.nrInStock ?
                                 <ListItemText primary={
+                                    <Typography style={{ textDecoration: 'none', color: 'red', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
+                                        In Stock:{cartItem.product.nrInStock}, {cartItem.product.title}
+                                    </Typography>} />
+                                :<ListItemText primary={
                                     <Typography style={{ textDecoration: 'none', color: 'black', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
                                         {cartItem.product.title}
                                     </Typography>} />
+                                }
                                 <div style={nextFlex}>
                                     <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, -1) }}>
                                         <RemoveIcon fontSize="small" />
