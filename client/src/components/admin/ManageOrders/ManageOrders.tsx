@@ -52,7 +52,7 @@ const ManageOrders = (props: Props) => {
 
             {orders.length === 0 ?
                 <Grid container>
-                    <Typography variant="h4"> loading orders </Typography>
+                    <Typography variant="h6"> Laddar beställningar </Typography>
                 </Grid> :
                 orders.map((order: any) => (
 
