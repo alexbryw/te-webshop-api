@@ -12,6 +12,7 @@ interface State {
     loggedIn: Boolean,
     admin: Boolean,
     name: String,
+    _id: string
 
     adminView: AdminView,
     changeAdminView: (view: AdminView) => void,
@@ -42,6 +43,7 @@ export const UserContext = createContext<State>({
     loggedIn: false,
     admin: false,
     name: "",
+    _id: "",
 
     adminView: "products",
     changeAdminView: () => { },
@@ -62,6 +64,7 @@ export class UserContextProvider extends Component<Props, State> {
             loggedIn: false,
             admin: false,
             name: "",
+            _id: "",
 
             adminView: "products",
             changeAdminView: this.changeAdminView,
@@ -225,14 +228,16 @@ export class UserContextProvider extends Component<Props, State> {
             this.setState({
                 loggedIn: true,
                 admin: user.admin,
-                name: user.name
+                name: user.name,
+                _id: user._id
             }, () => console.log("logged in", this.state)
             )
         } else {
             this.setState({
                 loggedIn: false,
                 admin: false,
-                name: ""
+                name: "",
+                _id: ""
             }, () => console.log("not logged in", this.state)
             )
         }

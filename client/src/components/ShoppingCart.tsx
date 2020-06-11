@@ -18,7 +18,7 @@ export default function ShoppingCart() {
                                     <ListItem >
                                         <Hidden only="xs">
                                         <ListItemAvatar>
-                                            <Avatar src={cartItem.product.imgURL}/>
+                                            <Avatar src={"http://localhost:9000/api/files/" + cartItem.product.file}/>
                                         </ListItemAvatar>
                                         </Hidden>
                                         <ListItemText primary={<Typography style = {{textDecoration: 'none', color: 'black', display: 'flex'}} component = {RouterLink} to={"product/"+ cartItem.id} noWrap>{cartItem.product.name}</Typography> } />

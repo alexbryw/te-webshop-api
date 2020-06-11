@@ -8,12 +8,14 @@ interface Props { }
 interface State {
     getOrders: () => any
     updateOrders: (orderID: any) => any
+    sendOrder: (order: any) => any
 
 }
 
 export const OrderContext = createContext<State>({
     getOrders: () => { },
     updateOrders: () => { },
+    sendOrder: () => { },
 
 });
 
@@ -24,6 +26,7 @@ export class OrderContextProvider extends Component<Props, State> {
         this.state = {
             getOrders: this.getOrders,
             updateOrders: this.updateOrders,
+            sendOrder: this.sendOrder
         }
     }
 
@@ -61,6 +64,35 @@ export class OrderContextProvider extends Component<Props, State> {
             })
 
         return updatedOrders
+    }
+
+    sendOrder = async (order: any) => {
+        // console.log(order)
+        const orderString = JSON.stringify(order)
+        const newOrder = await fetch("http://localhost:9000/api/orders/", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            // body: JSON.stringify({
+            //     user: order.user,
+            //     shipping: order.shipping,
+            //     productRow: order.productRow,
+            //     to_firstname: order.to_firstname,
+            //     to_lastname: order.to_lastname,
+            //     to_street: order.to_street,
+            //     to_city: order.to_city,
+            //     to_zip: order.to_zip
+            // })
+            body: JSON.stringify(order)
+        })
+            .then((response) =>  response.json())
+            .then((data) => {
+                console.log(data);
+                return data
+            })
+        return newOrder
     }
 
 
