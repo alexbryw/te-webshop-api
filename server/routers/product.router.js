@@ -27,7 +27,10 @@ router.get("/category/:category", getProductsByCategory);
 router.post("/", checkLoginSession, checkAuthorization, addProduct);
 
 // Update one product
-router.put("/:id", checkLoginSession, checkAuthorization, updateProduct);
+router.put("/:id",
+checkLoginSession,
+checkAuthorization,
+updateProduct);
 
 // Delete one product
 router.delete("/:id", checkLoginSession, checkAuthorization, deleteProduct);

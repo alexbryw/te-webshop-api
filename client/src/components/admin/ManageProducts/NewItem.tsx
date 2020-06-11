@@ -248,7 +248,7 @@ export default class NewItem extends React.Component<Props, State> {
                             title: newItem.name,
                             description: newItem.description,
                             price: newItem.price ? newItem.price : 10,
-                            category: [newItem.category],
+                            category: newItem.category,
                             nrInStock: newItem.nrInStock ? newItem.nrInStock : 10
                         }
 
