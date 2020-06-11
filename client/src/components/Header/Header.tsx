@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react'
+import React, { CSSProperties, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // MATERIAL UI
@@ -13,19 +13,28 @@ import { Cart } from '../Cart'
 
 // COMPONENTS
 import LoginModal from "../LoginModal/LoginModal"
+import UserOrderHistory from "../UserOrderHistory/UserOrderHistory"
 
 // CONTEXTS
 import { NewCartContext } from "../../contexts/NewCartContext"
 import { UserContext } from '../../contexts/UserContext'
 
 
-export default function Header() {
+
+interface Props {
+    orderContext: any;
+    userContext:any
+  }
+
+export default function Header(props: Props) {
     const classes = useStyles()
     const logo: any = require("../items/images/logo.png")
+     
 
     return (
         <UserContext.Consumer>
             {userContext => (
+      
                 <NewCartContext.Consumer>
                     {(cartState) => (
                         <>
@@ -46,7 +55,13 @@ export default function Header() {
                                 <Link to="/" className={classes.logo}>
                                     <img src={logo} alt="logo" className={classes.logoImg} />
                                 </Link>
-
+                                    
+                                 
+                                    {!props.userContext.admin && props.userContext.loggedIn ?
+                                        <UserOrderHistory orderContext={props.orderContext} userContext={props.userContext}/> : null
+                                    }  
+                                       
+                                   
 
                                 <div className={classes.cartIcon}>
                                     <Cart cartState={cartState} userContext={userContext} />
@@ -88,6 +103,7 @@ export default function Header() {
                     )}
                 </NewCartContext.Consumer>
             )}
+          
         </UserContext.Consumer>
     )
 }

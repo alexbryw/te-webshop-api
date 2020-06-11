@@ -20,16 +20,18 @@ POST http://localhost:9000/api/orders/
 Content-Type: application/json
 
 {
-    "user": "5ecb88f22b5cb34378cfc047",
-    "shipping": "5ed0edb39781da7e89d7cb4f",
+    "user": "5ee0c53260f09830deba3c54",
+    "shipping": "5ed0edba9781da7e89d7cb51",
     "productRow":[{
-        "product": "5ed61679014caf1c608dcce2",
-        "qty": 2
-    }],
-    "to_firstname": "Test",
-    "to_lastname": "Testson",
-    "to_street": "Testgatan 18",
-    "to_city": "Göteborg",
+        "product": "5ed8aad84e7960d8ba6a7bd2",
+        "qty": 2},{
+        "product": "5ed8ac634e7960d8ba6a7bd6",
+        "qty": 4
+        }],
+    "to_firstname": "Zlatan",
+    "to_lastname": "Ibra",
+    "to_street": "milano street",
+    "to_city": "stockholm",
     "to_zip": 12345
 }
 ###
