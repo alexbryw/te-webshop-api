@@ -54,9 +54,15 @@ export default function ShoppingCart(props: Props) {
                                         <RemoveIcon fontSize="small" />
                                     </IconButton>
                                     <ListItemText primary={<Typography noWrap >{cartItem.nrItems}</Typography>} />
-                                    <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, 1) }}>
-                                        <AddIcon fontSize="small" />
-                                    </IconButton>
+                                    {cartItem.nrItems >= cartItem.product.nrInStock ?
+                                        <IconButton size="small" disabled={true}>
+                                            <AddIcon fontSize="small" />
+                                        </IconButton>
+                                    :
+                                        <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, 1) }}>
+                                            <AddIcon fontSize="small" />
+                                        </IconButton>
+                                    }
                                 </div>
                                 <div style={flexStyle}>
                                     <ListItemText primary={
