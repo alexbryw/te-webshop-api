@@ -9,6 +9,11 @@ const {
   deleteProduct,
 } = require("../middlewares/product/product.controller");
 
+const {
+  checkLoginSession,
+  checkAuthorization
+} = require('../middlewares/session/session.controller')
+
 // Get all products
 router.get("/", getAllProducts);
 
@@ -19,12 +24,12 @@ router.get("/:id", getProduct);
 router.get("/category/:category", getProductsByCategory);
 
 // Add new product
-router.post("/", addProduct);
+router.post("/", checkLoginSession, checkAuthorization, addProduct);
 
 // Update one product
-router.put("/:id", updateProduct);
+router.put("/:id", checkLoginSession, checkAuthorization, updateProduct);
 
 // Delete one product
-router.delete("/:id", deleteProduct);
+router.delete("/:id", checkLoginSession, checkAuthorization, deleteProduct);
 
 module.exports = router;
