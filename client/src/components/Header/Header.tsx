@@ -1,10 +1,8 @@
-import React, { CSSProperties, useState } from 'react'
+import React, { CSSProperties, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // MATERIAL UI
-import { Typography, Grid, Container, IconButton, Button } from '@material-ui/core'
-
-
+import { Grid, Button } from '@material-ui/core'
 
 // STYLES
 import useStyles from "./headerStyles"
@@ -12,16 +10,22 @@ import { Cart } from '../Cart/Cart'
 
 // COMPONENTS
 import LoginModal from "../LoginModal/LoginModal"
+import UserOrderHistory from "../UserOrderHistory/UserOrderHistory"
 
 // CONTEXTS
 import { CartContext } from "../../contexts/NewCartContext"
 import { UserContext } from '../../contexts/UserContext'
 import { ProductContext } from '../../contexts/ProductContext'
 
+interface Props {
+    orderContext: any;
+    userContext: any
+}
 
-export default function Header() {
+export default function Header(props: Props) {
     const classes = useStyles()
     const logo: any = require("../items/images/logo.png")
+
 
     return (
         <ProductContext.Consumer>
@@ -48,6 +52,12 @@ export default function Header() {
                                         <Link to="/" className={classes.logo}>
                                             <img src={logo} alt="logo" className={classes.logoImg} />
                                         </Link>
+
+
+                                        {!props.userContext.admin && props.userContext.loggedIn ?
+                                            <UserOrderHistory orderContext={props.orderContext} userContext={props.userContext} /> : null
+                                        }
+
 
 
                                         <div className={classes.cartIcon}>

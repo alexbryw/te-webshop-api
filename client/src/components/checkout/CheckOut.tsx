@@ -8,6 +8,7 @@ import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
 import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
+import ShoppigCartCheckout from './../ShoppingCartCheckout'
 import serverAPI from '../../serverAPI'
 import { Link, Redirect } from 'react-router-dom'
 
@@ -105,10 +106,9 @@ export default class CheckOut extends React.Component<Props, State>{
 
         switch (step) {
             case 1:
-
                 return (
                     this.props.userContext.loggedIn ?
-                        <div>
+                        <>
                             <HomeButton />
                             <Grid
                                 container
@@ -122,11 +122,11 @@ export default class CheckOut extends React.Component<Props, State>{
 
                                         {this.props.cartContext.cartList.length > 0 ?
                                             <div>
-                                                <ShoppingCart cartContext={this.props.cartContext} productContext={this.props.productContext} />
+                                                <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
                                                 <AddressForm
-                                                    cartContext={this.props.cartContext}
                                                     customerInfo={this.state.customerInfo}
                                                     onSubmit={this.onAddressFormSubmit}
+                                                    cartContext={this.props.cartContext}
                                                 />
                                             </div>
                                             :
@@ -139,25 +139,26 @@ export default class CheckOut extends React.Component<Props, State>{
                                     </Card>
                                 </Grid>
                             </Grid>
-                        </div>
+                        </>
                         : <Redirect to="/" />
                 )
-                break
 
             case 2:
                 if (this.state.customerInfo) {
                     return (
 
                         this.props.userContext.loggedIn ?
-                            <div>
+                            <>
                                 <HomeButton />
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}
                                 >
+
                                     <Grid item xs={12} sm={6}>
 
                                         <Card style={cardStyle}>
+                                            <ShoppigCartCheckout />
                                             <Typography variant="h6">Skickas till:</Typography>
                                             <Typography>{this.state.customerInfo?.firstName} {this.state.customerInfo?.lastName}</Typography>
                                             <Typography>{this.state.customerInfo?.address}</Typography>
@@ -184,16 +185,14 @@ export default class CheckOut extends React.Component<Props, State>{
                                         </Card>
                                     </Grid>
                                 </Grid>
-                            </div>
+                            </>
                             : <Redirect to="/" />
                     )
                 }
-                break
 
             case 3:
                 if (this.state.customerInfo && this.state.customerPaymentInfo) {
                     return (
-
                         this.props.userContext.loggedIn ?
                             <div>
                                 <HomeButton />
@@ -208,6 +207,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
                                             <br />
                                             <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
+                                            <ShoppigCartCheckout />
                                         </Card>
                                     </Grid>
                                 </Grid>
@@ -215,7 +215,6 @@ export default class CheckOut extends React.Component<Props, State>{
                             : <Redirect to="/" />
                     )
                 }
-                break
         }
     }
 }

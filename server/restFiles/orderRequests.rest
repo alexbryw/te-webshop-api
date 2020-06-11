@@ -20,17 +20,18 @@ POST http://localhost:9000/api/orders/
 Content-Type: application/json
 
 {
-    "user": "5ecb88f22b5cb34378cfc047",
+    "user": "5edf8011d5cd5d4970ff9150",
     "shipping": "5ed0edb39781da7e89d7cb4f",
     "productRow":[{
-        "product": "5ed61679014caf1c608dcce2",
+        "product": "5ed8a8274e7960d8ba6a7bcc",
         "qty": 2
     }],
     "to_firstname": "Test",
     "to_lastname": "Testson",
     "to_street": "Testgatan 18",
     "to_city": "Göteborg",
-    "to_zip": 12345
+    "to_zip": 12345,
+    "paymentMethod" : "klarna"
 }
 ###
 
@@ -67,7 +68,8 @@ Content-Type: application/json
     "to_lastname": "Moore",
     "to_street": "Testgatan 18",
     "to_city": "Göteborg",
-    "to_zip": 12345
+    "to_zip": 12345,
+    "paymentMethod" : "swish"
 }
 ###
 

@@ -11,8 +11,8 @@ import ProductContextProvider from "./contexts/ProductContext";
 
 function App() {
   return (
-    <OrderContextProvider>
-      <ProductContextProvider>
+    <ProductContextProvider>
+      <OrderContextProvider>
         <UserContextProvider>
           <CartProvider>
             <ThemeProvider theme={Theme}>
@@ -20,8 +20,8 @@ function App() {
             </ThemeProvider>
           </CartProvider>
         </UserContextProvider>
-      </ProductContextProvider>
-    </OrderContextProvider>
+      </OrderContextProvider>
+    </ProductContextProvider>
   );
 }
 

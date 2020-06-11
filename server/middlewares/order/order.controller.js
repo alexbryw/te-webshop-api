@@ -3,6 +3,7 @@ const productModel = require('../../models/product.model')
 
 // get all orders
 const getOrders = async (req, res) => {
+    console.log('HELOOO2')
     let query = {}
     if (!req.session.admin) {
         query.user = req.session.id
@@ -82,8 +83,11 @@ const checkProductInStock = async (req, res, next) => {
     // console.log(req.body)
     let errorFound = false
     let errorMessage = ""
+    // console.log(req.body.user, req.session.id)
     if (!req.body.productRow || req.body.productRow.length < 1) {
         return res.status(400).json({ err: "Could not find any products in the order." })
+    } else if(req.body.user !== req.session.id){
+        return res.status(401).json({ err: "Wrong user is placing order." })
     }
 
     //---- Loop over all products in order req and see if they are in stock.

@@ -24,8 +24,8 @@ POST http://localhost:9000/api/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "name": "user",
-    "password": "123",
+    "name": "Zlatan",
+    "password": "21",
     "admin": false,
     "requestsAdmin": true
 }
