@@ -44,6 +44,7 @@ Användare:</br>
  ***Vi har använt MongoDB Atlas***</br>
 ✅ -Man ska kunna logga in som administratör i systemet (G)</br>
 ***Det finns två roller user eller admin***</br>
+***Man kan till en början vara inloggad som användare, logga in som administratör kan man först göra när admin har godkännt din förfrågan***</br>
 ✅ -Man ska kunna registrera sig som administratör på sidan, nya användare ska sparas i databasen (VG)</br>
 ***Vid registrering kan man välja att ansöka om admin roll*** </br>
 ✅ -En administratör behöver godkännas av en tidigare administratör innan man kan logga in fösta gången (VG)</br>
