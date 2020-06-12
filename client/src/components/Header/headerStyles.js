@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
     },
     logoImg: {
-        height: "2.8rem"
+        height: "3.5rem"
     },
 
     cartIcon: {
