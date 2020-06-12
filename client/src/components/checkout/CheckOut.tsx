@@ -28,6 +28,12 @@ interface State {
     orderResponse: any
 }
 
+const getOrderDate = (orderDate: string) => {
+    let dateObject: Date = new Date(orderDate)
+    const dateString: string = `${dateObject.getFullYear()}/${dateObject.getMonth()}/${dateObject.getDate()}`
+    return dateString
+  }
+
 export default class CheckOut extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
@@ -206,7 +212,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <Typography>{this.state.customerInfo?.address}</Typography>
                                             <Typography>{this.state.customerInfo?.zipCode} {this.state.customerInfo?.city}</Typography>
                                             <br />
-                                            <Typography>E-Mail: {this.state.customerInfo?.email}</Typography>
+                                            <Typography>Mail: {this.state.customerInfo?.email}</Typography>
                                             <Typography>Mobilnummer: {this.state.customerInfo?.mobile}</Typography>
                                             <br />
                                             <Typography>Valt Fraktsätt: {this.state.customerInfo?.shippingMethod} ({this.state.customerInfo?.shippingCost} kr)</Typography>
@@ -252,7 +258,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                                 <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
                                                 <br />
                                                 <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
-                                                <Typography>Orderdatum: {this.state.orderResponse.orderDate}</Typography>
+                                                <Typography>{`Orderdatum: ${getOrderDate(this.state.orderResponse.orderDate)}`}</Typography>
                                                 <Typography>Stad: {this.state.orderResponse.to_city}</Typography>
                                                 <Typography>Adress: {this.state.orderResponse.to_street}</Typography>
                                                 <Typography>Postnummer: {this.state.orderResponse.to_zip}</Typography>
