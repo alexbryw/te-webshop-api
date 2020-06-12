@@ -14,13 +14,13 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     cartIcon: {
-        background: "#9cba98",
+        background: "#E0CBAB",
         transition: ".22s ease-in-out",
         '& path': {
             color: "#fff"
         },
         '&:hover': {
-            background: "#558b2f"
+            background: "#E6B46A"
         }
     },
     relativeContainer: {

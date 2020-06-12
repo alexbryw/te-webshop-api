@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
             margin: 0
         },
         '& :first-child': {
-            color: "#558b2f",
+            color: "#E6B46A",
             background: "#0001",
             fontSize: "1rem",
         },

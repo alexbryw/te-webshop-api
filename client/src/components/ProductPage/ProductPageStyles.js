@@ -5,7 +5,15 @@ import {
 
 const useStyles = makeStyles({
     media: {
-        height: '50vh',
+        width: "100%",
+        mixBlendMode: "multiply",
+        opacity: ".9",
+
+        "&:after": {
+            content: "open-quote",
+            display: "block",
+            paddingBottom: "100%",
+        }
     },
     buyBtn: {
         width: "80%",
@@ -15,7 +23,10 @@ const useStyles = makeStyles({
         }
     },
     productPageWrapper: {
-        minHeight: "calc(100vh - 13rem)"
+        padding: "5rem",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     }
 })
 

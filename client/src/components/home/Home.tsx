@@ -63,7 +63,7 @@ export default function Home(props: Props) {
           <Button
             key={category}
             variant="outlined"
-            color="secondary"
+            color="primary"
             onClick={() => handleSetFilter(category)}
           >
             {category === "" ?

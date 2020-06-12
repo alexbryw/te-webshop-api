@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100vw",
-        padding: theme.spacing(1, 4),
+        padding: theme.spacing(1, 1),
         position: "relative",
     },
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
         borderTop: ".1rem solid #0002",
 
-        height: "3rem",
+        // height: "3rem",
         padding: theme.spacing(1),
         '& .MuiButtonBase-root': {
             padding: theme.spacing(0, 3),
@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
     },
     logoImg: {
-        height: "2.8rem"
+        height: "2.8rem",
+        filter:"sepia(100%) contrast(50%)"
     },
 
     cartIcon: {

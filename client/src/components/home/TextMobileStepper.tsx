@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     img: {
       position: "relative",
 
-      height: "16rem",
+      height: "50vh",
       width: '100%',
       overflow: 'hidden',
       marginBottom: "1rem",
@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: '50% 50%',
+      filter: "grayscale(70%)"
     },
 
     sliderSphere: {
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: 0,
 
       width: "50%",
-      background: "#558b2fdd",
+      background: "#E6B46A00",
       borderRadius: "50%",
 
       display: "flex",
@@ -73,6 +74,14 @@ const useStyles = makeStyles((theme: Theme) =>
         display: "block",
         paddingBottom: "100%",
       }
+    },
+    sliderTextStyle: {
+      fontSize: "2rem",
+
+      whiteSpace: 'pre-line',
+      textAlign: 'center',
+      color: "#e7e7e7",
+      opacity: 1
     }
   }),
 )
@@ -115,11 +124,11 @@ export default function TextMobileStepper() {
           transition: 'background-image 1s ease-in-out',
         }}
       >
-        <div className={classes.sliderSphere}>
-          <Typography style={sliderTextStyle} variant="h5" >
+        {/* <div className={classes.sliderSphere}>
+          <Typography className={classes.sliderTextStyle} variant="h5" >
             {tutorialSteps[activeStep].sliderText}
           </Typography>
-        </div>
+        </div> */}
       </div>
     </div>
   )

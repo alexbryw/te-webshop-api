@@ -2,21 +2,22 @@ import { makeStyles } from "@material-ui/core/";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // background: "#a2d293",
+        background: "#a2d29300",
         '& *': {
             textDecoration: "none"
         },
         '&.MuiPaper-elevation1': {
             boxShadow: "none !important",
-            border: ".1rem solid #a2d29344",
         }
     },
     media: {
         height: 0,
         // paddingTop: '56.25%', // 16:9
-        paddingTop: '90%',
+        paddingTop: '100%',
 
-        // filter: " grayscale(100%)"
+
+        mixBlendMode: "multiply",
+        opacity: ".9"
     },
     productTitle: {
         textAlign: "center",
