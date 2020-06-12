@@ -18,7 +18,7 @@ interface Props {
   productContext: any;
 }
 
-interface State {}
+interface State { }
 
 const ManageProducts = (props: Props) => {
   const [itemList, setItemList] = React.useState(items);
@@ -51,8 +51,8 @@ const ManageProducts = (props: Props) => {
     productList = productList
       .slice(0, i)
       .concat(productList.slice(i + 1, productList.length))({
-      items: productList,
-    });
+        items: productList,
+      });
     localStorage.setItem("productList", JSON.stringify(productList));
   };
 
@@ -89,28 +89,34 @@ const ManageProducts = (props: Props) => {
   };
 
   const getProducts = async () => {
+    console.log("## updating products ##");
+
     setProducts(await props.productContext.fetchProducts(""));
   };
+
+
 
   useEffect(() => {
     getProducts();
   }, []);
 
   return (
-    // <ProductContext.Consumer>{(productContext) => (
     <Container>
       {console.log("from manage product")}
       {console.log(products)}
 
       <Card variant="outlined">
         <NewItemToggle
+          refreshProducts={getProducts}
           handleNew={handleNew}
           productContext={props.productContext}
         />
       </Card>
-      {/* {if(product.length > 0){} */}
       {products.map((product: any, index: number) => (
         <ProductAdminList
+
+          refreshProducts={getProducts}
+
           productContext={props.productContext}
           itemData={product}
           key={index}
@@ -120,7 +126,6 @@ const ManageProducts = (props: Props) => {
         />
       ))}
     </Container>
-    // )}</ProductContext.Consumer>
   );
 };
 

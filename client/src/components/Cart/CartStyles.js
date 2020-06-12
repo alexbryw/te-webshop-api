@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     cartIcon: {
-        background: "#E0CBAB",
+        background: "#2c393f88",
         transition: ".22s ease-in-out",
         '& path': {
             color: "#fff"

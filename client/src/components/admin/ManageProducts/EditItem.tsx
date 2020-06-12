@@ -1,18 +1,12 @@
 import React, { CSSProperties } from "react";
 
-// INTERFACES
-import { Product } from "../../../interfaces/interfaces";
-
 // MATERIAL
 import {
   TextField,
   Typography,
   FormControl,
   Container,
-  Button,
-  makeStyles,
-  Theme,
-  createStyles,
+  Button
 } from "@material-ui/core/";
 
 // ICONS
@@ -31,6 +25,8 @@ interface Props {
   handleSubmit: any;
   isDeleted: any;
   deleted: boolean;
+
+  refreshProducts: () => void
 }
 
 interface State {
@@ -85,12 +81,11 @@ export default class EditItem extends React.Component<Props, State> {
   handleDescriptionInput = (event: { target: { value: any } }) =>
     this.setState({ description: event.target.value });
   handleNumberInStockInput = (event: { target: { value: any } }) => {
-      this.setState({ nrInStock: event.target.value });
-      if (event.target.value === "") {
-          this.setState({ nrInStock: this.state.prevNrInStock }, () =>
-            console.log(this.state.nrInStock)
-          );
-        }
+    this.setState({ nrInStock: event.target.value });
+    if (event.target.value === "") {
+      this.setState({ nrInStock: this.state.prevNrInStock }
+      );
+    }
   }
   // handleCategoryInput = (event: { target: { value: any } }) => this.setState({ category: event.target.value })
 
@@ -104,34 +99,16 @@ export default class EditItem extends React.Component<Props, State> {
       if (y != "") updatedCategories.push(y);
     });
 
-    this.setState({ category: updatedCategories }, () =>
-      console.log(this.state.category)
+    this.setState({ category: updatedCategories }
     );
 
     if (event.target.value === "") {
-      this.setState({ category: this.state.prevCategory }, () =>
-        console.log(this.state.category)
+      this.setState({ category: this.state.prevCategory }
       );
     }
   };
 
-  //Disables the button if there is no content or the number value is NaN
-  // checkInput() {
-  //   let userMassage;
-  //   if (
-  //     this.state.name === "" ||
-  //     isNaN(this.state.price) ||
-  //     this.state.imgURL === "" ||
-  //     this.state.description === "" ||
-  //     isNaN( this.state.nrInStock ) ||
-  //     this.state.category
-  //   ) {
-  //     userMassage = "Kan inte skicka";
-  //   } else {
-  //     userMassage = "";
-  //   }
-  //   return userMassage;
-  // }
+
 
   //Let the user know if they updated correctly or not
   isSent() {
@@ -180,9 +157,11 @@ export default class EditItem extends React.Component<Props, State> {
                 color="primary"
                 fullWidth
                 onClick={() => {
-                  // this.props.delete(this.props.arrayIndex);
-                  // this.props.isDeleted();
-                  this.props.productContext.deleteProduct(this.props.itemData._id)
+                  this.props.productContext.deleteProduct(
+                    this.props.itemData._id,
+                    this.props.refreshProducts
+                  );
+
                 }}
               >
                 <RemoveCircleOutlineIcon />
@@ -294,8 +273,8 @@ export default class EditItem extends React.Component<Props, State> {
                     placeholder="Ex: Svart    Alt: Svart, Koffeinfritt"
                     // value={this.state.category}
                     onChange={this.handleCategoryInput}
-                    // error={this.state.category === ' '}
-                    // helperText={this.state.category === ' ' ? ('Skriv in en  Ka👏te👏go👏ri👏') : (' ')}
+                  // error={this.state.category === ' '}
+                  // helperText={this.state.category === ' ' ? ('Skriv in en  Ka👏te👏go👏ri👏') : (' ')}
                   />
                 </form>
               </FormControl>
@@ -319,26 +298,26 @@ export default class EditItem extends React.Component<Props, State> {
                     category: this.state.category,
                     nrInStock: this.state.nrInStock,
                   };
-                  // let updatedProduct = [...this.props.itemData]
-                  // updatedProduct.nrInStock = this.state.nrInStock
+
                   this.props.productContext.updateProduct(
-                    updatedProduct,
-                    this.props.itemData._id
+                    {
+                      title: this.state.name,
+                      description: this.state.description,
+                      price: this.state.price,
+                      category: this.state.category,
+                      nrInStock: this.state.nrInStock,
+                    },
+                    this.props.itemData._id,
+                    this.props.refreshProducts
                   );
-                  console.log(this.props.itemData);
-                  console.log("from click update product");
-                  console.log(this.state.nrInStock);
-                  console.log(this.state.category);
-                  console.log(updatedProduct, "uppdaterade produkten");
-                  // this.props.handleSubmit(this.props.arrayIndex, itemData);
-                  this.isSent();
                 }}
               >
                 <EditIcon /> Ändra
               </Button>
             )}
           </Container>
-        )}
+        )
+        }
       </ProductContext.Consumer>
     );
   }

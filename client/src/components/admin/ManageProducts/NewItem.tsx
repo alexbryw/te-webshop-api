@@ -4,6 +4,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { Typography, TextField, Button, FormControl, Grid, InputLabel } from '@material-ui/core'
 
 interface Props {
+    refreshProducts: () => void
     handleNew: any
     productContext: any
 }
@@ -57,16 +58,6 @@ export default class NewItem extends React.Component<Props, State> {
         this.setState({ category: updatedCategories }, () => console.log(this.state.category))
     }
 
-
-
-
-    handleUploadFile = (event: any) => {
-        const input: any = document.querySelector('.imageUploader')
-        if (input) {
-            // this.setState({:event.target.input
-            // this.props.productContext.uploadFile(input.files[0])
-        }
-    }
     //Let the user know if they added a item correctly or not
     checkInput() {
         let userMassage
@@ -161,11 +152,9 @@ export default class NewItem extends React.Component<Props, State> {
                                     <CloudUploadIcon />
                                         Välj bild
                                     <input
-                                        // style={inputForUpload}
-                                        className={'imageUploader'}
+                                        id='imageUploader'
                                         name="imgURL"
                                         type="file"
-                                        onChange={this.handleUploadFile}
                                     />
                                 </span>
                             </Grid>
@@ -241,7 +230,7 @@ export default class NewItem extends React.Component<Props, State> {
 
                     onClick={(e: any) => {
                         console.log(newItem)
-                        const input: any = document.querySelector('.imageUploader')
+                        const input: any = document.querySelector('#imageUploader')
 
                         const newProduct = {
                             file: "",
@@ -252,9 +241,7 @@ export default class NewItem extends React.Component<Props, State> {
                             nrInStock: newItem.nrInStock ? newItem.nrInStock : 10
                         }
 
-                        this.props.productContext.postProduct(newProduct, input.files[0]);
-                        //this.props.handleNew(newItem);
-                        this.added()
+                        this.props.productContext.postProduct(newProduct, input.files[0], this.props.refreshProducts);
                     }}>
                     <AddCircleOutlineOutlinedIcon /> Lägg till
                     </Button>

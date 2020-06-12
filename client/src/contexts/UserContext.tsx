@@ -151,7 +151,6 @@ export class UserContextProvider extends Component<Props, State> {
             return response.json()
         }).then((data) => {
             if (!data.err) {
-                console.log(data)
                 this.loginUser(data, closeModal, errCb)
             }
             else {

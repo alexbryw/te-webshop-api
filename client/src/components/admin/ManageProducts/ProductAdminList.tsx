@@ -13,6 +13,8 @@ interface Props {
   arrayIndex: number;
   handleSubmit: any;
   delete: any;
+
+  refreshProducts: () => void
 }
 
 interface State {
@@ -49,7 +51,7 @@ export default class ProductAdminList extends React.Component<Props, State> {
             {this.state.toggleItem ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </IconButton>
           {
-          "Produkt - " +
+            "Produkt - " +
             this.props.itemData._id +
             " - " +
             this.props.itemData.title}
@@ -58,6 +60,8 @@ export default class ProductAdminList extends React.Component<Props, State> {
 
         {this.state.toggleItem ? (
           <EditItem
+            refreshProducts={this.props.refreshProducts}
+
             productContext={this.props.productContext}
             itemData={this.props.itemData}
             arrayIndex={this.props.arrayIndex}
