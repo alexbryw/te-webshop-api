@@ -109,7 +109,7 @@ export class CartProvider extends React.Component<Props, State>{
         } else {    //If item is not in list then a new item is pushed to list.
             if (inNrItems > 0) {
                 //TODO Remove product?
-                const fetchedProducts = await fetchProducts()
+                const fetchedProducts = await this.fetchProducts()
                 const newProduct = fetchedProducts.find(({ _id }) => _id === inItemId) //cant find on await promise <any>?
                 if (newProduct) {
                     updatedCartList.push({ id: inItemId, nrItems: inNrItems, product: newProduct })
