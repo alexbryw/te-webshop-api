@@ -6,7 +6,6 @@ import { CustomerInfo, CustomerPaymentInfo, CartItem } from '../../interfaces/in
 import { Grid } from '@material-ui/core'
 import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
-import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
 import { Link, Redirect } from 'react-router-dom'
 
@@ -143,7 +142,7 @@ export default class CheckOut extends React.Component<Props, State>{
                 return (
                     this.props.userContext.loggedIn ?
                         <>
-                            <HomeButton />
+                      
                             <Grid
                                 container
                                 justify="center"
@@ -151,9 +150,9 @@ export default class CheckOut extends React.Component<Props, State>{
                                 <Grid item xs={12} sm={6}>
                                     <Card style={checkoutStyle}>
                                         <Typography color="primary" variant="h4" style={{ ...{ marginLeft: "1rem" }, ...{ marginTop: "1.5em" } }}>
-                                            Checkout
+                                            Kassa
                                     </Typography>
-                                        {this.isCartInStock() ? <h3>In Stock</h3> : <h3>Not In Stock :-/</h3>}
+                                        {this.isCartInStock() ? <p>In Stock</p> : <p>Not In Stock :-/</p>}
                                         {this.props.cartContext.cartList.length > 0 ?
                                             <div>
                                                 <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
@@ -188,7 +187,7 @@ export default class CheckOut extends React.Component<Props, State>{
 
                         this.props.userContext.loggedIn ?
                             <>
-                                <HomeButton />
+                            
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}
@@ -234,7 +233,7 @@ export default class CheckOut extends React.Component<Props, State>{
                     return (
                         this.props.userContext.loggedIn ?
                             <div>
-                                <HomeButton />
+                            
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}>
@@ -243,13 +242,13 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <h1>Bravo!</h1>
                                             {this.state.orderResponse.err ? <h3>{this.state.orderResponse.err}</h3> :
                                             <div>
-                                                <h3>first name: {this.state.orderResponse.to_firstname}</h3>
-                                                <h3>last name: {this.state.orderResponse.to_lastname}</h3>
-                                                <h3>City: {this.state.orderResponse.to_city}</h3>
-                                                <h3>Street: {this.state.orderResponse.to_street}</h3>
-                                                <h3>Area code: {this.state.orderResponse.to_zip}</h3>
+                                                <h3>Namn: {this.state.orderResponse.to_firstname}</h3>
+                                                <h3>Efternamn: {this.state.orderResponse.to_lastname}</h3>
+                                                <h3>Stad: {this.state.orderResponse.to_city}</h3>
+                                                <h3>Adress: {this.state.orderResponse.to_street}</h3>
+                                                <h3>Postnummer: {this.state.orderResponse.to_zip}</h3>
                                                 {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
-                                                <h3>orderDate: {this.state.orderResponse.orderDate}</h3>
+                                                <h3>Orderdatum: {this.state.orderResponse.orderDate}</h3>
                                                 {/**isOrderShipped: false
                                                     orderDate: "2020-06-10T16:03:09.596Z"
                                                     productRow: (2) [{…}, {…}]

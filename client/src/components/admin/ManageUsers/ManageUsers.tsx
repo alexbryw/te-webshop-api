@@ -32,19 +32,19 @@ const ManageUsers = (props: Props) => {
     return (
         <Container maxWidth="md" className={classes.mainContainer}>
             <Typography variant="h4" className={classes.header}>
-                Manage users
+                Hantera användare
             </Typography>
 
             <List dense className={classes.userList}>
                 <ListItem className={classes.user}>
-                    <ListItemText primary="name" />
-                    <ListItemText primary="role" />
+                    <ListItemText primary="Namn" />
+                    <ListItemText primary="Roll" />
                     <ListItemText primary="ID" />
-                    <ListItemText primary="requests admin" />
+                    <ListItemText primary="Admin ansökan" />
                 </ListItem>
                 {users.length === 0 ? (
                     <ListItem className={classes.user}>
-                        <ListItemText primary="Users loading..." />
+                        <ListItemText primary="Laddar användare..." />
                     </ListItem>
                 )
                     :
@@ -57,7 +57,7 @@ const ManageUsers = (props: Props) => {
 
                                 {user.requestsAdmin && !user.admin ?
                                     <ListItem>
-                                        <ListItemText primary="Requests&nbsp;admin" />
+                                        <ListItemText primary="Admin&nbsp;ansökan" />
                                         <IconButton onClick={() => handleUpdateUserStatus(user)}>
                                             <CheckCircleIcon color="primary" />
                                         </IconButton>

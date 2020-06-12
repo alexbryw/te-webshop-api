@@ -76,21 +76,21 @@ export default function Header(props: Props) {
                                             <Grid item>
                                                 <Link to="/admin">
                                                     <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("products")}>
-                                                        products
+                                                        Produkter
                                         </Button>
                                                 </Link>
                                             </Grid>
                                             <Grid item>
                                                 <Link to="/admin">
                                                     <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("orders")}>
-                                                        orders
+                                                        Beställningar
                                         </Button>
                                                 </Link>
                                             </Grid>
                                             <Grid item>
                                                 <Link to="/admin">
                                                     <Button variant="outlined" color="secondary" onClick={() => userContext.changeAdminView("users")}>
-                                                        users
+                                                        Användare
                                         </Button>
                                                 </Link>
                                             </Grid>
