@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        background: "#a2d29300",
+        background: "#0000",
         '& *': {
             textDecoration: "none"
         },

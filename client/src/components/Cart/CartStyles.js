@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
             color: "#fff"
         },
         '&:hover': {
-            background: "#E6B46A"
+            background: "#2c393f"
         }
     },
     relativeContainer: {
