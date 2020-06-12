@@ -21,14 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   buttonWrapper: {
-
     '& > *': {
       position: "absolute",
       top: ".5rem",
-      zIndex: 1000,
-      // width: 0
-      // padding: ".5rem 1rem"
-
+      zIndex: 1000
     }
   },
 
@@ -39,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     "& .MuiTypography-overline": {
       fontSize: "0.84rem",
-      // margin: theme.spacing(0, 1),
       margin: "0 .5rem"
     },
   },

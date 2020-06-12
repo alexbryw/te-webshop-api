@@ -72,10 +72,8 @@ export class ProductContextProvider extends Component<Props, State> {
         const found = categories.find((x) => x === cate);
 
         if (!found) categories.push(cate);
-        console.log(cate, found);
       });
     });
-    // console.log(categories);
 
     return categories;
   };
@@ -95,7 +93,6 @@ export class ProductContextProvider extends Component<Props, State> {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
 
         return data;
       });
@@ -109,14 +106,12 @@ export class ProductContextProvider extends Component<Props, State> {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       });
     return product
   };
 
   uploadFile = async (file: any) => {
-    console.log(file.size);
     const fd = new FormData();
     fd.append("image", file);
 
@@ -131,18 +126,10 @@ export class ProductContextProvider extends Component<Props, State> {
     }
     const newFile = await uploadedFile.json();
 
-    // .then(res => res.json())
-    //.then(save => save.json())
-
-    // .then(json => console.log(json))
-    // .catch(err => console.error(err));
-
     if (!["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
       console.log("Only images are allowed.");
       return;
     }
-    console.log(newFile);
-    console.log(newFile._id);
     // check file size (< 2MB)
     if (file.size > 2 * 1024 * 1024) {
       console.log("File must be less than 2MB.");
@@ -155,15 +142,6 @@ export class ProductContextProvider extends Component<Props, State> {
     const getUploadedFile = await this.uploadFile(product.file);
     product.file = getUploadedFile._id;
 
-    // console.log("***********************");
-    // console.log(product);
-    // console.log(file);
-    // console.log("***********************");
-    // console.log(getUploadedFile._id);
-    // console.log(product);
-    // const fd = new FormData(file);
-    //       fd.append('product', product + 'uploadFile', file._id)
-    //fd.append('product', product)
     await fetch("http://localhost:9000/api/products", {
       method: "POST",
       credentials: "include",
@@ -179,20 +157,9 @@ export class ProductContextProvider extends Component<Props, State> {
         nrInStock: product.nrInStock,
       }),
     }).then(() => cb())
-
-    //TODO ERROR Controll
-
-    // .then((res) => res.json())
-    // .then((json) => {
-    //   console.log('************************',json);
-    //  // console.log(this.uploadFile, '******************* THIS IS THE IMAGE****************')
-    //   return json;
-    // });
-    // return ;
   };
 
   updateProduct = async (product: any, productId: any, cb: () => void) => {
-    console.log("from updateproduct", product, productId);
     await fetch("http://localhost:9000/api/products/" + productId,
       {
         method: "PUT",
@@ -211,13 +178,11 @@ export class ProductContextProvider extends Component<Props, State> {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("updated product", data);
         cb()
       });
   };
 
   deleteProduct = async (productId: any, cb: () => void) => {
-    console.log("from deleteproduct", productId)
     await fetch("http://localhost:9000/api/products/" + productId,
       {
         method: "DELETE",
@@ -226,23 +191,8 @@ export class ProductContextProvider extends Component<Props, State> {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("deleted product", data);
         cb()
       });
-  };
-
-
-
-
-
-  //   async componentDidMount(){
-  //     const data = await this.uploadFile
-  //     console.log("from product Context ****HELLO****")
-  //     console.log(data)
-  // }
-
-  textLogger = (text: String): void => {
-    console.log(text, "this is the text? form ProductContext");
   };
 
   render() {

@@ -4,27 +4,21 @@ async function login(req, res, next) {
     try {
         console
         const user = await User.findOne({ name: req.body.name }).select("+password")
-        // console.log(user,req.body.username)
         if (!user) return res.status(401).json({ err: 'Wrong username or password' })
 
         user.comparePassword(req.body.password, async (error, isMatch) => {
             if (error) throw error
             if (!isMatch) return res.status(401).json({ err: 'Wrong password' })
-            console.log("its a match");
 
             // create a session with the valid inputs
             req.session.id = user._id
             req.session.username = user.name
             req.session.admin = user.admin
 
-            console.log("created client session");
-
-
             // return successful login
             console.log("successful login");
 
             res.json({ name: user.name, admin: user.admin, _id: user._id })
-            // res.json(req.session)
         })
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -84,19 +78,16 @@ function checkAuthorization(req, res, next) {
     // blocks any non administrator
 
     if (req.session.admin) {
-        console.log('you have admin rights');
         next()
 
     } else {
-        res.status(401).json({err: "you don't have access"})
+        res.status(401).json({ err: "you don't have access" })
     }
 
     // next()
 }
 
-async function setSession(req, res, next) {
-    console.log("setSession");
-
+async function setSession(req, res) {
     return res.json(res.session)
 }
 

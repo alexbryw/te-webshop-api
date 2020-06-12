@@ -38,7 +38,4 @@ router.patch("/:id",
     checkAuthorization,
     updateOrderStatus)
 
-//Delete not needed in order.
-// router.delete()
-
 module.exports = router

@@ -2,7 +2,14 @@ import React, { useState, CSSProperties } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
 // MATERIAL UI
-import { IconButton, Button, Typography, makeStyles, Theme } from '@material-ui/core'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import {
+    IconButton,
+    Button,
+    Typography,
+    makeStyles,
+    Theme
+} from '@material-ui/core'
 
 
 // ICONS
@@ -14,10 +21,10 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import ShoppingCart from '../ShoppingCart'
 import LoginModal from "../LoginModal/LoginModal"
 
-
-
+// INTERFACES
 import { CartItem } from '../../interfaces/interfaces'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+
+// STYLES
 import useStyles from "./CartStyles"
 
 

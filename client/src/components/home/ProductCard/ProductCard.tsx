@@ -35,7 +35,6 @@ export default function ProductCard(props: Props) {
         }
       }
     }
-    // console.log(inStock, " is OutOfStock card." )
     return inStock
   }
 

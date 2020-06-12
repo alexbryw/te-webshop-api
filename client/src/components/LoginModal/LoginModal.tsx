@@ -75,8 +75,6 @@ const LoginModal = (props: Props) => {
 
     const handleOpen = () => {
         setOpen(true);
-
-        // props.cancelTimeout(true, true)
     };
 
     const handleClose = () => {
@@ -208,9 +206,6 @@ const LoginModal = (props: Props) => {
 
                     <Button variant="contained"
                         color="primary"
-                        // className={classes.button}
-
-                        className={classes.logoutBtn}
                         onClick={() => props.userContext.logOut()}>
 
                         {matches ?
@@ -220,12 +215,9 @@ const LoginModal = (props: Props) => {
                     :
                     <Button variant="contained"
                         color="primary"
-                        // className={classes.button} 
 
-                        className={classes.loginBtn}
                         onClick={() => handleOpen()}
                     >
-                        {console.log(window.innerWidth)}
                         {matches ?
                             <VpnKeyIcon /> : "logga in"
                         }

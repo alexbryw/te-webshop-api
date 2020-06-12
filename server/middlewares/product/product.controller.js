@@ -7,7 +7,7 @@ function getAllProducts(req, res, next) {
     } else {
       res.json(result);
     }
-  })/*.populate('file')*/
+  })
 }
 
 function getProduct(req, res, next) {
@@ -17,7 +17,7 @@ function getProduct(req, res, next) {
     } else {
       res.json(result);
     }
-  })/*.populate('file')*/
+  })
 }
 
 function getProductsByCategory(req, res, next) {
@@ -27,7 +27,7 @@ function getProductsByCategory(req, res, next) {
     } else {
       res.json(result)
     }
-  })/*.populate('file')*/
+  })
 }
 
 function addProduct(req, res, next) {
@@ -42,15 +42,13 @@ function addProduct(req, res, next) {
 }
 
 function updateProduct(req, res, next) {
-  console.log(req.body)
-  console.log(req.params.id)
   Product.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, result) => {
-      if(err) {
-        next(err);
-      } else {
-        res.json(result);
-      }
+    if (err) {
+      next(err);
+    } else {
+      res.json(result);
     }
+  }
   );
 }
 
