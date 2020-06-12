@@ -50,19 +50,21 @@ export function Cart(props: Props) {
     const cart = <div className={classes.cart}>
 
         {props.cartContext.cartList.length === 0 ?
-            <Typography variant="h6" color="primary" style={{ margin: '1rem' }}>Kundvagnen&nbsp;är&nbsp;tom</Typography> : <>
+            <Typography variant="h6" color="primary" >Kundvagnen&nbsp;är&nbsp;tom</Typography> : <>
                 <ShoppingCart cartContext={props.cartContext} productContext={props.productContext} />
 
                 {props.userContext.loggedIn ?
                     <Button
+                        className={classes.button}
+
                         onClick={() => props.cartContext.toggleCartVisibility()}
                         component={RouterLink} to={props.userContext.loggedIn ? '/checkout' : ""}
                         variant="contained"
                         color="primary" >
                         gå till kassan
-                        </Button>
+                    </Button>
                     :
-                    <LoginModal userContext={props.userContext} buttonHandle="logga&nbsp;in&nbsp;för att&nbsp;gå&nbsp;till&nbsp;kassan" />
+                    <LoginModal userContext={props.userContext} />
                 }
             </>}
     </div>

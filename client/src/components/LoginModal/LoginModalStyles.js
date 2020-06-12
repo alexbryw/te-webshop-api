@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     position: "absolute",
     
-    // top: "2rem",
-    top: 0,
+    top: ".5rem",
+    // top: 0,
     zIndex: 1000,
 
     padding: theme.spacing(1, 2)

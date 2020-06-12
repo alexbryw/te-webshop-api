@@ -14,8 +14,6 @@ type LoginModalView = "login" | "register"
 
 interface Props {
     userContext: any,
-    buttonHandle: string
-    // cancelTimeout: (visibility: Boolean, altVisibility: Boolean | null) => void
 }
 
 const LoginModal = (props: Props) => {

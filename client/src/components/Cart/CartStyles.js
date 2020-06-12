@@ -26,12 +26,17 @@ const useStyles = makeStyles((theme) => ({
     relativeContainer: {
         width: "100%",
 
-        position: 'relative',
+        position: 'relative'
+    },
+    button: {
+        position: "absolute",
 
-        [theme.breakpoints.down(510)]: {
-        }
+        top: ".5rem",
+        // top: 0,
+        zIndex: 1000,
 
-    }
+        padding: theme.spacing(1, 2)
+    },
 }));
 
 export default useStyles;

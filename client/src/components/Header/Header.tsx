@@ -33,7 +33,7 @@ export default function Header(props: Props) {
 
 
                 <Grid item>
-                    <LoginModal userContext={props.userContext} buttonHandle="logga in" />
+                    <LoginModal userContext={props.userContext} />
 
                     {!props.userContext.admin && props.userContext.loggedIn ?
                         <UserOrderHistory orderContext={props.orderContext} userContext={props.userContext} /> : null
