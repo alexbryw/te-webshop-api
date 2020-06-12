@@ -67,11 +67,11 @@ async function checkLoginSession(req, res, next) {
             res.session = user
             next()
         } else {
-            res.json({ err: { login: "Please renew your login session!" } })
+            res.status(401).json({ err: "Please renew your login session!" })
         }
 
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -88,11 +88,7 @@ function checkAuthorization(req, res, next) {
         next()
 
     } else {
-        res.json({
-            err: {
-                msg: "you don't have access"
-            }
-        })
+        res.status(401).json({err: "you don't have access"})
     }
 
     // next()
