@@ -14,10 +14,13 @@ export default function ScrollDialog(props: Props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
-  const [orders, setOrders] = React.useState([]);
+  const [orders, setOrders] = React.useState<any[]>([]);
 
   const getOrders = async () => {
-    setOrders(await props.orderContext.getOrders())
+    const fetchedOrders = await props.orderContext.getOrders()
+
+    if(!fetchedOrders.err) setOrders(fetchedOrders)
+    else setOrders([])
   }
 
 
@@ -50,6 +53,7 @@ export default function ScrollDialog(props: Props) {
   }
 
   return (
+   
     <>
       <IconButton
         color="primary"
@@ -66,9 +70,10 @@ export default function ScrollDialog(props: Props) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
+         {orders ? <>
         <DialogTitle id="scroll-dialog-title">Köphistorik</DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
-          {orders ?
+          {orders.length !== 0 ?
             orders.map((order: any) => (
               <List key={order._id} dense>
                 <ListItem >
@@ -124,6 +129,7 @@ export default function ScrollDialog(props: Props) {
             Klart
           </Button>
         </DialogActions>
+         </> : null }
       </Dialog>
     </>
   );
