@@ -58,9 +58,11 @@ export default function ScrollDialog(props: Props) {
       <IconButton
         color="primary"
         size="medium"
+        className={classes.openModalBtn}
         onClick={handleClickOpen('paper')}
       >
         <PersonIcon />
+        Kvitton
       </IconButton>
 
       <Dialog
@@ -80,7 +82,7 @@ export default function ScrollDialog(props: Props) {
                   <ListItemText primary={`${order.to_firstname} ${order.to_lastname}`} />
                 </ListItem>
                 <ListItem >
-                  <ListItemText style={{ color: order.isOrderShipped ? '#558B2F' : '#BF9900' }} primary={`Orderstatus: ${order.isOrderShipped ? 'Skickad ✅' : 'Packas 📦'}`} />
+                  <ListItemText style={{ color: order.isOrderShipped ? '#2c393f' : '#BF9900' }} primary={`Orderstatus: ${order.isOrderShipped ? 'Skickad ✅' : 'Packas 📦'}`} />
                 </ListItem>
                 <ListItem >
                   <ListItemText primary={`Orderdatum: ${getOrderDate(order.orderDate)}`} />

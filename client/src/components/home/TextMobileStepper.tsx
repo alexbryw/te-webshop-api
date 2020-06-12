@@ -1,10 +1,6 @@
-import React, { useEffect, CSSProperties } from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles, Theme, useTheme, createStyles } from '@material-ui/core/styles'
-import MobileStepper from '@material-ui/core/MobileStepper'
-import Button from '@material-ui/core/Button'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
-import { Typography } from '@material-ui/core'
+
 
 
 //Picks images and text i slider
@@ -34,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: '100vw',
       flexGrow: 1,
+      position: "relative",
 
       display: "flex",
       justifyContent: "center",
@@ -42,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
     img: {
       position: "relative",
 
-      height: "16rem",
+      height: "100vh",
       width: '100%',
       overflow: 'hidden',
       marginBottom: "1rem",
@@ -54,31 +51,42 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: '50% 50%',
+      filter: "grayscale(70%)"
     },
 
-    sliderSphere: {
+    logo: {
       position: "absolute",
-      zIndex: 0,
+      top: "50vh",
 
-      width: "50%",
-      background: "#558b2fdd",
-      borderRadius: "50%",
+      zIndex: 500,
+      left: "50%",
+      transform: "translatex(-50%) translatey(-50%)",
 
       display: "flex",
-      justifyContent: "center",
       alignItems: "center",
 
-      "&:after": {
-        content: "open-quote",
-        display: "block",
-        paddingBottom: "100%",
+      filter: "invert(100%)",
+      borderRadius: "50rem",
+      background: "#fff5",
+
+      width: "50vh",
+      
+      
+      [theme.breakpoints.down(510)]: {
+        width: "50vw",
       }
-    }
+
+
+    },
   }),
 )
 
 export default function TextMobileStepper() {
   const classes = useStyles()
+
+
+  const logo: any = require("../items/images/te_te_logo.png")
+
   const theme = useTheme()
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = tutorialSteps.length
@@ -91,14 +99,6 @@ export default function TextMobileStepper() {
     }
   }
 
-  const handleBack = () => {
-    if (activeStep === 0) {
-      setActiveStep(prevActiveStep => prevActiveStep = tutorialSteps.length - 1)
-    } else {
-      setActiveStep(prevActiveStep => prevActiveStep - 1)
-    }
-  }
-
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext()
@@ -108,6 +108,10 @@ export default function TextMobileStepper() {
 
   return (
     <div className={classes.root}>
+
+
+      <img src={logo} alt="logo" className={classes.logo} />
+
       <div
         className={classes.img}
         style={{
@@ -115,29 +119,7 @@ export default function TextMobileStepper() {
           transition: 'background-image 1s ease-in-out',
         }}
       >
-        <div className={classes.sliderSphere}>
-          <Typography style={sliderTextStyle} variant="h5" >
-            {tutorialSteps[activeStep].sliderText}
-          </Typography>
-        </div>
       </div>
     </div>
   )
-}
-
-const sliderTextStyle: CSSProperties = {
-  whiteSpace: 'pre-line',
-  textAlign: 'center',
-  color: "#e7e7e7",
-  opacity: 1
-}
-
-const sliderSphere: CSSProperties = {
-  backgroundImage: `url(${require("../items/images/sphere.png")})`,
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'contain',
-  backgroundPosition: 'center',
-  height: '100%',
-  backgroundPositionY: '-3em',
-  padding: '10%',
 }

@@ -4,12 +4,12 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { Typography, TextField, Button, FormControl, Grid, InputLabel } from '@material-ui/core'
 
 interface Props {
+    refreshProducts: () => void
     handleNew: any
     productContext: any
 }
 
 interface State {
-    addedMessage: boolean,
     userMassage: string,
     id: number,
     name: string,
@@ -17,14 +17,15 @@ interface State {
     imgURL: string,
     description: string,
     nrInStock: number,
-    category: string[]
+    category: string[],
+
+    file: any
 }
 
 export default class NewItem extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
-            addedMessage: false,
             userMassage: "",
             id: 0,
             name: "",
@@ -32,8 +33,29 @@ export default class NewItem extends React.Component<Props, State> {
             imgURL: "",
             description: "",
             nrInStock: 0,
-            category: []
+            category: [],
+
+            file: null
         }
+    }
+
+    clearState = () => {
+        this.setState({
+
+            userMassage: "",
+            id: 0,
+            name: "",
+            price: 0,
+            imgURL: "",
+            description: "",
+            nrInStock: 0,
+            category: [],
+
+            file: null
+        }, () => {
+            let x: any = document.querySelector("#categories")
+            x.value = ""
+        })
     }
 
     //Updates states so it matches the textboxes content
@@ -57,16 +79,14 @@ export default class NewItem extends React.Component<Props, State> {
         this.setState({ category: updatedCategories }, () => console.log(this.state.category))
     }
 
+    handleFileInput = () => {
+        const input: any = document.querySelector('#imageUploader')
 
-
-
-    handleUploadFile = (event: any) => {
-        const input: any = document.querySelector('.imageUploader')
-        if (input) {
-            // this.setState({:event.target.input
-            // this.props.productContext.uploadFile(input.files[0])
-        }
+        this.setState({ file: input.files[0] })
     }
+
+
+
     //Let the user know if they added a item correctly or not
     checkInput() {
         let userMassage
@@ -85,11 +105,6 @@ export default class NewItem extends React.Component<Props, State> {
         return userMassage
     }
 
-    //Let the admin know if admin have added it 😁
-    added() {
-        this.setState({ addedMessage: true })
-    }
-
 
     disableButton = () => {
         if (
@@ -97,9 +112,9 @@ export default class NewItem extends React.Component<Props, State> {
             this.state.price > 0 &&
             this.state.description.length > 5 &&
             this.state.nrInStock > 0 &&
-            this.state.category.length > 0
+            this.state.category.length > 0 &&
+            this.state.file != null
         ) {
-
             return false
         }
 
@@ -108,16 +123,6 @@ export default class NewItem extends React.Component<Props, State> {
     }
 
     render() {
-        const newItem = {
-            id: this.state.id,
-            name: this.state.name,
-            price: this.state.price,
-            imgURL: this.state.imgURL,
-            description: this.state.description,
-            nrInStock: this.state.nrInStock,
-            category: this.state.category
-        }
-
         return (
 
             <div>
@@ -161,11 +166,11 @@ export default class NewItem extends React.Component<Props, State> {
                                     <CloudUploadIcon />
                                         Välj bild
                                     <input
-                                        // style={inputForUpload}
-                                        className={'imageUploader'}
+                                        required
+                                        id='imageUploader'
                                         name="imgURL"
                                         type="file"
-                                        onChange={this.handleUploadFile}
+                                        onChange={this.handleFileInput}
                                     />
                                 </span>
                             </Grid>
@@ -185,8 +190,6 @@ export default class NewItem extends React.Component<Props, State> {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <InputLabel>
-                                </InputLabel>
                                 <TextField
                                     fullWidth
                                     name="nrInStock"
@@ -204,8 +207,6 @@ export default class NewItem extends React.Component<Props, State> {
                             </Grid>
 
                             <Grid item xs={12}>
-
-                                <InputLabel htmlFor="categories"></InputLabel>
                                 <TextField
                                     fullWidth
                                     id="categories"
@@ -215,10 +216,6 @@ export default class NewItem extends React.Component<Props, State> {
                                     onChange={this.handleCategoryInput}
 
                                     helperText={this.state.category.length >= 1 ? "Tillagda kategorier: " + this.state.category.map(x => ` -${x} `) : "Skriv in en  Ka👏te👏go👏ri👏 och separera dem med ','"}
-                                // helperText={
-                                //     this.state.category === '' ? (
-                                //         'Skriv in en  Ka👏te👏go👏ri👏') : (' ')
-                                //     }
                                 />
 
                             </Grid>
@@ -226,11 +223,6 @@ export default class NewItem extends React.Component<Props, State> {
                     </form>
                 </FormControl>
 
-
-                <Typography color="primary">
-                    {this.state.userMassage}
-                </Typography>
-                {this.state.addedMessage ? <Typography color="primary" >Tillagd</Typography> : null}
                 <Button
                     variant='contained'
                     color="primary"
@@ -240,21 +232,21 @@ export default class NewItem extends React.Component<Props, State> {
                     disabled={this.disableButton()}
 
                     onClick={(e: any) => {
-                        console.log(newItem)
-                        const input: any = document.querySelector('.imageUploader')
 
-                        const newProduct = {
-                            file: "",
-                            title: newItem.name,
-                            description: newItem.description,
-                            price: newItem.price ? newItem.price : 10,
-                            category: newItem.category,
-                            nrInStock: newItem.nrInStock ? newItem.nrInStock : 10
-                        }
-
-                        this.props.productContext.postProduct(newProduct, input.files[0]);
-                        //this.props.handleNew(newItem);
-                        this.added()
+                        this.props.productContext.postProduct(
+                            {
+                                title: this.state.name,
+                                description: this.state.description,
+                                price: this.state.price,
+                                category: this.state.category,
+                                nrInStock: this.state.nrInStock,
+                                file: this.state.file,
+                            },
+                            () => {
+                                this.props.refreshProducts();
+                                this.clearState()
+                            }
+                        );
                     }}>
                     <AddCircleOutlineOutlinedIcon /> Lägg till
                     </Button>

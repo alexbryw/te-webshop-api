@@ -17,20 +17,23 @@ const ManageOrders = (props: Props) => {
     let orderTotal;
 
     const getOrders = async () => {
-        setOrders(await props.orderContext.getOrders())
+        const x = await props.orderContext.getOrders()
+        if (!x.err) setOrders(x)
     }
     const handleConfirmShipping = async (order: any) => {
-        setOrders(await props.orderContext.updateOrders(order))
+        const x = await props.orderContext.updateOrders(order)
+        if (!x.err) setOrders(x)
     }
 
     const getTotal = (order: any): number => {
         let totalPrice: number = 0
+        if (order.shipping != null && order.productRow[0].product != null) {
+            totalPrice = order.shipping.price
 
-        if (order.shipping != null) totalPrice = order.shipping.price
-
-        order.productRow.forEach((product: any) => {
-            totalPrice += product.qty * product.product.price
-        });
+            order.productRow.forEach((product: any) => {
+                totalPrice += product.qty * product.product.price
+            });
+        }
 
         return totalPrice
     }
@@ -123,31 +126,42 @@ const ManageOrders = (props: Props) => {
 
 
                         {/* products */}
-                        < Grid item xs={12} md={8} >
-                            <List className={classes.productList} dense>
-                                <ListItem>
-                                    <ListItemText primary="antal" />
-                                    <ListItemText primary="produkt"/>
-                                    <ListItemText primary="styck pris"/>
-                                    <ListItemText primary="total"/>
-                                </ListItem>
-                                {order.productRow.map((row: any, index: number) => (
-                                    row.product != null ?
-                                        <ListItem key={index}>
-                                            <ListItemText primary={row.qty} />
-                                            <ListItemText primary={row.product.title} />
-                                            <ListItemText primary={row.product.price + ":-"} />
-                                            <ListItemText primary={row.qty * row.product.price + ":-"} />
-                                        </ListItem> :
-                                        <ListItem>
-                                            <ListItemText primary="produkten finns ej" />
-                                        </ListItem>
-                                ))}
-                                <ListItem className={classes.totalPrice}>
-                                    <ListItemText primary={
-                                        order.productRow[0].product != null ? "Att betala : " + getTotal(order) + ":-" : "ingen beställning"} />
-                                </ListItem>
-                            </List>
+                        < Grid item xs={12} md={8}>
+
+
+                            {order.productRow[0].product != null
+                                ?
+                                <List className={classes.productList} dense>
+                                    <ListItem>
+                                        <ListItemText primary="antal" />
+                                        <ListItemText primary="produkt" />
+                                        <ListItemText primary="styck pris" />
+                                        <ListItemText primary="total" />
+                                    </ListItem>
+                                    {order.productRow.map((row: any, index: number) => (
+                                        row.product != null ?
+                                            <ListItem key={index}>
+                                                <ListItemText primary={row.qty} />
+                                                <ListItemText primary={row.product.title} />
+                                                <ListItemText primary={row.product.price + ":-"} />
+                                                <ListItemText primary={row.qty * row.product.price + ":-"} />
+                                            </ListItem> :
+                                            <ListItem>
+                                                <ListItemText primary="produkten finns ej" />
+                                            </ListItem>
+                                    ))}
+                                    <ListItem className={classes.totalPrice}>
+                                        <ListItemText primary={"Att betala : " + getTotal(order) + ":-"} />
+                                    </ListItem>
+                                </List>
+                                :
+                                <Grid item>
+                                    <Typography variant="h5" align="center">
+                                        Ingen beställning
+                                    </Typography>
+                                </Grid>
+                            }
+
                         </Grid>
                     </Grid >
                 )

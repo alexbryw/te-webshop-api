@@ -8,12 +8,12 @@ interface State {
   products: Product[];
 
   uploadFile: (file: any) => any;
-  updateProduct: (product: any, productId: any) => any;
-  postProduct: (product: any, file: any) => any;
+  updateProduct: (product: any, productId: any, cb: () => void) => any;
+  postProduct: (product: any, cb: () => void) => any;
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
   getCategories: () => any;
-  deleteProduct: (productId: any) => any
+  deleteProduct: (productId: any, cb: () => void) => any
 }
 
 export const ProductContext = createContext<State>({
@@ -119,12 +119,13 @@ export class ProductContextProvider extends Component<Props, State> {
     console.log(file.size);
     const fd = new FormData();
     fd.append("image", file);
-    console.log(fd);
+
     // send `POST` request
     const uploadedFile = await fetch("http://localhost:9000/api/files/", {
       method: "POST",
       body: fd,
     });
+
     if (!uploadedFile) {
       console.log("this file is NOT uploading 🍊");
     }
@@ -150,20 +151,20 @@ export class ProductContextProvider extends Component<Props, State> {
     return newFile;
   };
 
-  postProduct = async (product: any, file: any) => {
-    console.log("***********************");
-    console.log(product);
-    console.log(file);
-    console.log("***********************");
-    const getUploadedFile = await this.uploadFile(file);
-    console.log(getUploadedFile._id);
+  postProduct = async (product: any, cb: () => void) => {
+    const getUploadedFile = await this.uploadFile(product.file);
     product.file = getUploadedFile._id;
-    console.log(product);
+
+    // console.log("***********************");
+    // console.log(product);
+    // console.log(file);
+    // console.log("***********************");
+    // console.log(getUploadedFile._id);
+    // console.log(product);
     // const fd = new FormData(file);
     //       fd.append('product', product + 'uploadFile', file._id)
     //fd.append('product', product)
-
-    const completeProduct = await fetch("http://localhost:9000/api/products", {
+    await fetch("http://localhost:9000/api/products", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -177,9 +178,7 @@ export class ProductContextProvider extends Component<Props, State> {
         category: product.category,
         nrInStock: product.nrInStock,
       }),
-    });
-    const returnedProduct = await completeProduct.json();
-    console.log(returnedProduct);
+    }).then(() => cb())
 
     //TODO ERROR Controll
 
@@ -192,11 +191,9 @@ export class ProductContextProvider extends Component<Props, State> {
     // return ;
   };
 
-  updateProduct = async (product: any, productId: any) => {
+  updateProduct = async (product: any, productId: any, cb: () => void) => {
     console.log("from updateproduct", product, productId);
-
-    const updatedProduct = await fetch(
-      "http://localhost:9000/api/products/" + productId,
+    await fetch("http://localhost:9000/api/products/" + productId,
       {
         method: "PUT",
         credentials: "include",
@@ -214,17 +211,14 @@ export class ProductContextProvider extends Component<Props, State> {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        return data;
+        console.log("updated product", data);
+        cb()
       });
-
-    return updatedProduct;
   };
 
-  deleteProduct = async (productId: any) => {
+  deleteProduct = async (productId: any, cb: () => void) => {
     console.log("from deleteproduct", productId)
-    const deletedProduct = await fetch(
-      "http://localhost:9000/api/products/" + productId,
+    await fetch("http://localhost:9000/api/products/" + productId,
       {
         method: "DELETE",
         credentials: "include",
@@ -233,14 +227,12 @@ export class ProductContextProvider extends Component<Props, State> {
       .then((response) => response.json())
       .then((data) => {
         console.log("deleted product", data);
-        return data;
+        cb()
       });
-
-    return deletedProduct;
   };
 
-    
-    
+
+
 
 
   //   async componentDidMount(){

@@ -64,6 +64,7 @@ const ProductPage = (props: Props) => {
             direction="row"
             justify="center"
             alignItems="center"
+            className={classes.productPageWrapper}
         >
             {console.log(product)}
             {

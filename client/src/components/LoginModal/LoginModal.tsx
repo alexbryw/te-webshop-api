@@ -1,12 +1,14 @@
 import React from 'react';
 
 // MATERIAL UI
-import { Grid, Modal, Container, Typography, Button, TextField, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Grid, Modal, Box, Typography, Button, TextField, FormControlLabel, Checkbox, useMediaQuery, useTheme } from '@material-ui/core';
+
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 
 
 // CONTEXT
-import UserContext from "../../contexts/UserContext"
 
 import useStyles from './LoginModalStyles';
 
@@ -14,12 +16,14 @@ type LoginModalView = "login" | "register"
 
 interface Props {
     userContext: any,
-    buttonHandle: string
-    // cancelTimeout: (visibility: Boolean, altVisibility: Boolean | null) => void
 }
 
 const LoginModal = (props: Props) => {
     const classes = useStyles();
+
+
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('xs'));
 
     const [open, setOpen] = React.useState(false);
     const [view, setView] = React.useState("login");
@@ -152,6 +156,7 @@ const LoginModal = (props: Props) => {
             >
                 {view === "login" ?
                     <Button
+
                         variant="contained"
                         color="primary"
                         onClick={() => props.userContext.loginUser(
@@ -163,6 +168,7 @@ const LoginModal = (props: Props) => {
                     </Button>
                     :
                     <Button
+
                         variant="contained"
                         color="primary"
                         disabled={inputValues.password !== inputValues.confirmPassword
@@ -197,12 +203,35 @@ const LoginModal = (props: Props) => {
 
     return (
         <>
-            <Button variant="contained"
-                color="primary"
-                onClick={() => handleOpen()}
-                className={classes.button} >
-                {props.buttonHandle}
-            </Button>
+            <Box className={classes.buttonWrapper}>
+                {props.userContext.loggedIn ?
+
+                    <Button variant="contained"
+                        color="primary"
+                        // className={classes.button}
+
+                        className={classes.logoutBtn}
+                        onClick={() => props.userContext.logOut()}>
+
+                        {matches ?
+                            <ExitToAppIcon /> : "logga ut"
+                        }
+                    </Button>
+                    :
+                    <Button variant="contained"
+                        color="primary"
+                        // className={classes.button} 
+
+                        className={classes.loginBtn}
+                        onClick={() => handleOpen()}
+                    >
+                        {console.log(window.innerWidth)}
+                        {matches ?
+                            <VpnKeyIcon /> : "logga in"
+                        }
+                    </Button>
+                }
+            </Box>
             <Modal
                 open={open}
                 onClose={handleClose}

@@ -29,7 +29,7 @@ export default function ShoppingCart(props: Props) {
 
     return (
         props.cartContext.cartList?.length > 0 ?
-            <List>
+            <List style={{ paddingTop: "3rem" }}>
                 {props.cartContext.cartList?.length > 0 ?
                     props.cartContext.cartList.map((cartItem: any) =>
                         <div key={cartItem.id}>
@@ -40,14 +40,14 @@ export default function ShoppingCart(props: Props) {
                                     </ListItemAvatar>
                                 </Hidden>
                                 {cartItem.nrItems > cartItem.product.nrInStock ?
-                                <ListItemText primary={
-                                    <Typography style={{ textDecoration: 'none', color: 'red', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
-                                        In Stock:{cartItem.product.nrInStock}, {cartItem.product.title}
-                                    </Typography>} />
-                                :<ListItemText primary={
-                                    <Typography style={{ textDecoration: 'none', color: 'black', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
-                                        {cartItem.product.title}
-                                    </Typography>} />
+                                    <ListItemText primary={
+                                        <Typography style={{ textDecoration: 'none', color: 'red', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
+                                            In Stock:{cartItem.product.nrInStock}, {cartItem.product.title}
+                                        </Typography>} />
+                                    : <ListItemText primary={
+                                        <Typography style={{ textDecoration: 'none', color: 'black', display: 'flex' }} component={RouterLink} to={"product/" + cartItem.id} noWrap>
+                                            {cartItem.product.title}
+                                        </Typography>} />
                                 }
                                 <div style={nextFlex}>
                                     <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, -1) }}>
@@ -58,7 +58,7 @@ export default function ShoppingCart(props: Props) {
                                         <IconButton size="small" disabled={true}>
                                             <AddIcon fontSize="small" />
                                         </IconButton>
-                                    :
+                                        :
                                         <IconButton size="small" onClick={(e) => { e.stopPropagation(); props.cartContext.addProduct(cartItem.id, 1) }}>
                                             <AddIcon fontSize="small" />
                                         </IconButton>

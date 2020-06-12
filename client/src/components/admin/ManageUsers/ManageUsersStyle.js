@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
             background: "#fff5",
         },
         "&:first-child": {
-            background: "#558b2f",
+            background: "#2c393f33",
             color: "#e7e7e7",
             textDecoration: "underline",
             borderTopLeftRadius: theme.shape.borderRadius,

@@ -16,7 +16,7 @@ export default function HomeButton() {
 }
 
 const homeButtonLink:CSSProperties = {
-    border: 'solid 0.15em #558b2f',
+    border: 'solid 0.15em #2c393f',
     position:'absolute',
     left: '1em', 
     borderRadius:'3em',

@@ -9,6 +9,13 @@ const useStyles = makeStyles(() => ({
     },
     flex: {
         display: "flex"
+    },
+    openModalBtn: {
+        position:"absolute",
+        top:"4rem",
+        zIndex:1000,
+
+        fontSize:"1rem"
     }
 }));
 

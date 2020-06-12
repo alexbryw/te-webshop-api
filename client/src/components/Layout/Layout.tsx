@@ -32,7 +32,12 @@ const Layout = () => {
                                     {userContext => (
                                         <BrowserRouter>
 
-                                            <Header orderContext={orderContext} userContext={userContext}/>
+                                            <Header
+                                                orderContext={orderContext}
+                                                userContext={userContext}
+                                                productContext={productContext}
+                                                cartContext={cartContext}
+                                            />
                                             <Container className={classes.root}>
 
 

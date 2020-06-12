@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
             margin: 0
         },
         '& :first-child': {
-            color: "#558b2f",
+            color: "#2c393f",
             background: "#0001",
             fontSize: "1rem",
         },
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
             },
         },
         '& .MuiListItem-root:first-child': {
-            background: "#a2d293",
+            background: "#2c393f88",
         }
     },
 

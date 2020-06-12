@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         right: "100%",
         top: "100%",
+        zIndex:2000,
 
         padding: ".5rem",
 
@@ -14,24 +15,29 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     cartIcon: {
-        background: "#9cba98",
+        background: "#2c393f88",
         transition: ".22s ease-in-out",
         '& path': {
             color: "#fff"
         },
         '&:hover': {
-            background: "#558b2f"
+            background: "#2c393f"
         }
     },
     relativeContainer: {
         width: "100%",
 
-        position: 'relative',
+        position: 'relative'
+    },
+    button: {
+        position: "absolute",
 
-        [theme.breakpoints.down(510)]: {
-        }
+        top: ".5rem",
+        // top: 0,
+        zIndex: 1000,
 
-    }
+        padding: theme.spacing(1, 2)
+    },
 }));
 
 export default useStyles;
