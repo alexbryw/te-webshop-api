@@ -189,7 +189,7 @@ export class UserContextProvider extends Component<Props, State> {
     }
 
     logOut = async () => {
-        await fetch(sessionURL + "/logout", {
+        await fetch(sessionURL + "logout", {
             method: "DELETE",
             credentials: 'include'
         }).then((response) => {
