@@ -6,7 +6,6 @@ import { CustomerInfo, CustomerPaymentInfo, CartItem } from '../../interfaces/in
 import { Grid } from '@material-ui/core'
 import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
-import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
 import { Link, Redirect } from 'react-router-dom'
 
@@ -143,7 +142,7 @@ export default class CheckOut extends React.Component<Props, State>{
                 return (
                     this.props.userContext.loggedIn ?
                         <>
-                            <HomeButton />
+                      
                             <Grid
                                 container
                                 justify="center"
@@ -153,7 +152,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                         <Typography color="primary" variant="h4" style={{ ...{ marginLeft: "1rem" }, ...{ marginTop: "1.5em" } }}>
                                             Kassa
                                     </Typography>
-                                        {this.isCartInStock() ? <h3>In Stock</h3> : <h3>Not In Stock :-/</h3>}
+                                        {this.isCartInStock() ? <p>In Stock</p> : <p>Not In Stock :-/</p>}
                                         {this.props.cartContext.cartList.length > 0 ?
                                             <div>
                                                 <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
@@ -188,7 +187,7 @@ export default class CheckOut extends React.Component<Props, State>{
 
                         this.props.userContext.loggedIn ?
                             <>
-                                <HomeButton />
+                            
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}
@@ -234,7 +233,7 @@ export default class CheckOut extends React.Component<Props, State>{
                     return (
                         this.props.userContext.loggedIn ?
                             <div>
-                                <HomeButton />
+                            
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}>
