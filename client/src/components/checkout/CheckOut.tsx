@@ -247,7 +247,8 @@ export default class CheckOut extends React.Component<Props, State>{
                                     style={gridStyle}>
                                     <Grid item xs={12} sm={12}>
                                         <Card style={cardStyle}>
-                                            {this.state.orderResponse.err ? <h3>Order Error: {this.state.orderResponse.err}</h3> :
+                                            {this.state.orderResponse ? console.log(this.state.orderResponse) : null}
+                                            {!this.state.orderResponse || this.state.orderResponse.err ? <h3>Order Error: {this.state.orderResponse.err}</h3> :
                                             <div>
                                             <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
                                             <br />
@@ -260,6 +261,10 @@ export default class CheckOut extends React.Component<Props, State>{
                                                 <Typography>Stad: {this.state.orderResponse.to_city}</Typography>
                                                 <Typography>Adress: {this.state.orderResponse.to_street}</Typography>
                                                 <Typography>Postnummer: {this.state.orderResponse.to_zip}</Typography>
+                                                <br />
+                                                <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
+                                                <Typography>Tack för ditt köp och välkommen åter ❤️</Typography>
+                                                <br />
                                                 {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
                                                 {/**isOrderShipped: false
                                                     orderDate: "2020-06-10T16:03:09.596Z"
@@ -273,11 +278,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                                     user: "5edf8924bb36e02f2c910771" */}
                                             </div>
                                             }
-                                            <br />
-                                            <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
-                                            <Typography>Tack för ditt köp och välkommen åter ❤️</Typography>
-                                            <br />
-                                            {/* <ShoppigCartCheckout /> */}
                                         </Card>
                                     </Grid>
                                 </Grid>
