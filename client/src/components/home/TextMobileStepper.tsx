@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       top: "50vh",
 
-      zIndex: 1000,
+      zIndex: 500,
       left: "50%",
       transform: "translatex(-50%) translatey(-50%)",
 

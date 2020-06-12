@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         right: "100%",
         top: "100%",
+        zIndex:2000,
 
         padding: ".5rem",
 
