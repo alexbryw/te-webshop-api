@@ -6,10 +6,7 @@ import { CustomerInfo, CustomerPaymentInfo, CartItem } from '../../interfaces/in
 import { Grid } from '@material-ui/core'
 import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
-
 import ShoppingCart from '../ShoppingCart'
-import ShoppigCartCheckout from './../ShoppingCartCheckout'
-import serverAPI from '../../serverAPI'
 import { Link, Redirect } from 'react-router-dom'
 
 interface Props {
@@ -87,29 +84,12 @@ export default class CheckOut extends React.Component<Props, State>{
         this.setState({ disableOrderButton: true })
     }
 
-    // async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number) {
-    //     const response = await serverAPI(customerInfoFromForm)
-    //     if (response) {
-    //         this.setState({
-    //             customerPaymentInfo: customerInfoFromForm,
-    //             step: this.state.step + 1,
-    //             orderNumber: ts,
-    //             disableOrderButton: false
-    //         })
-    //     }
-    // }
-
     async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number){
-        // console.log(this.props.userContext._id, " user id")
-        // console.log("from order api call")
-        // console.log(this.state.customerInfo)
-        // console.log(this.props.cartState.cartList)
-        console.log(customerInfoFromForm.paymentMethod)
+
         if(this.props.cartContext.cartList && this.props.cartContext.cartList.length > 0 && this.state.customerInfo){
             console.log("ok")
         }
         const newProductRow = this.props.cartContext.cartList.map( (cartItem: CartItem) => {return {product: cartItem.id, qty: cartItem.nrItems}})
-        // console.log(newProductRow)
         const newOrder = {
             user: this.props.userContext._id,
             shipping: this.state.customerInfo.shippingId,
@@ -123,7 +103,6 @@ export default class CheckOut extends React.Component<Props, State>{
         }
         console.log(newOrder)
         const response = await this.props.orderContext.sendOrder(newOrder)
-        // const response = await serverAPI(customerInfoFromForm)
         if(response){
             if(response.err){
                 console.log(response.err)
@@ -136,6 +115,18 @@ export default class CheckOut extends React.Component<Props, State>{
             orderResponse: response
             })
         }
+    }
+
+    isCartInStock(){
+        let inStock = true
+        for (const cartItem of this.props.cartContext.cartList) {
+            if(cartItem.nrItems > cartItem.product.nrInStock){
+                inStock = false
+            }
+        }
+
+        console.log(inStock, " is OutOfStock" )
+        return inStock
     }
 
     render() {
@@ -167,15 +158,20 @@ export default class CheckOut extends React.Component<Props, State>{
                                         <Typography color="primary" variant="h4" style={{ ...{ marginLeft: "1rem" }, ...{ marginTop: "1.5em" } }}>
                                             Kassa
                                     </Typography>
-
+                                        {this.isCartInStock() ? <p>In Stock</p> : <p>Not In Stock :-/</p>}
                                         {this.props.cartContext.cartList.length > 0 ?
                                             <div>
                                                 <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
+                                                {this.isCartInStock() ?
                                                 <AddressForm
                                                     customerInfo={this.state.customerInfo}
                                                     onSubmit={this.onAddressFormSubmit}
                                                     cartContext={this.props.cartContext}
                                                 />
+                                                :<div style={flexIt}>
+                                                <Typography variant="h5" color="primary">Produkter saknas i lager, ändra produkt eller antal.</Typography>
+                                                </div>}
+                                                
                                             </div>
                                             :
                                             <div style={flexIt}>
@@ -206,7 +202,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                     <Grid item xs={12} sm={6}>
 
                                         <Card style={cardStyle}>
-                                            <ShoppigCartCheckout />
+                                            {/* <ShoppingCart /> */}
                                             <Typography variant="h6">Skickas till:</Typography>
                                             <Typography>{this.state.customerInfo?.firstName} {this.state.customerInfo?.lastName}</Typography>
                                             <Typography>{this.state.customerInfo?.address}</Typography>
@@ -279,7 +275,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
                                             <Typography>Tack för ditt köp och välkommen åter ❤️</Typography>
                                             <br />
-                                            <ShoppigCartCheckout />
+                                            {/* <ShoppigCartCheckout /> */}
                                         </Card>
                                     </Grid>
                                 </Grid>
