@@ -24,7 +24,7 @@ interface Props {
 
 export default function Header(props: Props) {
     const classes = useStyles()
-    const logo: any = require("../items/images/logo.png")
+    const logo: any = require("../items/images/te_te_logo.png")
 
 
     return (
