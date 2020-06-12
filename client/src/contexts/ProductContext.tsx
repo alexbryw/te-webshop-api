@@ -9,7 +9,7 @@ interface State {
 
   uploadFile: (file: any) => any;
   updateProduct: (product: any, productId: any, cb: () => void) => any;
-  postProduct: (product: any, file: any, cb: () => void) => any;
+  postProduct: (product: any, cb: () => void) => any;
   fetchProducts: () => any;
   fetchProduct: (id: string) => any;
   getCategories: () => any;
@@ -125,7 +125,7 @@ export class ProductContextProvider extends Component<Props, State> {
       method: "POST",
       body: fd,
     });
-    
+
     if (!uploadedFile) {
       console.log("this file is NOT uploading 🍊");
     }
@@ -151,8 +151,8 @@ export class ProductContextProvider extends Component<Props, State> {
     return newFile;
   };
 
-  postProduct = async (product: any, file: any, cb: () => void) => {
-    const getUploadedFile = await this.uploadFile(file);
+  postProduct = async (product: any, cb: () => void) => {
+    const getUploadedFile = await this.uploadFile(product.file);
     product.file = getUploadedFile._id;
 
     // console.log("***********************");
