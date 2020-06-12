@@ -158,7 +158,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                         <Typography color="primary" variant="h4" style={{ ...{ marginLeft: "1rem" }, ...{ marginTop: "1.5em" } }}>
                                             Kassa
                                     </Typography>
-                                        {this.isCartInStock() ? <p>In Stock</p> : <p>Not In Stock :-/</p>}
                                         {this.props.cartContext.cartList.length > 0 ?
                                             <div>
                                                 <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
@@ -202,7 +201,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                     <Grid item xs={12} sm={6}>
 
                                         <Card style={cardStyle}>
-                                            {/* <ShoppingCart /> */}
                                             <Typography variant="h6">Skickas till:</Typography>
                                             <Typography>{this.state.customerInfo?.firstName} {this.state.customerInfo?.lastName}</Typography>
                                             <Typography>{this.state.customerInfo?.address}</Typography>
@@ -247,7 +245,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                     style={gridStyle}>
                                     <Grid item xs={12} sm={12}>
                                         <Card style={cardStyle}>
-                                            {this.state.orderResponse ? console.log(this.state.orderResponse) : null}
                                             {!this.state.orderResponse || this.state.orderResponse.err ? <h3>Order Error: {this.state.orderResponse.err}</h3> :
                                             <div>
                                             <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
