@@ -21,7 +21,7 @@ interface Props {
 
 export default function Header(props: Props) {
     const classes = useStyles()
-    const logo: any = require("../items/images/logo.png")
+    const logo: any = require("../items/images/te_te_logo.png")
 
 
     return (
@@ -31,23 +31,21 @@ export default function Header(props: Props) {
                 alignItems="center"
                 className={classes.root}>
 
-                {props.userContext.loggedIn ?
-                    <Button variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        onClick={() => props.userContext.logOut()}
-                    >logga ut </Button>
-                    :
-                    <LoginModal userContext={props.userContext} buttonHandle="logga in" />}
+
+                <Grid item>
+                    <LoginModal userContext={props.userContext} buttonHandle="logga in" />
+
+                    {!props.userContext.admin && props.userContext.loggedIn ?
+                        <UserOrderHistory orderContext={props.orderContext} userContext={props.userContext} /> : null
+                    }
+
+                </Grid>
 
                 <Link to="/" className={classes.logo}>
                     <img src={logo} alt="logo" className={classes.logoImg} />
                 </Link>
 
 
-                {!props.userContext.admin && props.userContext.loggedIn ?
-                    <UserOrderHistory orderContext={props.orderContext} userContext={props.userContext} /> : null
-                }
 
 
 
@@ -66,22 +64,22 @@ export default function Header(props: Props) {
                 >
                     <Grid item>
                         <Link to="/admin">
-                            <Button variant="outlined" color="primary" onClick={() => props.userContext.changeAdminView("products")}>
-                                products
+                            <Button variant="contained" color="primary" onClick={() => props.userContext.changeAdminView("products")}>
+                                Produkter
                                         </Button>
                         </Link>
                     </Grid>
                     <Grid item>
                         <Link to="/admin">
-                            <Button variant="outlined" color="primary" onClick={() => props.userContext.changeAdminView("orders")}>
-                                orders
+                            <Button variant="contained" color="primary" onClick={() => props.userContext.changeAdminView("orders")}>
+                                Beställningar
                                         </Button>
                         </Link>
                     </Grid>
                     <Grid item>
                         <Link to="/admin">
-                            <Button variant="outlined" color="primary" onClick={() => props.userContext.changeAdminView("users")}>
-                                users
+                            <Button variant="contained" color="primary" onClick={() => props.userContext.changeAdminView("users")}>
+                                Användare
                                         </Button>
                         </Link>
                     </Grid>

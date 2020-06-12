@@ -87,16 +87,16 @@ const LoginModal = (props: Props) => {
             className={classes.paper}>
 
             <Grid item xs={6}>
-                <Typography variant="h4" align="center">{view}</Typography>
+                <Typography variant="h4" align="center">{view === 'login' ? 'Logga in' : 'Registrera dig'}</Typography>
             </Grid>
             <Grid item xs={9}>
                 <TextField
                     fullWidth
                     variant="outlined"
                     id="outlined-helperText"
-                    label="username"
+                    label="användarnamn"
                     helperText={inputErrors.register ? "username is unavailable" :
-                        inputValues.username.length > 20 ? "username can't be longer than 20 characters" : null}
+                        inputValues.username.length > 20 ? "Användarnamnet får ej överstiga 20 tecken" : null}
 
                     value={inputValues.username}
                     onChange={(e) => changeInputValues(e, "username")}
@@ -109,8 +109,8 @@ const LoginModal = (props: Props) => {
                     type="password"
                     variant="outlined"
                     id="outlined-helperText"
-                    label="password"
-                    helperText={inputValues.password.length > 20 ? "password can't be longer than 20 characters" : null}
+                    label="lösenord"
+                    helperText={inputValues.password.length > 20 ? "Lösenordet får ej överstiga 20 tecken" : null}
 
                     value={inputErrors.login ? "" : inputValues.password}
                     onChange={(e) => changeInputValues(e, "password")}
@@ -127,8 +127,8 @@ const LoginModal = (props: Props) => {
                             error={inputValues.password !== inputValues.confirmPassword}
                             variant="outlined"
                             id="outlined-helperText"
-                            label="confirm password"
-                            helperText={"match the password"}
+                            label="Bekräfta lösenord"
+                            helperText={"Lösenordet måste matcha"}
 
                             value={inputValues.confirmPassword}
                             onChange={(e) => changeInputValues(e, "confirmPassword")}
@@ -139,7 +139,7 @@ const LoginModal = (props: Props) => {
                     <Grid item>
                         <FormControlLabel
                             control={<Checkbox checked={inputValues.requestAdmin} onClick={(e) => changeInputValues(e, "requestAdmin")} name="checkedA" />}
-                            label="want to be Admin?"
+                            label="Ansök om admin roll?"
                         />
                     </Grid>
                 </>
@@ -189,7 +189,7 @@ const LoginModal = (props: Props) => {
                     {view === "login" ? "Inget konto än?" : "Har du ett konto?"}
                 </Typography>
                 <Button onClick={() => changeView()}>
-                    {view === "register" ? "Login" : "Register"}
+                    {view === "register" ? "Logga in" : "Registera dig"}
                 </Button>
             </Grid>
         </Grid>
@@ -197,12 +197,21 @@ const LoginModal = (props: Props) => {
 
     return (
         <>
-            <Button variant="contained"
-                color="primary"
-                onClick={() => handleOpen()}
-                className={classes.button} >
-                {props.buttonHandle}
-            </Button>
+            {props.userContext.loggedIn ?
+                <Button variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    onClick={() => props.userContext.logOut()}>
+                    logga ut
+                </Button>
+                :
+                <Button variant="contained"
+                    color="primary"
+                    onClick={() => handleOpen()}
+                    className={classes.button} >
+                    logga in
+                </Button>
+            }
             <Modal
                 open={open}
                 onClose={handleClose}

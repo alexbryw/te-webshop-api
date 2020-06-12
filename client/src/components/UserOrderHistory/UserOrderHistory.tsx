@@ -1,19 +1,26 @@
 import React, { useEffect } from 'react';
+//Material UI
 import { DialogActions, DialogContent, DialogTitle, Dialog, DialogProps, Button, ListItem, ListItemText, List, IconButton } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
+
+// STYLES
+import useStyles from "./userOrderHistoryStyle"
 
 interface Props {
   orderContext: any;
   userContext: any
 }
 export default function ScrollDialog(props: Props) {
-
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
-  const [orders, setOrders] = React.useState([]);
+  const [orders, setOrders] = React.useState<any[]>([]);
 
   const getOrders = async () => {
-    setOrders(await props.orderContext.getOrders())
+    const fetchedOrders = await props.orderContext.getOrders()
+
+    if(!fetchedOrders.err) setOrders(fetchedOrders)
+    else setOrders([])
   }
 
 
@@ -46,13 +53,16 @@ export default function ScrollDialog(props: Props) {
   }
 
   return (
+   
     <>
       <IconButton
         color="primary"
         size="medium"
+        className={classes.openModalBtn}
         onClick={handleClickOpen('paper')}
       >
         <PersonIcon />
+        Kvitton
       </IconButton>
 
       <Dialog
@@ -62,9 +72,10 @@ export default function ScrollDialog(props: Props) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
+         {orders ? <>
         <DialogTitle id="scroll-dialog-title">Köphistorik</DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
-          {orders ?
+          {orders.length !== 0 ?
             orders.map((order: any) => (
               <List key={order._id} dense>
                 <ListItem >
@@ -82,13 +93,13 @@ export default function ScrollDialog(props: Props) {
 
                 {
                   order.productRow.map((row: any, index: number) => (row.product != null ?
-                    <List style={{ border: '0.1rem dashed #2c393f', marginBottom: '0.6rem' }} key={index} dense>
+                    <List className={classes.recipteList} key={index} dense>
                       <ListItem >
                         <ListItemText primary={`${row.product.title}`} />
                       </ListItem>
 
 
-                      <div style={{ display: 'flex' }}>
+                      <div className={classes.flex}>
                         <ListItem>
                           <ListItemText primary={`Antal: ${row.qty}`} />
                         </ListItem>
@@ -120,6 +131,7 @@ export default function ScrollDialog(props: Props) {
             Klart
           </Button>
         </DialogActions>
+         </> : null }
       </Dialog>
     </>
   );

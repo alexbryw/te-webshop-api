@@ -7,6 +7,8 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: "50%",
     left: "50%",
+    zIndex: "1500",
+
     transform: "translatex(-50%) translatey(-50%)",
 
     width: "100%",
@@ -19,8 +21,16 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
+    position: "absolute",
+    
+    // top: "2rem",
+    top: 0,
+    zIndex: 1000,
+
     padding: theme.spacing(1, 2)
   },
+
+
   registerContainer: {
     display: "flex",
     justifyContent: "center",

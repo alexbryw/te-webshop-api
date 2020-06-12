@@ -40,6 +40,19 @@ const ProductPage = (props: Props) => {
         setProduct(await props.productContext.fetchProduct(props.match.params.id))
     }
 
+    function isProductInStock(){
+        let inStock = true
+        for (const cartItem of props.cartContext.cartList) {
+          if(cartItem.id === product._id){
+            if(cartItem.nrItems >= product.nrInStock){
+                inStock = false
+            }
+          }
+        }
+        // console.log(inStock, " is OutOfStock card." )
+        return inStock
+      }
+
     useEffect(() => {
         getProduct()
     }, [])
@@ -74,7 +87,7 @@ const ProductPage = (props: Props) => {
                                 <Typography gutterBottom variant="body2" color="textPrimary" component="p">
                                     {product.description}
                                 </Typography>
-
+                                {isProductInStock() && product.nrInStock !== 0 ? 
                                 <Button variant="contained" color="primary" className={classes.buyBtn}
                                     onClick={() => {
                                         props.cartContext.setCartVisibility(true, false);
@@ -83,9 +96,17 @@ const ProductPage = (props: Props) => {
                                     }} >
                                     <Typography variant="overline">
                                         köp
-                        </Typography>
+                                    </Typography>
                                     <ShoppingCartIcon />
                                 </Button>
+                                :
+                                <Button variant="contained" color="primary" disabled={true} className={classes.buyBtn}>
+                                <Typography variant="overline">
+                                    Lager: {product.nrInStock}
+                                </Typography>
+                                <ShoppingCartIcon />
+                            </Button>
+                                }
                             </CardContent>
                         </Grid>
                     </> : <h3>nothing here</h3>

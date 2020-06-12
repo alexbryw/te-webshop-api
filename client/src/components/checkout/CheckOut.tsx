@@ -6,10 +6,7 @@ import { CustomerInfo, CustomerPaymentInfo, CartItem } from '../../interfaces/in
 import { Grid } from '@material-ui/core'
 import { Card } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
-import HomeButton from './HomeButton'
 import ShoppingCart from '../ShoppingCart'
-import ShoppigCartCheckout from './../ShoppingCartCheckout'
-import serverAPI from '../../serverAPI'
 import { Link, Redirect } from 'react-router-dom'
 
 interface Props {
@@ -27,6 +24,12 @@ interface State {
     disableOrderButton: boolean
     orderResponse: any
 }
+
+const getOrderDate = (orderDate: string) => {
+    let dateObject: Date = new Date(orderDate)
+    const dateString: string = `${dateObject.getFullYear()}/${dateObject.getMonth()}/${dateObject.getDate()}`
+    return dateString
+  }
 
 export default class CheckOut extends React.Component<Props, State>{
     constructor(props: Props) {
@@ -81,29 +84,12 @@ export default class CheckOut extends React.Component<Props, State>{
         this.setState({ disableOrderButton: true })
     }
 
-    // async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number) {
-    //     const response = await serverAPI(customerInfoFromForm)
-    //     if (response) {
-    //         this.setState({
-    //             customerPaymentInfo: customerInfoFromForm,
-    //             step: this.state.step + 1,
-    //             orderNumber: ts,
-    //             disableOrderButton: false
-    //         })
-    //     }
-    // }
-
     async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number){
-        // console.log(this.props.userContext._id, " user id")
-        // console.log("from order api call")
-        // console.log(this.state.customerInfo)
-        // console.log(this.props.cartState.cartList)
-        console.log(customerInfoFromForm.paymentMethod)
-        if(this.props.cartContext.cartList && this.props.cartContext.cartList.length > 0 && this.state.customerInfo){
-            console.log("ok")
-        }
+
+        // if(this.props.cartContext.cartList && this.props.cartContext.cartList.length > 0 && this.state.customerInfo){
+        //     console.log("ok")
+        // }
         const newProductRow = this.props.cartContext.cartList.map( (cartItem: CartItem) => {return {product: cartItem.id, qty: cartItem.nrItems}})
-        // console.log(newProductRow)
         const newOrder = {
             user: this.props.userContext._id,
             shipping: this.state.customerInfo.shippingId,
@@ -115,9 +101,8 @@ export default class CheckOut extends React.Component<Props, State>{
             to_zip: this.state.customerInfo.zipCode,
             paymentMethod: customerInfoFromForm.paymentMethod
         }
-        console.log(newOrder)
+        // console.log(newOrder)
         const response = await this.props.orderContext.sendOrder(newOrder)
-        // const response = await serverAPI(customerInfoFromForm)
         if(response){
             if(response.err){
                 console.log(response.err)
@@ -130,6 +115,18 @@ export default class CheckOut extends React.Component<Props, State>{
             orderResponse: response
             })
         }
+    }
+
+    isCartInStock(){
+        let inStock = true
+        for (const cartItem of this.props.cartContext.cartList) {
+            if(cartItem.nrItems > cartItem.product.nrInStock){
+                inStock = false
+            }
+        }
+
+        console.log(inStock, " is OutOfStock" )
+        return inStock
     }
 
     render() {
@@ -151,7 +148,7 @@ export default class CheckOut extends React.Component<Props, State>{
                 return (
                     this.props.userContext.loggedIn ?
                         <>
-                            <HomeButton />
+                        
                             <Grid
                                 container
                                 justify="center"
@@ -159,17 +156,22 @@ export default class CheckOut extends React.Component<Props, State>{
                                 <Grid item xs={12} sm={6}>
                                     <Card style={checkoutStyle}>
                                         <Typography color="primary" variant="h4" style={{ ...{ marginLeft: "1rem" }, ...{ marginTop: "1.5em" } }}>
-                                            Checkout
+                                            Kassa
                                     </Typography>
-
+                                        {this.isCartInStock() ? <p>In Stock</p> : <p>Not In Stock :-/</p>}
                                         {this.props.cartContext.cartList.length > 0 ?
                                             <div>
                                                 <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
+                                                {this.isCartInStock() ?
                                                 <AddressForm
                                                     customerInfo={this.state.customerInfo}
                                                     onSubmit={this.onAddressFormSubmit}
                                                     cartContext={this.props.cartContext}
                                                 />
+                                                :<div style={flexIt}>
+                                                <Typography variant="h5" color="primary">Produkter saknas i lager, ändra produkt eller antal.</Typography>
+                                                </div>}
+                                                
                                             </div>
                                             :
                                             <div style={flexIt}>
@@ -191,7 +193,7 @@ export default class CheckOut extends React.Component<Props, State>{
 
                         this.props.userContext.loggedIn ?
                             <>
-                                <HomeButton />
+                            
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}
@@ -200,24 +202,26 @@ export default class CheckOut extends React.Component<Props, State>{
                                     <Grid item xs={12} sm={6}>
 
                                         <Card style={cardStyle}>
-                                            <ShoppigCartCheckout />
+                                            {/* <ShoppingCart /> */}
                                             <Typography variant="h6">Skickas till:</Typography>
                                             <Typography>{this.state.customerInfo?.firstName} {this.state.customerInfo?.lastName}</Typography>
                                             <Typography>{this.state.customerInfo?.address}</Typography>
                                             <Typography>{this.state.customerInfo?.zipCode} {this.state.customerInfo?.city}</Typography>
                                             <br />
-                                            <Typography>E-Mail: {this.state.customerInfo?.email}</Typography>
+                                            <Typography>Mail: {this.state.customerInfo?.email}</Typography>
                                             <Typography>Mobilnummer: {this.state.customerInfo?.mobile}</Typography>
                                             <br />
                                             <Typography>Valt Fraktsätt: {this.state.customerInfo?.shippingMethod} ({this.state.customerInfo?.shippingCost} kr)</Typography>
                                             <Typography style={{ fontWeight: 'bold' }}>Förväntad leveransdag: {this.state.customerInfo?.deliveryDate} </Typography>
                                             <br />
                                             <Typography variant="h5" color="primary">
-                                                Totalkostnad: {this.props.cartContext.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
+                                                Total: {this.props.cartContext.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
                                                     <br />
-                                                <span style={{ ...{ fontSize: '0.6rem' }, ...{ marginLeft: '6.5rem' } }}>(varav {this.props.cartContext.cartTotalPrice * 0.25} kr moms).</span>
                                             </Typography>
-                                            <b />
+                                            <Typography variant="overline" color="primary">
+                                                (varav {this.props.cartContext.cartTotalPrice * 0.25} kr moms).
+                                            </Typography>
+                                         
                                             <Payment
                                                 onSubmit={this.onPaymentFormSubmit}
                                                 customerInfo={this.state.customerInfo}
@@ -237,22 +241,26 @@ export default class CheckOut extends React.Component<Props, State>{
                     return (
                         this.props.userContext.loggedIn ?
                             <div>
-                                <HomeButton />
+                               
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}>
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item xs={12} sm={12}>
                                         <Card style={cardStyle}>
-                                            <h1>Bravo!</h1>
-                                            {this.state.orderResponse.err ? <h3>{this.state.orderResponse.err}</h3> :
+                                            {this.state.orderResponse.err ? <h3>Order Error: {this.state.orderResponse.err}</h3> :
                                             <div>
-                                                <h3>first name: {this.state.orderResponse.to_firstname}</h3>
-                                                <h3>last name: {this.state.orderResponse.to_lastname}</h3>
-                                                <h3>City: {this.state.orderResponse.to_city}</h3>
-                                                <h3>Street: {this.state.orderResponse.to_street}</h3>
-                                                <h3>Area code: {this.state.orderResponse.to_zip}</h3>
+                                            <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
+                                            <br />
+
+                                                {/* <h3>{this.state.orderResponse.to_firstname}  {this.state.orderResponse.to_lastname}</h3> */}
+                                                <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
+                                                <br />
+                                                <Typography>Ditt ordernummer är: {this.state.orderResponse._id}</Typography>
+                                                <Typography>{`Orderdatum: ${getOrderDate(this.state.orderResponse.orderDate)}`}</Typography>
+                                                <Typography>Stad: {this.state.orderResponse.to_city}</Typography>
+                                                <Typography>Adress: {this.state.orderResponse.to_street}</Typography>
+                                                <Typography>Postnummer: {this.state.orderResponse.to_zip}</Typography>
                                                 {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
-                                                <h3>orderDate: {this.state.orderResponse.orderDate}</h3>
                                                 {/**isOrderShipped: false
                                                     orderDate: "2020-06-10T16:03:09.596Z"
                                                     productRow: (2) [{…}, {…}]
@@ -265,12 +273,11 @@ export default class CheckOut extends React.Component<Props, State>{
                                                     user: "5edf8924bb36e02f2c910771" */}
                                             </div>
                                             }
-                                            {/* <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
                                             <br />
                                             <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
+                                            <Typography>Tack för ditt köp och välkommen åter ❤️</Typography>
                                             <br />
-                                            <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
-                                            <ShoppigCartCheckout /> */}
+                                            {/* <ShoppigCartCheckout /> */}
                                         </Card>
                                     </Grid>
                                 </Grid>
@@ -287,7 +294,7 @@ const checkoutStyle: CSSProperties = {
 }
 
 const cardStyle: CSSProperties = {
-    padding: '2rem'
+    padding: '3rem'
 }
 
 const gridStyle: CSSProperties = {
