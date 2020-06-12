@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100vw",
+        height: "6.5rem",
         padding: theme.spacing(1, 4),
         position: "relative",
     },
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
     },
     logoImg: {
-        height: "3.5rem"
+        height: "4.9rem"
     },
 
     cartIcon: {
