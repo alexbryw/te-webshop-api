@@ -60,3 +60,4 @@ Användare:</br>
 -Administratörer ska kunna lägga till och ta bort produkter (VG)</br>
 -Backendapplikationen måste ha en fungerande global felhantering (VG)</br>
 -Checkoutflödet i frontendapplikationen ska ha validering på samtliga fält (G)</br>
+
