@@ -213,11 +213,13 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <Typography style={{ fontWeight: 'bold' }}>Förväntad leveransdag: {this.state.customerInfo?.deliveryDate} </Typography>
                                             <br />
                                             <Typography variant="h5" color="primary">
-                                                Totalkostnad: {this.props.cartContext.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
+                                                Total: {this.props.cartContext.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
                                                     <br />
-                                                <span style={{ ...{ fontSize: '0.6rem' }, ...{ marginLeft: '6.5rem' } }}>(varav {this.props.cartContext.cartTotalPrice * 0.25} kr moms).</span>
                                             </Typography>
-                                            <b />
+                                            <Typography variant="overline" color="primary">
+                                                (varav {this.props.cartContext.cartTotalPrice * 0.25} kr moms).
+                                            </Typography>
+                                         
                                             <Payment
                                                 onSubmit={this.onPaymentFormSubmit}
                                                 customerInfo={this.state.customerInfo}
@@ -288,7 +290,7 @@ const checkoutStyle: CSSProperties = {
 }
 
 const cardStyle: CSSProperties = {
-    padding: '6rem'
+    padding: '3rem'
 }
 
 const gridStyle: CSSProperties = {

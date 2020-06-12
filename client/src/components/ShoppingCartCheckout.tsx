@@ -26,7 +26,7 @@ export default function ShoppingCart() {
                                                 {/* <Avatar src={cartItem.product.imgURL} /> */}
                                             </ListItemAvatar>
                                         </Hidden>
-                                        <ListItemText primary={<Typography noWrap>{cartItem.product.name}</Typography>} />
+                                        <ListItemText primary={<Typography noWrap>{cartItem.product.title}</Typography>} />
                                         <div style={flexStyle}>
                                             <ListItemText primary={
                                                 <Typography noWrap align="center">
