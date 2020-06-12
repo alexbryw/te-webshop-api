@@ -44,7 +44,7 @@ export default function Footer() {
 
             <Grid item>
                 <Typography color="primary" variant="body2">
-                    tekulan@temail.te
+                    teote@temail.te
                 </Typography>
             </Grid>
         </Grid>
