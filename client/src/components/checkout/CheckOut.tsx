@@ -86,9 +86,9 @@ export default class CheckOut extends React.Component<Props, State>{
 
     async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number){
 
-        if(this.props.cartContext.cartList && this.props.cartContext.cartList.length > 0 && this.state.customerInfo){
-            console.log("ok")
-        }
+        // if(this.props.cartContext.cartList && this.props.cartContext.cartList.length > 0 && this.state.customerInfo){
+        //     console.log("ok")
+        // }
         const newProductRow = this.props.cartContext.cartList.map( (cartItem: CartItem) => {return {product: cartItem.id, qty: cartItem.nrItems}})
         const newOrder = {
             user: this.props.userContext._id,
@@ -101,7 +101,7 @@ export default class CheckOut extends React.Component<Props, State>{
             to_zip: this.state.customerInfo.zipCode,
             paymentMethod: customerInfoFromForm.paymentMethod
         }
-        console.log(newOrder)
+        // console.log(newOrder)
         const response = await this.props.orderContext.sendOrder(newOrder)
         if(response){
             if(response.err){
@@ -247,13 +247,15 @@ export default class CheckOut extends React.Component<Props, State>{
                                     style={gridStyle}>
                                     <Grid item xs={12} sm={12}>
                                         <Card style={cardStyle}>
-                                            <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
-                                            {this.state.orderResponse.err ? <h3>{this.state.orderResponse.err}</h3> :
+                                            {this.state.orderResponse.err ? <h3>Order Error: {this.state.orderResponse.err}</h3> :
                                             <div>
+                                            <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
+                                            <br />
+
                                                 {/* <h3>{this.state.orderResponse.to_firstname}  {this.state.orderResponse.to_lastname}</h3> */}
                                                 <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
                                                 <br />
-                                                <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
+                                                <Typography>Ditt ordernummer är: {this.state.orderResponse._id}</Typography>
                                                 <Typography>{`Orderdatum: ${getOrderDate(this.state.orderResponse.orderDate)}`}</Typography>
                                                 <Typography>Stad: {this.state.orderResponse.to_city}</Typography>
                                                 <Typography>Adress: {this.state.orderResponse.to_street}</Typography>
