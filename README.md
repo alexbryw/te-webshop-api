@@ -56,7 +56,7 @@ Användare:</br>
 ✅ -Administratörer ska kunna se en lista på alla gjorda beställningar (G)</br>
 ***Detta görs under beställningar fliken i admin baren  där kan du även godkänna nya administratörer***</br>
 ✅ -Administratörer ska kunna markera beställningar som skickade (VG)</br>
-***Under beställningar i admin baren finns en bekräfta leverans knapp***
+***Under beställningar i admin baren finns en bekräfta leverans knapp***</br>
 ✅ -Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)</br>
 ***Kategorierna sparar som en array i databasen. Knapparna skapas dynamiskt efter varje unik kategori som finns i databasen.***</br>
 ✅ -Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori (G)</br>
