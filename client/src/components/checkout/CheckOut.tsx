@@ -25,6 +25,12 @@ interface State {
     orderResponse: any
 }
 
+const getOrderDate = (orderDate: string) => {
+    let dateObject: Date = new Date(orderDate)
+    const dateString: string = `${dateObject.getFullYear()}/${dateObject.getMonth()}/${dateObject.getDate()}`
+    return dateString
+  }
+
 export default class CheckOut extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
@@ -142,7 +148,7 @@ export default class CheckOut extends React.Component<Props, State>{
                 return (
                     this.props.userContext.loggedIn ?
                         <>
-                      
+                        
                             <Grid
                                 container
                                 justify="center"
@@ -202,18 +208,20 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <Typography>{this.state.customerInfo?.address}</Typography>
                                             <Typography>{this.state.customerInfo?.zipCode} {this.state.customerInfo?.city}</Typography>
                                             <br />
-                                            <Typography>E-Mail: {this.state.customerInfo?.email}</Typography>
+                                            <Typography>Mail: {this.state.customerInfo?.email}</Typography>
                                             <Typography>Mobilnummer: {this.state.customerInfo?.mobile}</Typography>
                                             <br />
                                             <Typography>Valt Fraktsätt: {this.state.customerInfo?.shippingMethod} ({this.state.customerInfo?.shippingCost} kr)</Typography>
                                             <Typography style={{ fontWeight: 'bold' }}>Förväntad leveransdag: {this.state.customerInfo?.deliveryDate} </Typography>
                                             <br />
                                             <Typography variant="h5" color="primary">
-                                                Totalkostnad: {this.props.cartContext.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
+                                                Total: {this.props.cartContext.cartTotalPrice + this.state.customerInfo?.shippingCost} kr
                                                     <br />
-                                                <span style={{ ...{ fontSize: '0.6rem' }, ...{ marginLeft: '6.5rem' } }}>(varav {this.props.cartContext.cartTotalPrice * 0.25} kr moms).</span>
                                             </Typography>
-                                            <b />
+                                            <Typography variant="overline" color="primary">
+                                                (varav {this.props.cartContext.cartTotalPrice * 0.25} kr moms).
+                                            </Typography>
+                                         
                                             <Payment
                                                 onSubmit={this.onPaymentFormSubmit}
                                                 customerInfo={this.state.customerInfo}
@@ -233,22 +241,24 @@ export default class CheckOut extends React.Component<Props, State>{
                     return (
                         this.props.userContext.loggedIn ?
                             <div>
-                            
+                               
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}>
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item xs={12} sm={12}>
                                         <Card style={cardStyle}>
-                                            <h1>Bravo!</h1>
+                                            <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
                                             {this.state.orderResponse.err ? <h3>{this.state.orderResponse.err}</h3> :
                                             <div>
-                                                <h3>Namn: {this.state.orderResponse.to_firstname}</h3>
-                                                <h3>Efternamn: {this.state.orderResponse.to_lastname}</h3>
-                                                <h3>Stad: {this.state.orderResponse.to_city}</h3>
-                                                <h3>Adress: {this.state.orderResponse.to_street}</h3>
-                                                <h3>Postnummer: {this.state.orderResponse.to_zip}</h3>
+                                                {/* <h3>{this.state.orderResponse.to_firstname}  {this.state.orderResponse.to_lastname}</h3> */}
+                                                <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
+                                                <br />
+                                                <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
+                                                <Typography>{`Orderdatum: ${getOrderDate(this.state.orderResponse.orderDate)}`}</Typography>
+                                                <Typography>Stad: {this.state.orderResponse.to_city}</Typography>
+                                                <Typography>Adress: {this.state.orderResponse.to_street}</Typography>
+                                                <Typography>Postnummer: {this.state.orderResponse.to_zip}</Typography>
                                                 {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
-                                                <h3>Orderdatum: {this.state.orderResponse.orderDate}</h3>
                                                 {/**isOrderShipped: false
                                                     orderDate: "2020-06-10T16:03:09.596Z"
                                                     productRow: (2) [{…}, {…}]
@@ -261,12 +271,11 @@ export default class CheckOut extends React.Component<Props, State>{
                                                     user: "5edf8924bb36e02f2c910771" */}
                                             </div>
                                             }
-                                            {/* <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
                                             <br />
                                             <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
+                                            <Typography>Tack för ditt köp och välkommen åter ❤️</Typography>
                                             <br />
-                                            <Typography>Ditt ordernummer är: {this.state.orderNumber}</Typography>
-                                            <ShoppigCartCheckout /> */}
+                                            {/* <ShoppigCartCheckout /> */}
                                         </Card>
                                     </Grid>
                                 </Grid>
@@ -283,7 +292,7 @@ const checkoutStyle: CSSProperties = {
 }
 
 const cardStyle: CSSProperties = {
-    padding: '2rem'
+    padding: '3rem'
 }
 
 const gridStyle: CSSProperties = {
