@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         '& .MuiButtonBase-root': {
             padding: theme.spacing(0, 3),
+            margin:theme.spacing(1)
         },
         '& .MuiButton-label': {
             border: "none",
@@ -32,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
     logo: {
 
         position: "absolute",
-        top: "1rem",
-        left: "8rem",
+        top: "3rem",
+        left: "1rem",
 
         display: "flex",
         alignItems: "center",

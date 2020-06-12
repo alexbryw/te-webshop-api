@@ -20,12 +20,21 @@ const ManageUsers = (props: Props) => {
     const [users, setUsers] = React.useState([])
 
     const gatherUsers = async () => {
-        setUsers(await props.userContext.getUsers())
+        const x = await props.userContext.getUsers()
+
+        if (!x.err) {
+            setUsers(x)
+        }
+
     }
     useEffect(() => { gatherUsers() }, [])
 
     const handleUpdateUserStatus = async (user: any) => {
-        setUsers(await props.userContext.updateUserStatus(user))
+        const x = await props.userContext.updateUserStatus(user)
+
+        if (!x.err) {
+            setUsers(x)
+        }
     }
 
 

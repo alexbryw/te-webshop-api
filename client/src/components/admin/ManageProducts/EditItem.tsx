@@ -127,7 +127,7 @@ export default class EditItem extends React.Component<Props, State> {
 
           <Grid container spacing={2} justify="center">
 
-            <Grid item xs={4}>
+            <Grid item xs={6} md={4}>
               <TextField
                 disabled
                 fullWidth
@@ -142,7 +142,7 @@ export default class EditItem extends React.Component<Props, State> {
               />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={6} md={4}>
 
               <TextField
                 disabled
@@ -159,7 +159,7 @@ export default class EditItem extends React.Component<Props, State> {
               />
             </Grid>
 
-            <Grid item xs={7}>
+            <Grid item xs={12} md={7}>
               <TextField
                 disabled
                 fullWidth
@@ -214,7 +214,7 @@ export default class EditItem extends React.Component<Props, State> {
               />
             </Grid>
 
-            <Grid item xs={2}>
+            <Grid item xs={6} md={2}>
               <Button
                 variant="contained"
                 color="primary"
@@ -228,11 +228,11 @@ export default class EditItem extends React.Component<Props, State> {
                 }}
               >
                 <RemoveCircleOutlineIcon />
-                    Ta bort
+                    Ta&nbsp;bort
                   </Button>
             </Grid>
 
-            <Grid item xs={2}>
+            <Grid item xs={6} md={2}>
               <Button
                 variant="contained"
                 color="primary"

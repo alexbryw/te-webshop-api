@@ -17,10 +17,12 @@ const ManageOrders = (props: Props) => {
     let orderTotal;
 
     const getOrders = async () => {
-        setOrders(await props.orderContext.getOrders())
+        const x = await props.orderContext.getOrders()
+        if (!x.err) setOrders(x)
     }
     const handleConfirmShipping = async (order: any) => {
-        setOrders(await props.orderContext.updateOrders(order))
+        const x = await props.orderContext.updateOrders(order)
+        if (!x.err) setOrders(x)
     }
 
     const getTotal = (order: any): number => {

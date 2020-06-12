@@ -14,20 +14,22 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "33rem",
 
-    backgroundColor: theme.palette.background.paper,
+    background: "#fff",
     boxShadow: "none",
     border: '2px solid #000',
-    padding: theme.spacing(2, 4, 3),
+    padding: "1rem 2rem 1.5rem"
   },
 
-  button: {
-    position: "absolute",
-    
-    top: ".5rem",
-    // top: 0,
-    zIndex: 1000,
+  buttonWrapper: {
 
-    padding: theme.spacing(1, 2)
+    '& > *': {
+      position: "absolute",
+      top: ".5rem",
+      zIndex: 1000,
+      // width: 0
+      // padding: ".5rem 1rem"
+
+    }
   },
 
 
@@ -37,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     "& .MuiTypography-overline": {
       fontSize: "0.84rem",
-      margin: theme.spacing(0, 1),
+      // margin: theme.spacing(0, 1),
+      margin: "0 .5rem"
     },
   },
 

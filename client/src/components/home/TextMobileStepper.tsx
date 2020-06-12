@@ -65,12 +65,17 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
 
-      height: "50%",
-
-
       filter: "invert(100%)",
       borderRadius: "50rem",
       background: "#fff5",
+
+      width: "50vh",
+      
+      
+      [theme.breakpoints.down(510)]: {
+        width: "50vw",
+      }
+
 
     },
   }),

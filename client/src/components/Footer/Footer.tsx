@@ -19,26 +19,11 @@ export default function Footer() {
     return (
         <Grid
             container
-            direction="column"
+            direction="row"
             justify="center"
             alignItems="center"
             className={classes.root}
         >
-            {/* <Grid item>
-                <Typography color="primary" variant="body2">
-                    Tekulan AB
-                    </Typography>
-            </Grid>
-            <Grid item>
-                <Typography color="primary" variant="body2">
-                    VägGatan 34
-                    </Typography>
-            </Grid>
-            <Grid item>
-                <Typography color="primary" variant="body2">
-                    123 45 Stadeborg
-                    </Typography>
-            </Grid> */}
             <Grid item>
                 <Typography color="primary" variant="body2">
                     +4699-0253 6456

@@ -91,7 +91,8 @@ const ManageProducts = (props: Props) => {
   const getProducts = async () => {
     console.log("## updating products ##");
 
-    setProducts(await props.productContext.fetchProducts(""));
+    const x = await props.productContext.fetchProducts("")
+    if (!x.err) setProducts(x);
   };
 
 
