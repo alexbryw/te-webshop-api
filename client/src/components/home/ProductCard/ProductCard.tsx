@@ -26,6 +26,19 @@ interface Props {
 export default function ProductCard(props: Props) {
   const classes = useStyles();
 
+  function isProductInStock(){
+    let inStock = true
+    for (const cartItem of props.cartContext.cartList) {
+      if(cartItem.id === props.product._id){
+        if(cartItem.nrItems >= props.product.nrInStock){
+            inStock = false
+        }
+      }
+    }
+    // console.log(inStock, " is OutOfStock card." )
+    return inStock
+  }
+
   return (
     <Card className={classes.root}>
 
@@ -39,10 +52,14 @@ export default function ProductCard(props: Props) {
           <Typography variant="h5" color="textSecondary" className={classes.productTitle}>
             {props.product.title}
           </Typography>
+          <Typography variant="h6" color="textSecondary" className={classes.productTitle}>
+            Lager: {props.product.nrInStock}
+          </Typography>
         </CardContent>
       </Link>
 
       <CardActions disableSpacing>
+        {isProductInStock() && props.product.nrInStock !== 0 ? 
         <Button
           className={classes.buyBtn}
           variant="contained"
@@ -53,6 +70,15 @@ export default function ProductCard(props: Props) {
           }}>
           <ShoppingCartIcon />&nbsp;{props.product.price}:-
         </Button>
+        :
+        <Button
+        className={classes.buyBtn}
+        variant="contained"
+        disabled={true}
+        color="primary">
+        <ShoppingCartIcon />&nbsp; Lager: {props.product.nrInStock}
+      </Button>
+      }
       </CardActions>
 
     </Card >
