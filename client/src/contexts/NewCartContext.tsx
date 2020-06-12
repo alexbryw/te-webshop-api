@@ -3,7 +3,6 @@
 
 import React, { createContext } from 'react'
 import { CartItem, NewProduct } from '../interfaces/interfaces'
-import { items, fetchProducts } from '../ItemList'
 
 export const CartContext = createContext<State>({
     cartList: [],
@@ -71,9 +70,7 @@ export class CartProvider extends React.Component<Props, State>{
     toggleCartVisibility = () => {
         this.setState({
             showCart: !this.state.showCart
-        },
-            () => console.log("toggled")
-        )
+        })
     }
     setCartVisibility = (visibility: Boolean, clear: Boolean) => {
 
@@ -84,7 +81,6 @@ export class CartProvider extends React.Component<Props, State>{
         })
     }
     cancelTimeout = (timer: any) => {
-        console.log('cancelled');
 
         clearTimeout(timer)
     }
@@ -95,8 +91,6 @@ export class CartProvider extends React.Component<Props, State>{
     // Add a product to cartList array, Id and Number of items to add.
     // Number of items can be negative -1 to remove a product or positive to add.
     addProduct = async (inItemId: string, inNrItems: number) => {
-        console.log(inItemId, inNrItems, "  from addProduct cartContext")
-        console.log(this.state.cartList)
         const cartListPosition = this.findItemInCart(inItemId)
         const updatedCartList = [...this.state.cartList]
 
@@ -115,7 +109,7 @@ export class CartProvider extends React.Component<Props, State>{
         } else {    //If item is not in list then a new item is pushed to list.
             if (inNrItems > 0) {
                 //TODO Remove product?
-                const fetchedProducts = await fetchProducts()
+                const fetchedProducts = await this.fetchProducts()
                 const newProduct = fetchedProducts.find(({ _id }) => _id === inItemId) //cant find on await promise <any>?
                 if (newProduct) {
                     updatedCartList.push({ id: inItemId, nrItems: inNrItems, product: newProduct })
@@ -130,6 +124,19 @@ export class CartProvider extends React.Component<Props, State>{
             }
         }
     }
+
+    fetchProducts = async () => {
+        const products: [NewProduct] = await fetch("http://localhost:9000/api/products/", {
+            method: "GET",
+            credentials: "include",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                return data;
+            });
+        return products;
+    };
+
 
     calcTotalCartPrice(cartList: Array<CartItem>) {
         let TotalPrice = 0
@@ -180,18 +187,14 @@ export class CartProvider extends React.Component<Props, State>{
             cartList: [],
             cartTotalPrice: 0,
         }, () => {
-            // localStorage.clear()
             localStorage.removeItem('cartList')
             localStorage.removeItem('cartTotalPrice')
-            console.log("2. after clear local storage")
         })
     }
 
     saveCartToLocalStorage() {
         localStorage.setItem('cartList', JSON.stringify(this.state.cartList))
-        // localStorage.setItem('savedCheckoutCartList', JSON.stringify(this.state.savedCheckoutCartList))
         localStorage.setItem('cartTotalPrice', this.state.cartTotalPrice.toString())
-        // localStorage.setItem('savedCartTotalPrice', this.state.savedCartTotalPrice.toString())
     }
 
     loadCartFromLocalStorage() {
@@ -215,7 +218,6 @@ export class CartProvider extends React.Component<Props, State>{
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 return data
             })
 
@@ -224,10 +226,7 @@ export class CartProvider extends React.Component<Props, State>{
 
     startLoadCartFromLocalStorage() {
         if (this.state.cartList.length < 1) {
-            console.log("1. cart empty. Load cart from storage.")
             this.loadCartFromLocalStorage()
-        } else {
-            console.log("cart has items, do not load.")
         }
     }
 

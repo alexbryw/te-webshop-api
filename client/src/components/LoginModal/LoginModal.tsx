@@ -34,6 +34,18 @@ const LoginModal = (props: Props) => {
         confirmPassword: "",
         requestAdmin: false
     });
+
+
+    const clearInputValues = () => {
+        setInputValues({
+            username: "",
+            password: "",
+            confirmPassword: "",
+            requestAdmin: false
+        })
+    }
+
+
     const changeInputValues = (event: any, anchor: string) => {
         clearInputErrors()
         if (anchor === "requestAdmin") {
@@ -75,8 +87,6 @@ const LoginModal = (props: Props) => {
 
     const handleOpen = () => {
         setOpen(true);
-
-        // props.cancelTimeout(true, true)
     };
 
     const handleClose = () => {
@@ -159,11 +169,13 @@ const LoginModal = (props: Props) => {
 
                         variant="contained"
                         color="primary"
-                        onClick={() => props.userContext.loginUser(
-                            { name: inputValues.username, password: inputValues.password },
-                            handleClose,
-                            handleSetInputErrors
-                        )}>
+                        onClick={() => {
+                            props.userContext.loginUser(
+                                { name: inputValues.username, password: inputValues.password },
+                                handleClose,
+                                handleSetInputErrors
+                            ); clearInputValues()
+                        }}>
                         Logga in
                     </Button>
                     :
@@ -174,15 +186,18 @@ const LoginModal = (props: Props) => {
                         disabled={inputValues.password !== inputValues.confirmPassword
                             || inputValues.password.length < 3
                             || inputValues.username.length < 3}
-                        onClick={() => props.userContext.registerUser(
-                            {
-                                name: inputValues.username,
-                                password: inputValues.password,
-                                requestsAdmin: inputValues.requestAdmin
-                            },
-                            handleClose,
-                            handleSetInputErrors
-                        )}
+                        onClick={() => {
+                            props.userContext.registerUser(
+                                {
+                                    name: inputValues.username,
+                                    password: inputValues.password,
+                                    requestsAdmin: inputValues.requestAdmin
+                                },
+                                handleClose,
+                                handleSetInputErrors
+                            )
+                            clearInputValues()
+                        }}
                     >
                         Registrera
                     </Button>
@@ -208,9 +223,6 @@ const LoginModal = (props: Props) => {
 
                     <Button variant="contained"
                         color="primary"
-                        // className={classes.button}
-
-                        className={classes.logoutBtn}
                         onClick={() => props.userContext.logOut()}>
 
                         {matches ?
@@ -220,12 +232,9 @@ const LoginModal = (props: Props) => {
                     :
                     <Button variant="contained"
                         color="primary"
-                        // className={classes.button} 
 
-                        className={classes.loginBtn}
                         onClick={() => handleOpen()}
                     >
-                        {console.log(window.innerWidth)}
                         {matches ?
                             <VpnKeyIcon /> : "logga in"
                         }

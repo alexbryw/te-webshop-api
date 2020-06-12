@@ -35,7 +35,6 @@ export interface RouteMatch {
 export interface CartItem {
     id: string
     nrItems: number
-    // product: Product
     product: any //or NewProduct
 }
 

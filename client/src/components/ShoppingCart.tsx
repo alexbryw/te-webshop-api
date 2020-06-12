@@ -24,7 +24,6 @@ interface Props {
 
 export default function ShoppingCart(props: Props) {
 
-    // console.log(props.cartContext);
 
 
     return (

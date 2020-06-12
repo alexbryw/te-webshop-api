@@ -174,7 +174,6 @@ export default class Payment extends React.Component<Props, CustomerPaymentInfo>
             value={this.state.cardOwner}
             error = {this.state.isCardOwnerError}
             helperText = {this.state.cardOwnerErrorText}
-            //onChange = {this.handleChange('kortNr')}
             />
             <br/>
           <TextField id="outlined-basic" 
@@ -187,7 +186,6 @@ export default class Payment extends React.Component<Props, CustomerPaymentInfo>
             error = {this.state.isCardNrError} 
             helperText= {this.state.cardNrErrorText}
             onChange={(event) => { this.setState({ cardNr: event.target.value }) }}
-            //onChange = {this.handleChange('kortNr')}
             />
             <br/>
           <TextField id="outlined-basic" 
@@ -202,7 +200,6 @@ export default class Payment extends React.Component<Props, CustomerPaymentInfo>
             inputProps={{ maxLength: 7}}
             style = {{...{width:'15ch'},...margins}}
             onChange={(event) => { this.setState({ cardExp: event.target.value }) }}
-            //onChange = {this.handleChange('kortNr')}
             />
           <TextField id="outlined-basic" 
             label="CVC" 
@@ -216,7 +213,6 @@ export default class Payment extends React.Component<Props, CustomerPaymentInfo>
             inputProps={{ maxLength: 3}}
             style = {{...{width:'10ch'}, ...margins}}
             onChange={(event) => { this.setState({ cardCVC: event.target.value }) }}
-            //onChange = {this.handleChange('kortNr')}
             />
           <br/>  
         </form>

@@ -11,8 +11,6 @@ import { Product } from "../../../interfaces/interfaces";
 // MATERIAL UI
 import { Container, Card } from "@material-ui/core/";
 
-// CONTEXTS
-// import { ProductContext } from '../../../contexts/ProductContext';
 
 interface Props {
   productContext: any;
@@ -89,7 +87,6 @@ const ManageProducts = (props: Props) => {
   };
 
   const getProducts = async () => {
-    console.log("## updating products ##");
 
     const x = await props.productContext.fetchProducts("")
     if (!x.err) setProducts(x);
@@ -103,8 +100,6 @@ const ManageProducts = (props: Props) => {
 
   return (
     <Container>
-      {console.log("from manage product")}
-      {console.log(products)}
 
       <Card variant="outlined">
         <NewItemToggle

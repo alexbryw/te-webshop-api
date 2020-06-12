@@ -29,7 +29,7 @@ const getOrderDate = (orderDate: string) => {
     let dateObject: Date = new Date(orderDate)
     const dateString: string = `${dateObject.getFullYear()}/${dateObject.getMonth()}/${dateObject.getDate()}`
     return dateString
-  }
+}
 
 export default class CheckOut extends React.Component<Props, State>{
     constructor(props: Props) {
@@ -84,12 +84,9 @@ export default class CheckOut extends React.Component<Props, State>{
         this.setState({ disableOrderButton: true })
     }
 
-    async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number){
+    async apiCall(customerInfoFromForm: CustomerPaymentInfo, ts: number) {
 
-        // if(this.props.cartContext.cartList && this.props.cartContext.cartList.length > 0 && this.state.customerInfo){
-        //     console.log("ok")
-        // }
-        const newProductRow = this.props.cartContext.cartList.map( (cartItem: CartItem) => {return {product: cartItem.id, qty: cartItem.nrItems}})
+        const newProductRow = this.props.cartContext.cartList.map((cartItem: CartItem) => { return { product: cartItem.id, qty: cartItem.nrItems } })
         const newOrder = {
             user: this.props.userContext._id,
             shipping: this.state.customerInfo.shippingId,
@@ -101,31 +98,28 @@ export default class CheckOut extends React.Component<Props, State>{
             to_zip: this.state.customerInfo.zipCode,
             paymentMethod: customerInfoFromForm.paymentMethod
         }
-        // console.log(newOrder)
         const response = await this.props.orderContext.sendOrder(newOrder)
-        if(response){
-            if(response.err){
-                console.log(response.err)
+        if (response) {
+            if (!response.err) {
+                this.setState({
+                    customerPaymentInfo: customerInfoFromForm,
+                    step: this.state.step + 1,
+                    orderNumber: ts,
+                    disableOrderButton: false,
+                    orderResponse: response
+                })
             }
-            this.setState({
-            customerPaymentInfo: customerInfoFromForm,
-            step: this.state.step + 1,
-            orderNumber: ts,
-            disableOrderButton: false,
-            orderResponse: response
-            })
         }
     }
 
-    isCartInStock(){
+    isCartInStock() {
         let inStock = true
         for (const cartItem of this.props.cartContext.cartList) {
-            if(cartItem.nrItems > cartItem.product.nrInStock){
+            if (cartItem.nrItems > cartItem.product.nrInStock) {
                 inStock = false
             }
         }
 
-        console.log(inStock, " is OutOfStock" )
         return inStock
     }
 
@@ -148,7 +142,7 @@ export default class CheckOut extends React.Component<Props, State>{
                 return (
                     this.props.userContext.loggedIn ?
                         <>
-                        
+
                             <Grid
                                 container
                                 justify="center"
@@ -162,15 +156,15 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <div>
                                                 <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
                                                 {this.isCartInStock() ?
-                                                <AddressForm
-                                                    customerInfo={this.state.customerInfo}
-                                                    onSubmit={this.onAddressFormSubmit}
-                                                    cartContext={this.props.cartContext}
-                                                />
-                                                :<div style={flexIt}>
-                                                <Typography variant="h5" color="primary">Produkter saknas i lager, ändra produkt eller antal.</Typography>
-                                                </div>}
-                                                
+                                                    <AddressForm
+                                                        customerInfo={this.state.customerInfo}
+                                                        onSubmit={this.onAddressFormSubmit}
+                                                        cartContext={this.props.cartContext}
+                                                    />
+                                                    : <div style={flexIt}>
+                                                        <Typography variant="h5" color="primary">Produkter saknas i lager, ändra produkt eller antal.</Typography>
+                                                    </div>}
+
                                             </div>
                                             :
                                             <div style={flexIt}>
@@ -192,7 +186,7 @@ export default class CheckOut extends React.Component<Props, State>{
 
                         this.props.userContext.loggedIn ?
                             <>
-                            
+
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}
@@ -219,7 +213,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                             <Typography variant="overline" color="primary">
                                                 (varav {this.props.cartContext.cartTotalPrice * 0.25} kr moms).
                                             </Typography>
-                                         
+
                                             <Payment
                                                 onSubmit={this.onPaymentFormSubmit}
                                                 customerInfo={this.state.customerInfo}
@@ -239,31 +233,31 @@ export default class CheckOut extends React.Component<Props, State>{
                     return (
                         this.props.userContext.loggedIn ?
                             <div>
-                               
+
                                 <Grid container
                                     justify="center"
                                     style={gridStyle}>
                                     <Grid item xs={12} sm={12}>
                                         <Card style={cardStyle}>
                                             {!this.state.orderResponse || this.state.orderResponse.err ? <h3>Order Error: {this.state.orderResponse.err}</h3> :
-                                            <div>
-                                            <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
-                                            <br />
+                                                <div>
+                                                    <h2>Tack för din besällning {this.state.orderResponse.to_firstname} {this.state.orderResponse.to_lastname}</h2>
+                                                    <br />
 
-                                                {/* <h3>{this.state.orderResponse.to_firstname}  {this.state.orderResponse.to_lastname}</h3> */}
-                                                <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
-                                                <br />
-                                                <Typography>Ditt ordernummer är: {this.state.orderResponse._id}</Typography>
-                                                <Typography>{`Orderdatum: ${getOrderDate(this.state.orderResponse.orderDate)}`}</Typography>
-                                                <Typography>Stad: {this.state.orderResponse.to_city}</Typography>
-                                                <Typography>Adress: {this.state.orderResponse.to_street}</Typography>
-                                                <Typography>Postnummer: {this.state.orderResponse.to_zip}</Typography>
-                                                <br />
-                                                <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
-                                                <Typography>Tack för ditt köp och välkommen åter ❤️</Typography>
-                                                <br />
-                                                {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
-                                                {/**isOrderShipped: false
+                                                    {/* <h3>{this.state.orderResponse.to_firstname}  {this.state.orderResponse.to_lastname}</h3> */}
+                                                    <Typography>Du har beställt supergott te för den totala kostnaden av {this.props.cartContext.savedCartTotalPrice + this.state.customerInfo?.shippingCost}kr! <br /> Vi har skickat bekräftelse till din mail: {this.state.customerInfo?.email}</Typography>
+                                                    <br />
+                                                    <Typography>Ditt ordernummer är: {this.state.orderResponse._id}</Typography>
+                                                    <Typography>{`Orderdatum: ${getOrderDate(this.state.orderResponse.orderDate)}`}</Typography>
+                                                    <Typography>Stad: {this.state.orderResponse.to_city}</Typography>
+                                                    <Typography>Adress: {this.state.orderResponse.to_street}</Typography>
+                                                    <Typography>Postnummer: {this.state.orderResponse.to_zip}</Typography>
+                                                    <br />
+                                                    <Typography>Beräknad leveransdag: {this.state.customerInfo?.deliveryDate}</Typography>
+                                                    <Typography>Tack för ditt köp och välkommen åter ❤️</Typography>
+                                                    <br />
+                                                    {/* <h3>Nr of products: {this.state.orderResponse.productRow.length}</h3> */}
+                                                    {/**isOrderShipped: false
                                                     orderDate: "2020-06-10T16:03:09.596Z"
                                                     productRow: (2) [{…}, {…}]
                                                     shipping: "5ed0edb79781da7e89d7cb50"
@@ -273,7 +267,7 @@ export default class CheckOut extends React.Component<Props, State>{
                                                     to_street: "Testgatan 18"
                                                     to_zip: 12345
                                                     user: "5edf8924bb36e02f2c910771" */}
-                                            </div>
+                                                </div>
                                             }
                                         </Card>
                                     </Grid>

@@ -30,17 +30,7 @@ class OrderContextProvider extends Component<Props, State> {
         }
     }
 
-
-//hämta en besökares alla ordrar
-//******************   |    */
-//******************   |     */
-//******************   V     */
-// getAllOrders = async () => {
-//     const order = await fetch(orderURL, {}
-
-
     getOrders = async () => {
-        console.log('hello')
         const orders = await fetch("http://localhost:9000/api/orders/", {
 
             method: "GET",
@@ -48,13 +38,12 @@ class OrderContextProvider extends Component<Props, State> {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 return data
             })
 
         return orders
     }
-    
+
 
     updateOrders = async (order: any) => {
         const updatedOrders = await fetch("http://localhost:9000/api/orders/" + order._id, {
@@ -69,7 +58,6 @@ class OrderContextProvider extends Component<Props, State> {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 const orders = this.getOrders()
                 return orders
             })
@@ -78,7 +66,6 @@ class OrderContextProvider extends Component<Props, State> {
     }
 
     sendOrder = async (order: any) => {
-        // console.log(order)
         const orderString = JSON.stringify(order)
         const newOrder = await fetch("http://localhost:9000/api/orders/", {
             method: "POST",
@@ -86,21 +73,10 @@ class OrderContextProvider extends Component<Props, State> {
             headers: {
                 "Content-Type": "application/json",
             },
-            // body: JSON.stringify({
-            //     user: order.user,
-            //     shipping: order.shipping,
-            //     productRow: order.productRow,
-            //     to_firstname: order.to_firstname,
-            //     to_lastname: order.to_lastname,
-            //     to_street: order.to_street,
-            //     to_city: order.to_city,
-            //     to_zip: order.to_zip
-            // })
             body: JSON.stringify(order)
         })
-            .then((response) =>  response.json())
+            .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 return data
             })
         return newOrder

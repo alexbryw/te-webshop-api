@@ -1,11 +1,18 @@
 import React, { CSSProperties } from "react";
-import { Product } from "../../../interfaces/interfaces";
-import Card from "@material-ui/core/Card";
-import Typography from "@material-ui/core/Typography";
-import EditItem from "./EditItem";
-import IconButton from "@material-ui/core/IconButton";
+
+// MATERIAL UI
+import {
+  Card,
+  Typography,
+  IconButton
+} from "@material-ui/core";
+
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+
+// COMPONENTS
+import EditItem from "./EditItem";
+
 
 interface Props {
   productContext: any;

@@ -25,7 +25,6 @@ interface Props extends RouteComponentProps<{ id: string }> {
 // A simple component that shows the pathname of the current location
 const ProductPage = (props: Props) => {
     const classes = useStyles()
-    console.log(props.match.params.id);
 
     const [product, setProduct] = React.useState<any>({
         file: {
@@ -40,18 +39,17 @@ const ProductPage = (props: Props) => {
         setProduct(await props.productContext.fetchProduct(props.match.params.id))
     }
 
-    function isProductInStock(){
+    function isProductInStock() {
         let inStock = true
         for (const cartItem of props.cartContext.cartList) {
-          if(cartItem.id === product._id){
-            if(cartItem.nrItems >= product.nrInStock){
-                inStock = false
+            if (cartItem.id === product._id) {
+                if (cartItem.nrItems >= product.nrInStock) {
+                    inStock = false
+                }
             }
-          }
         }
-        // console.log(inStock, " is OutOfStock card." )
         return inStock
-      }
+    }
 
     useEffect(() => {
         getProduct()
@@ -66,7 +64,6 @@ const ProductPage = (props: Props) => {
             alignItems="center"
             className={classes.productPageWrapper}
         >
-            {console.log(product)}
             {
                 product ?
                     <>
@@ -87,25 +84,24 @@ const ProductPage = (props: Props) => {
                                 <Typography gutterBottom variant="body2" color="textPrimary" component="p">
                                     {product.description}
                                 </Typography>
-                                {isProductInStock() && product.nrInStock !== 0 ? 
-                                <Button variant="contained" color="primary" className={classes.buyBtn}
-                                    onClick={() => {
-                                        props.cartContext.setCartVisibility(true, false);
-                                        // cartState.toggleCartVisibility();
-                                        props.cartContext.addProduct(product._id, 1)
-                                    }} >
-                                    <Typography variant="overline">
-                                        köp
+                                {isProductInStock() && product.nrInStock !== 0 ?
+                                    <Button variant="contained" color="primary" className={classes.buyBtn}
+                                        onClick={() => {
+                                            props.cartContext.setCartVisibility(true, false);
+                                            props.cartContext.addProduct(product._id, 1)
+                                        }} >
+                                        <Typography variant="overline">
+                                            köp
                                     </Typography>
-                                    <ShoppingCartIcon />
-                                </Button>
-                                :
-                                <Button variant="contained" color="primary" disabled={true} className={classes.buyBtn}>
-                                <Typography variant="overline">
-                                    Lager: {product.nrInStock}
-                                </Typography>
-                                <ShoppingCartIcon />
-                            </Button>
+                                        <ShoppingCartIcon />
+                                    </Button>
+                                    :
+                                    <Button variant="contained" color="primary" disabled={true} className={classes.buyBtn}>
+                                        <Typography variant="overline">
+                                            Lager: {product.nrInStock}
+                                        </Typography>
+                                        <ShoppingCartIcon />
+                                    </Button>
                                 }
                             </CardContent>
                         </Grid>
@@ -115,6 +111,5 @@ const ProductPage = (props: Props) => {
     )
 }
 
-// Create a new component that is "connected" (to borrow redux
-// terminology) to the router.
+// Create a new component that is "connected" (to borrow redux terminology) to the router.
 export default withRouter(ProductPage);

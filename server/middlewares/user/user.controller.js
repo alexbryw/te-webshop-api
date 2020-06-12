@@ -19,8 +19,6 @@ async function getUser(req, res, next) {
 }
 //Get one user by id from db.
 async function findUser(req, res, next) {
-    console.log("get one user")
-
     let user
     let condition;
 
@@ -57,8 +55,7 @@ async function createUser(req, res, next) {
     }
 }
 
-async function deleteUser(req, res, next) {
-    console.log("delete :", res.user);
+async function deleteUser(req, res) {
     try {
         await res.user.remove()
         res.json({ msg: "deleted user: " + res.user.name })
@@ -69,7 +66,6 @@ async function deleteUser(req, res, next) {
 
 async function updateUser(req, res, next) {
     try {
-        console.log("body", req.body);
 
         User.findByIdAndUpdate(
             { _id: req.body.id },

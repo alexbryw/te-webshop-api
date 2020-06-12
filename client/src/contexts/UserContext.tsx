@@ -115,11 +115,8 @@ export class UserContextProvider extends Component<Props, State> {
             method: "GET",
             credentials: 'include',
         }).then((response) => response.json()).then((data) => {
-            console.log(data)
             return data
         })
-        // console.log("from get users")
-        // console.log(users)
         return users
     }
 
@@ -133,7 +130,6 @@ export class UserContextProvider extends Component<Props, State> {
         newUser: { name: string, password: string, requestsAdmin: boolean },
         closeModal: () => void,
         errCb: (error: boolean, anchor: string) => void) => {
-        console.log("register new user");
 
         await fetch("http://localhost:9000/api/users/", {
             method: "POST",
@@ -164,8 +160,6 @@ export class UserContextProvider extends Component<Props, State> {
     // getUser
 
     loginUser = async (user: any, closeModal: () => void, errCb: (error: boolean, anchor: string) => void) => {
-        console.log("logging in");
-
         // Create a session
         await fetch(sessionURL + "/login", {
             method: "POST",
@@ -211,35 +205,30 @@ export class UserContextProvider extends Component<Props, State> {
             credentials: 'include'
         })
             .then((response) => {
-                console.log(response);
                 return response.json()
             })
             .then((data) => {
-                console.log(data);
+
                 return data
             })
         this.setUserInState(user)
     }
 
     async setUserInState(user: any) {
-        if (user.err) console.log(user.err);
-
         if (user && !user.err) {
             this.setState({
                 loggedIn: true,
                 admin: user.admin,
                 name: user.name,
                 _id: user._id
-            }, () => console.log("logged in", this.state)
-            )
+            })
         } else {
             this.setState({
                 loggedIn: false,
                 admin: false,
                 name: "",
                 _id: ""
-            }, () => console.log("not logged in", this.state)
-            )
+            })
         }
     }
 

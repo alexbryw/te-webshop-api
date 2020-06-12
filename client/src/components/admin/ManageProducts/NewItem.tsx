@@ -61,7 +61,6 @@ export default class NewItem extends React.Component<Props, State> {
     //Updates states so it matches the textboxes content
     handleNameInput = (event: { target: { value: any } }) => this.setState({ name: event.target.value })
     handlePriceInput = (event: { target: { value: any } }) => this.setState({ price: event.target.value })
-    //handleimgURLChange = (event: { target: { value: any } }) => this.setState({imgURL:event.target.value})
     handleDescriptionInput = (event: { target: { value: any } }) => this.setState({ description: event.target.value })
     handleNumberInStockInput = (event: { target: { value: any } }) => this.setState({ nrInStock: event.target.value })
 
@@ -76,7 +75,7 @@ export default class NewItem extends React.Component<Props, State> {
             if (y != "") updatedCategories.push(y)
         })
 
-        this.setState({ category: updatedCategories }, () => console.log(this.state.category))
+        this.setState({ category: updatedCategories })
     }
 
     handleFileInput = () => {

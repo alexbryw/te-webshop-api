@@ -1,6 +1,19 @@
 import React, { useEffect } from 'react';
-//Material UI
-import { DialogActions, DialogContent, DialogTitle, Dialog, DialogProps, Button, ListItem, ListItemText, List, IconButton } from '@material-ui/core';
+
+//MATERIAL UI
+import {
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Dialog,
+  DialogProps,
+  Button,
+  ListItem,
+  ListItemText,
+  List,
+  IconButton
+} from '@material-ui/core';
+
 import PersonIcon from '@material-ui/icons/Person';
 
 // STYLES
@@ -19,12 +32,9 @@ export default function ScrollDialog(props: Props) {
   const getOrders = async () => {
     const fetchedOrders = await props.orderContext.getOrders()
 
-    if(!fetchedOrders.err) setOrders(fetchedOrders)
+    if (!fetchedOrders.err) setOrders(fetchedOrders)
     else setOrders([])
   }
-
-
-  console.log(orders)
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
@@ -53,7 +63,7 @@ export default function ScrollDialog(props: Props) {
   }
 
   return (
-   
+
     <>
       <IconButton
         color="primary"
@@ -72,66 +82,66 @@ export default function ScrollDialog(props: Props) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-         {orders ? <>
-        <DialogTitle id="scroll-dialog-title">Köphistorik</DialogTitle>
-        <DialogContent dividers={scroll === 'paper'}>
-          {orders.length !== 0 ?
-            orders.map((order: any) => (
-              <List key={order._id} dense>
-                <ListItem >
-                  <ListItemText primary={`${order.to_firstname} ${order.to_lastname}`} />
-                </ListItem>
-                <ListItem >
-                  <ListItemText style={{ color: order.isOrderShipped ? '#2c393f' : '#BF9900' }} primary={`Orderstatus: ${order.isOrderShipped ? 'Skickad ✅' : 'Packas 📦'}`} />
-                </ListItem>
-                <ListItem >
-                  <ListItemText primary={`Orderdatum: ${getOrderDate(order.orderDate)}`} />
-                </ListItem>
-                <ListItem >
-                  <ListItemText primary={`Ordernummer: ${order._id}`} />
-                </ListItem>
+        {orders ? <>
+          <DialogTitle id="scroll-dialog-title">Köphistorik</DialogTitle>
+          <DialogContent dividers={scroll === 'paper'}>
+            {orders.length !== 0 ?
+              orders.map((order: any) => (
+                <List key={order._id} dense>
+                  <ListItem >
+                    <ListItemText primary={`${order.to_firstname} ${order.to_lastname}`} />
+                  </ListItem>
+                  <ListItem >
+                    <ListItemText style={{ color: order.isOrderShipped ? '#2c393f' : '#BF9900' }} primary={`Orderstatus: ${order.isOrderShipped ? 'Skickad ✅' : 'Packas 📦'}`} />
+                  </ListItem>
+                  <ListItem >
+                    <ListItemText primary={`Orderdatum: ${getOrderDate(order.orderDate)}`} />
+                  </ListItem>
+                  <ListItem >
+                    <ListItemText primary={`Ordernummer: ${order._id}`} />
+                  </ListItem>
 
-                {
-                  order.productRow.map((row: any, index: number) => (row.product != null ?
-                    <List className={classes.recipteList} key={index} dense>
-                      <ListItem >
-                        <ListItemText primary={`${row.product.title}`} />
+                  {
+                    order.productRow.map((row: any, index: number) => (row.product != null ?
+                      <List className={classes.recipteList} key={index} dense>
+                        <ListItem >
+                          <ListItemText primary={`${row.product.title}`} />
+                        </ListItem>
+
+
+                        <div className={classes.flex}>
+                          <ListItem>
+                            <ListItemText primary={`Antal: ${row.qty}`} />
+                          </ListItem>
+
+                          <ListItem>
+                            <ListItemText primary={`Pris: ${row.product.price} :-`} />
+                          </ListItem>
+
+                          <ListItem>
+                            <ListItemText primary={`Total: ${row.qty * row.product.price}:-`} />
+                          </ListItem>
+                        </div>
+
+                      </List> :
+                      <ListItem>
+                        <ListItemText primary="invalid product" />
                       </ListItem>
+                    )
+                    )
+                  }
+                </List>
+              )
+              )
+              : null}
+          </DialogContent>
 
-
-                      <div className={classes.flex}>
-                        <ListItem>
-                          <ListItemText primary={`Antal: ${row.qty}`} />
-                        </ListItem>
-
-                        <ListItem>
-                          <ListItemText primary={`Pris: ${row.product.price} :-`} />
-                        </ListItem>
-
-                        <ListItem>
-                          <ListItemText primary={`Total: ${row.qty * row.product.price}:-`} />
-                        </ListItem>
-                      </div>
-
-                    </List> :
-                    <ListItem>
-                      <ListItemText primary="invalid product" />
-                    </ListItem>
-                  )
-                  )
-                }
-              </List>
-            )
-            )
-            : null}
-        </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" variant="outlined" size="small">
-            Klart
+          <DialogActions>
+            <Button onClick={handleClose} color="primary" variant="outlined" size="small">
+              Klart
           </Button>
-        </DialogActions>
-         </> : null }
+          </DialogActions>
+        </> : null}
       </Dialog>
     </>
   );

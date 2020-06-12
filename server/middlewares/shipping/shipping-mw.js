@@ -1,10 +1,10 @@
 const Shipping = require("../../models/shippingModel")
+
 //GET all shipping options from database.
 async function getShippings(req, res, next) {
     try {
         const shipping = await Shipping.find();
         res.json(shipping);
-        // next() //Don't go to next if res is sent.
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

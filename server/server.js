@@ -44,7 +44,6 @@ app.use("/api/files", filesRouter)
 app.use("/session", sessionRouter)
 
 app.get('/', (req, res) => res.json({ someText: 'From express API! :9000!' }))
-// app.use(errorNotFound) //Add 404 not found error.
 
 app.use((req, res) => {
     res.status(404).json({ 404: "Resource could not be found." })

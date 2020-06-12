@@ -1,11 +1,10 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 
-// MATERIAL
+// MATERIAL UI
 import {
   TextField,
   Typography,
   FormControl,
-  Container,
   Button,
   Grid
 } from "@material-ui/core/";
@@ -13,10 +12,7 @@ import {
 // ICONS
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Edit";
-//import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
-// CONTEXT
-import { ProductContext } from "../../../contexts/ProductContext";
 
 interface Props {
   productContext: any;
@@ -80,7 +76,6 @@ export default class EditItem extends React.Component<Props, State> {
       );
     }
   }
-  // handleCategoryInput = (event: { target: { value: any } }) => this.setState({ category: event.target.value })
 
   handleCategoryInput = (event: { target: { value: any } }) => {
     const updatedCategories: any[] = [];
