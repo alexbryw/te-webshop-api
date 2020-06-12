@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
     cart: {
         position: "absolute",
-        right: "100%",
-        top: "100%",
+        right: 0,
+        top: "110%",
         zIndex:2000,
 
         padding: ".5rem",
@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
         background: "#eaeaea",
         borderRadius: ".2rem",
         [theme.breakpoints.down(510)]: {
+            maxWidth: "85vw"
         }
     },
     cartIcon: {

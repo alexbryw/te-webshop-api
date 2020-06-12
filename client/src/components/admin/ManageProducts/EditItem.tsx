@@ -172,7 +172,7 @@ export default class EditItem extends React.Component<Props, State> {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="overline">
                 Nuvarande antal produkter i lager:{" "}
                 {this.state.prevNrInStock}
@@ -193,7 +193,7 @@ export default class EditItem extends React.Component<Props, State> {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="overline">
                 Nuvarande kategorier:{" "}
                 {this.state.prevCategory.map((x) => x + " ")}

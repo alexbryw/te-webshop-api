@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 
 // MATERIAL UI
-import { Typography, Container, IconButton, List, ListItem, ListItemText } from '@material-ui/core'
+import { Typography, Container, IconButton, List, ListItem, ListItemText, useTheme, useMediaQuery } from '@material-ui/core'
 
 // ICONS
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -14,8 +14,12 @@ interface Props {
     userContext: any
 }
 
+
 const ManageUsers = (props: Props) => {
     const classes = useStyles()
+
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('xs'));
 
     const [users, setUsers] = React.useState([])
 
@@ -66,7 +70,9 @@ const ManageUsers = (props: Props) => {
 
                                 {user.requestsAdmin && !user.admin ?
                                     <ListItem>
-                                        <ListItemText primary="Admin&nbsp;ansökan" />
+                                        {!matches &&
+                                            <ListItemText primary="Admin&nbsp;ansökan" />
+                                        }
                                         <IconButton onClick={() => handleUpdateUserStatus(user)}>
                                             <CheckCircleIcon color="primary" />
                                         </IconButton>

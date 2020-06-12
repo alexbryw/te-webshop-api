@@ -152,7 +152,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                         <Typography color="primary" variant="h4" style={{ ...{ marginLeft: "1rem" }, ...{ marginTop: "1.5em" } }}>
                                             Kassa
                                     </Typography>
-                                        {this.isCartInStock() ? <p>In Stock</p> : <p>Not In Stock :-/</p>}
                                         {this.props.cartContext.cartList.length > 0 ?
                                             <div>
                                                 <ShoppingCart productContext={this.props.productContext} cartContext={this.props.cartContext} />
@@ -196,7 +195,6 @@ export default class CheckOut extends React.Component<Props, State>{
                                     <Grid item xs={12} sm={6}>
 
                                         <Card style={cardStyle}>
-                                            {/* <ShoppingCart /> */}
                                             <Typography variant="h6">Skickas till:</Typography>
                                             <Typography>{this.state.customerInfo?.firstName} {this.state.customerInfo?.lastName}</Typography>
                                             <Typography>{this.state.customerInfo?.address}</Typography>
